@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>24</java.version>
+                <start-class>com.banqueteria.recetario.receta.Main</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -74,7 +75,21 @@
 
 	<build>
 		<plugins>
-		
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>exec-maven-plugin</artifactId>
+                            <version>3.1.0</version>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>exec</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <mainClass>com.banqueteria.recetario.receta.main</mainClass>
+                            </configuration>
+                        </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -96,7 +111,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.mycompany.mavenproject1.App</mainClass>
+                    <mainClass>com.banqueteria.recetario.receta.main</mainClass>
                 </configuration>
                 <executions>
                     <execution>
