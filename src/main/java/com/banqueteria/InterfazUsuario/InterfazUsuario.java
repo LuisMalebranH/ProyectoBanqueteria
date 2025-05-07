@@ -41,5 +41,7 @@ public class InterfazUsuario extends JFrame {
 
         add(loadButton, BorderLayout.NORTH);
         add(new JScrollPane(area), BorderLayout.CENTER);
+            setLocationRelativeTo(null);
     }
+
 }
