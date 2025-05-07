@@ -1,6 +1,9 @@
 package com.banqueteria.recetario.receta;
 
+import com.banqueteria.InterfazUsuario.Inicio;
 import com.banqueteria.InterfazUsuario.InterfazUsuario;
+import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.producto.ServicioProducto;
 import javax.swing.SwingUtilities;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,10 +19,12 @@ public class RecetaApplication {
                 
                 System.out.println("partio Spring ahora parte el servicio");
                 ServicioReceta servicioReceta = context.getBean(ServicioReceta.class);
-                    
+                ServicioIngrediente servicioIngrediente = context.getBean(ServicioIngrediente.class);
+                ServicioProducto servicioProducto = context.getBean(ServicioProducto.class);
+                
                 System.out.println("AVER SI SALTA ESTA ESTUPIDEZ DE");
             SwingUtilities.invokeLater(() -> {
-            new InterfazUsuario(servicioReceta).setVisible(true);
+            new Inicio(servicioReceta, servicioIngrediente, servicioProducto).setVisible(true);
                 System.out.println("SE SUPONE QUE PARTE LA VENTANA DESGRACIADA");
         });
     }
