@@ -1,15 +1,24 @@
 package com.banqueteria.recetario.receta;
 
+
+
 import com.banqueteria.InterfazUsuario.Inicio;
-import com.banqueteria.InterfazUsuario.InterfazUsuario;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import javax.swing.SwingUtilities;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.banqueteria.recetario.ingrediente", "com.banqueteria.recetario.receta", "com.banqueteria.recetario.producto"})
+@EnableJpaRepositories(basePackages = {
+    "com.banqueteria.recetario.ingrediente",
+    "com.banqueteria.recetario.producto",
+    "com.banqueteria.recetario.receta"
+})
+@EntityScan(basePackages = "com.banqueteria.recetario")
 public class RecetaApplication {
 
 	public static void main(String[] args) {

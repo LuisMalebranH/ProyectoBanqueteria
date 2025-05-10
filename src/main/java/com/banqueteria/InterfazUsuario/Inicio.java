@@ -39,8 +39,8 @@ public class Inicio extends javax.swing.JFrame {
         
         this.setSize(1200, 800);
         
-        corregirImagen(this.labeld,"src/resources/static/imagend.png");
-        corregirImagen(this.labeli,"src/resources/static/imageni.png");
+        corregirImagen(this.labeld,"imagend.png");
+        corregirImagen(this.labeli,"imageni.png");
         
         llenarTabla();
         
@@ -107,7 +107,7 @@ public class Inicio extends javax.swing.JFrame {
 
         PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 740));
 
-        labeli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imageni.png"))); // NOI18N
+        labeli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/imageni.png"))); // NOI18N
         labeli.setAutoscrolls(true);
         labeli.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         labeli.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -183,7 +183,7 @@ public class Inicio extends javax.swing.JFrame {
 
         PanelFondo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 50, 150, -1));
 
-        labeld.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imagend.png"))); // NOI18N
+        labeld.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/imagend.png"))); // NOI18N
         labeld.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         labeld.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labeld.setPreferredSize(new java.awt.Dimension(35, 15));

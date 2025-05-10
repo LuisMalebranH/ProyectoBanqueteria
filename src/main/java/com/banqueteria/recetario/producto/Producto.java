@@ -16,15 +16,18 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
     @Column(length = 20)
+    private String nombre;
+    
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "receta_id")
     private Receta receta;
     
-    private int precio;
+    
     @Column(length = 5)
+    private int precio;
+   
 
     // Getters & setters
 

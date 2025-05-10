@@ -1,6 +1,6 @@
 package com.banqueteria.recetario.ingrediente;
 
-import com.banqueteria.recetario.receta.*;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
