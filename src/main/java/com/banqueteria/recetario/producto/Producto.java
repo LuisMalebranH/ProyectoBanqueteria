@@ -1,6 +1,5 @@
 package com.banqueteria.recetario.producto;
 
-import com.banqueteria.recetario.receta.Receta;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,9 +19,8 @@ public class Producto {
     private String nombre;
     
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "receta_id")
-    private Receta receta;
+    @Column (length = 5000)
+    private String receta;
     
     
     @Column(length = 5)
@@ -47,11 +45,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public Receta getReceta() {
+    public String getReceta() {
         return receta;
     }
 
-    public void setReceta(Receta receta) {
+    public void setReceta(String receta) {
         this.receta = receta;
     }
 

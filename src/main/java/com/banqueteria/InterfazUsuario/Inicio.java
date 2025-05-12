@@ -4,12 +4,14 @@ package com.banqueteria.InterfazUsuario;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
-import com.banqueteria.recetario.receta.ServicioReceta;
 import java.awt.Image;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
@@ -17,20 +19,22 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 
 public class Inicio extends javax.swing.JFrame {
-    DefaultTableModel tabla;
     
-    private ServicioReceta servicioReceta;
+    DefaultTableModel tabla;
+    List<Producto> productos;
+    
     private ServicioProducto servicioProducto;
     private ServicioIngrediente servicioIngrediente;
 
-    public Inicio(ServicioReceta servicioReceta, ServicioIngrediente servicioIngrediente, ServicioProducto servicioProducto) {
-        this.servicioReceta = servicioReceta;
+    public Inicio(ServicioIngrediente servicioIngrediente, ServicioProducto servicioProducto) {
         this.servicioProducto = servicioProducto;
         this.servicioIngrediente = servicioIngrediente;
         initComponents();
@@ -39,12 +43,31 @@ public class Inicio extends javax.swing.JFrame {
         
         this.setSize(1200, 800);
         
-        corregirImagen(this.labeld,"imagend.png");
-        corregirImagen(this.labeli,"imageni.png");
+        corregirImagen(this.labeld,"src/imagenes/imagend.png");
+        corregirImagen(this.labeli,"src/imagenes/imageni.png");
         
         llenarTabla();
         
-        
+        ListSelectionModel model = TablaProductos.getSelectionModel();
+        model.addListSelectionListener(new ListSelectionListener(){
+            public void ValueChanged(ListSelectionEvent e){
+                
+            }
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()){
+                    int filaSeleccionada = TablaProductos.getSelectedRow();
+                    if(filaSeleccionada != -1){
+                        String nom = TablaProductos.getValueAt(filaSeleccionada, 0).toString();
+                        String receta = buscarReceta(nom).getReceta();
+                        String nombre = buscarReceta(nom).getNombre();
+                        TextoPreparacion.setText(receta);
+                        LabelNombreProd.setText(nombre);
+                    }
+                }
+            }
+        });
         
     }
 
@@ -56,6 +79,7 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         PanelFondo = new javax.swing.JPanel();
         PanelCalculo = new javax.swing.JPanel();
         labeli = new javax.swing.JLabel();
@@ -72,10 +96,16 @@ public class Inicio extends javax.swing.JFrame {
         TextoIngredientes = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         TextoReceta = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        TextoPreparacion = new javax.swing.JTextArea();
         btnAgregarProd = new javax.swing.JButton();
         btnIniCalculo = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+
+        jPopupMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPopupMenu1MouseClicked(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,7 +135,7 @@ public class Inicio extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 740));
+        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 690));
 
         labeli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/imageni.png"))); // NOI18N
         labeli.setAutoscrolls(true);
@@ -206,6 +236,12 @@ public class Inicio extends javax.swing.JFrame {
         });
         PanelFondo.add(TextBuscarProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(951, 180, 200, -1));
 
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
+
         TablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -213,10 +249,23 @@ public class Inicio extends javax.swing.JFrame {
             new String [] {
                 "Productos"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TablaProductos);
 
-        PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, 340, 450));
+        PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 230, 350, 450));
 
         PanelProducto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -229,10 +278,10 @@ public class Inicio extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         TextoIngredientes.setViewportView(jTextArea1);
 
-        jTextArea2.setEditable(false);
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        TextoReceta.setViewportView(jTextArea2);
+        TextoPreparacion.setEditable(false);
+        TextoPreparacion.setColumns(20);
+        TextoPreparacion.setRows(5);
+        TextoReceta.setViewportView(TextoPreparacion);
 
         javax.swing.GroupLayout PanelProductoLayout = new javax.swing.GroupLayout(PanelProducto);
         PanelProducto.setLayout(PanelProductoLayout);
@@ -291,11 +340,11 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PanelCalculoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanelCalculoMouseEntered
-        this.PanelCalculo.setSize(300, 780);        
+        this.PanelCalculo.setSize(300, 680);        
     }//GEN-LAST:event_PanelCalculoMouseEntered
 
     private void PanelCalculoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanelCalculoMouseExited
-        this.PanelCalculo.setSize(100, 780);        
+        this.PanelCalculo.setSize(100, 680);        
     }//GEN-LAST:event_PanelCalculoMouseExited
 
     private void labeldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labeldMouseEntered
@@ -318,10 +367,23 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_labeliMouseClicked
 
     private void TextBuscarProdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextBuscarProdKeyReleased
-        filtrar(this.TextBuscarProd.getText());
+        String texto = this.TextBuscarProd.getText();
+        filtrar(texto);
     }//GEN-LAST:event_TextBuscarProdKeyReleased
 
+    private void TablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaProductosMouseClicked
 
+    }//GEN-LAST:event_TablaProductosMouseClicked
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void jPopupMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPopupMenu1MouseClicked
+
+    }//GEN-LAST:event_jPopupMenu1MouseClicked
+
+    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -332,6 +394,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JTable TablaProductos;
     private javax.swing.JTextField TextBuscarProd;
     private javax.swing.JScrollPane TextoIngredientes;
+    private javax.swing.JTextArea TextoPreparacion;
     private javax.swing.JScrollPane TextoReceta;
     private javax.swing.JButton btnAgregarProd;
     private javax.swing.JButton btnIniCalculo;
@@ -340,9 +403,9 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JLabel labeld;
     private javax.swing.JLabel labeli;
     // End of variables declaration//GEN-END:variables
@@ -356,18 +419,20 @@ public class Inicio extends javax.swing.JFrame {
         label.setIcon(icon);
         
     }
+        
+    private void llenarTabla(){
     
-    private void llenarTabla (){
-    String[] colums = {"Producto"};
-    List<Producto> productos = servicioProducto.getAllProducto();
-    String data[][] = new String[productos.size()][1];
+        String dato;
+        productos = servicioProducto.getAllProducto();
+        
+        for (int i = 0; i<productos.size();i++){
+            dato = productos.get(i).getNombre();
+            String[] prod = {dato};
+            tabla = (DefaultTableModel) this.TablaProductos.getModel();
+            tabla.addRow(prod);
+        }
     
-    for (int i = 0;i<productos.size();i++){
-        data[i][0]= productos.get(i).getNombre();   
-    }
-    this.TablaProductos.setModel(new DefaultTableModel(data,colums));
-    
-}
+    }    
 
     private void filtrar(String texto){
     
@@ -376,6 +441,22 @@ public class Inicio extends javax.swing.JFrame {
         
         tr.setRowFilter(RowFilter.regexFilter(texto));
         
+    }
+    
+    private void listarIngredientes(){
+        
+        
+    
+    }
+    
+    private Producto buscarReceta(String nombre){
+        
+        for (Producto p : productos){
+            if(p.getNombre().equals(nombre)){
+                return p;
+            }
+        }
+        return null;
     }
 
 }
