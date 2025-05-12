@@ -1,6 +1,5 @@
 package com.banqueteria.recetario.producto;
 
-import com.banqueteria.recetario.receta.Receta;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

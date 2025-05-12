@@ -4,8 +4,7 @@
  */
 package com.banqueteria.InterfazUsuario;
 
-import Modelo.Ingrediente;
-import com.banqueteria.recetario.receta.ServicioReceta;
+import com.banqueteria.recetario.ingrediente.Ingrediente;
 import java.awt.Point;
 import javax.swing.table.DefaultTableModel;
 
@@ -88,7 +87,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         CBCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cat 1", "Cat 2", "Cat 3", "Nueva Cat" }));
         jPanel1.add(CBCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 160, 30));
 
-        jButton1.setText("Crear nueva Categoría");
+        jButton1.setText("Nueva Categoría");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -100,13 +99,13 @@ public class AgregarProducto extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 110, 30));
         jPanel1.add(TextoIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 160, 30));
 
-        jButton2.setText("Crear nuevo ingrediente");
+        jButton2.setText("Nuevo ingrediente");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, -1, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 160, -1));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
