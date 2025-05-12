@@ -1,4 +1,6 @@
-package com.banqueteria.recetario.producto;
+package com.banqueteria.recetario.listaingredientes;
+
+
 
 import java.util.List;
 import java.util.Optional;
@@ -10,24 +12,23 @@ import org.springframework.stereotype.Service;
  * @author Baxkill
  */
 @Service
-public class ServicioProducto{
+public class ServicioListaIngredientes{
     @Autowired
-    private ProductoRepositorio repo;
+    private ListaIngredientesRepositorio repo;
 
-    public List<Producto> getAllProducto() {
+    public List<ListaIngredientes> getAll() {
         return repo.findAll();
     }
 
-    public Producto save(Producto producto) {
-        return repo.save(producto);
+    public ListaIngredientes save(ListaIngredientes listaIngredientes) {
+        return repo.save(listaIngredientes);
     }
 
     public void delete(Long id) {
         repo.deleteById(id);
     }
 
-    public Optional<Producto> get(Long id) {
+    public Optional<ListaIngredientes> get(Long id) {
         return repo.findById(id);
     }
-    
 }

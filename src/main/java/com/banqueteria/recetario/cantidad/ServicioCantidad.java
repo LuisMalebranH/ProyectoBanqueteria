@@ -1,4 +1,5 @@
-package com.banqueteria.recetario.producto;
+package com.banqueteria.recetario.cantidad;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -10,24 +11,23 @@ import org.springframework.stereotype.Service;
  * @author Baxkill
  */
 @Service
-public class ServicioProducto{
+public class ServicioCantidad{
     @Autowired
-    private ProductoRepositorio repo;
+    private CantidadRepositorio repo;
 
-    public List<Producto> getAllProducto() {
+    public List<Cantidad> getAll() {
         return repo.findAll();
     }
 
-    public Producto save(Producto producto) {
-        return repo.save(producto);
+    public Cantidad save(Cantidad cantidad) {
+        return repo.save(cantidad);
     }
 
     public void delete(Long id) {
         repo.deleteById(id);
     }
 
-    public Optional<Producto> get(Long id) {
+    public Optional<Cantidad> get(Long id) {
         return repo.findById(id);
     }
-    
 }
