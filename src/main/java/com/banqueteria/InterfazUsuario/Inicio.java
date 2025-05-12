@@ -72,7 +72,7 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     Inicio() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
     
     @SuppressWarnings("unchecked")

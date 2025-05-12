@@ -205,10 +205,10 @@ public class AgregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Inicio abrir;
-        abrir = new Inicio();
+
+        Inicio abrir = new Inicio();
         abrir.setVisible(true);
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     

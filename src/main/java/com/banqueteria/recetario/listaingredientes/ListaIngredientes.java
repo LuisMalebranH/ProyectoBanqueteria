@@ -20,12 +20,9 @@ public class ListaIngredientes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(length = 20)
-    private String descripcion;
     
     @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="id_producto")
+    @JoinColumn(name="id_prod")
     private Producto producto;
     
     @ManyToOne(fetch=FetchType.EAGER)
@@ -50,13 +47,6 @@ public class ListaIngredientes {
         this.id = id;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 
     public Producto getProducto() {
         return producto;
