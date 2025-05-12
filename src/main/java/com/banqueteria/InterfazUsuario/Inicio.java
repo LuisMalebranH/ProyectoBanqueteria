@@ -1,6 +1,8 @@
 package com.banqueteria.InterfazUsuario;
 
 
+import com.banqueteria.recetario.categoria.Categoria;
+import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
@@ -30,13 +32,16 @@ public class Inicio extends javax.swing.JFrame {
     
     DefaultTableModel tabla;
     List<Producto> productos;
+    List<Categoria> categoria;
     
     private ServicioProducto servicioProducto;
     private ServicioIngrediente servicioIngrediente;
+    private ServicioCategoria servicioCategoria;
 
-    public Inicio(ServicioIngrediente servicioIngrediente, ServicioProducto servicioProducto) {
+    public Inicio(ServicioIngrediente servicioIngrediente, ServicioProducto servicioProducto, ServicioCategoria servicioCategoria) {
         this.servicioProducto = servicioProducto;
         this.servicioIngrediente = servicioIngrediente;
+        this.servicioCategoria = servicioCategoria;
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -47,6 +52,8 @@ public class Inicio extends javax.swing.JFrame {
         corregirImagen(this.labeli,"src/imagenes/imageni.png");
         
         llenarTabla();
+        llenarProducto();
+        llenarCategorias();
         
         ListSelectionModel model = TablaProductos.getSelectionModel();
         model.addListSelectionListener(new ListSelectionListener(){
@@ -60,8 +67,8 @@ public class Inicio extends javax.swing.JFrame {
                     int filaSeleccionada = TablaProductos.getSelectedRow();
                     if(filaSeleccionada != -1){
                         String nom = TablaProductos.getValueAt(filaSeleccionada, 0).toString();
-                        String receta = buscarReceta(nom).getReceta();
-                        String nombre = buscarReceta(nom).getNombre();
+                        String receta = buscarProducto(nom).getReceta();
+                        String nombre = buscarProducto(nom).getNombre();
                         TextoPreparacion.setText(receta);
                         LabelNombreProd.setText(nombre);
                     }
@@ -84,9 +91,13 @@ public class Inicio extends javax.swing.JFrame {
         PanelCalculo = new javax.swing.JPanel();
         labeli = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        cat1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        cat2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        cat3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        cat4 = new javax.swing.JLabel();
         labeld = new javax.swing.JLabel();
         TextBuscarProd = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -152,15 +163,17 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setPreferredSize(new java.awt.Dimension(150, 100));
 
+        cat1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat1, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
         PanelFondo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 140, -1));
@@ -168,15 +181,17 @@ public class Inicio extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.setPreferredSize(new java.awt.Dimension(150, 100));
 
+        cat2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat2, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
         PanelFondo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, 150, -1));
@@ -184,15 +199,17 @@ public class Inicio extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setPreferredSize(new java.awt.Dimension(150, 100));
 
+        cat3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat3, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat3, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
         PanelFondo.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, 150, -1));
@@ -200,15 +217,17 @@ public class Inicio extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setPreferredSize(new java.awt.Dimension(150, 100));
 
+        cat4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat4, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
         PanelFondo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 50, 150, -1));
@@ -398,6 +417,10 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JScrollPane TextoReceta;
     private javax.swing.JButton btnAgregarProd;
     private javax.swing.JButton btnIniCalculo;
+    private javax.swing.JLabel cat1;
+    private javax.swing.JLabel cat2;
+    private javax.swing.JLabel cat3;
+    private javax.swing.JLabel cat4;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -432,7 +455,50 @@ public class Inicio extends javax.swing.JFrame {
             tabla.addRow(prod);
         }
     
-    }    
+    }
+
+    private void llenarProducto(){
+    
+        String receta = productos.get(0).getReceta();
+        String nombre  = productos.get(0).getNombre();
+        this.TextoPreparacion.setText(receta);
+        this.LabelNombreProd.setText(nombre);
+        
+    }
+    
+    private void llenarCategorias(){
+    
+        categoria = servicioCategoria.getAll();
+        
+        if (categoria.size()<5){
+            this.labeli.setEnabled(false);
+            this.labeld.setEnabled(false);
+            switch (categoria.size()) {
+                case 1:
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    break;
+                case 2:
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    this.cat2.setText(categoria.get(1).getDetalle());
+                    break;
+                case 3:
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    this.cat2.setText(categoria.get(1).getDetalle());
+                    this.cat3.setText(categoria.get(2).getDetalle());
+                    break;
+                case 4: 
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    this.cat2.setText(categoria.get(1).getDetalle());
+                    this.cat3.setText(categoria.get(2).getDetalle());
+                    this.cat4.setText(categoria.get(3).getDetalle());
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+    
+    }
 
     private void filtrar(String texto){
     
@@ -449,7 +515,7 @@ public class Inicio extends javax.swing.JFrame {
     
     }
     
-    private Producto buscarReceta(String nombre){
+    private Producto buscarProducto(String nombre){
         
         for (Producto p : productos){
             if(p.getNombre().equals(nombre)){
