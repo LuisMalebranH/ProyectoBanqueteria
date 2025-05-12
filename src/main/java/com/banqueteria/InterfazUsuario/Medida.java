@@ -1,7 +1,7 @@
 
 package com.banqueteria.InterfazUsuario;
 
-import Modelo.Ingrediente;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JFrame;

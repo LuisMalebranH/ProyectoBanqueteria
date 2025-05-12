@@ -4,8 +4,7 @@
  */
 package com.banqueteria.InterfazUsuario;
 
-import Modelo.Ingrediente;
-import com.banqueteria.recetario.receta.ServicioReceta;
+import com.banqueteria.recetario.ingrediente.Ingrediente;
 import java.awt.Point;
 import javax.swing.table.DefaultTableModel;
 
