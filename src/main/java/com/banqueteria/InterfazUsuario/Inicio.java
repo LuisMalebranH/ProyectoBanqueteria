@@ -1,6 +1,8 @@
 package com.banqueteria.InterfazUsuario;
 
 
+import com.banqueteria.recetario.categoria.Categoria;
+import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
@@ -30,13 +32,16 @@ public class Inicio extends javax.swing.JFrame {
     
     DefaultTableModel tabla;
     List<Producto> productos;
+    List<Categoria> categoria;
     
     private ServicioProducto servicioProducto;
     private ServicioIngrediente servicioIngrediente;
+    private ServicioCategoria servicioCategoria;
 
-    public Inicio(ServicioIngrediente servicioIngrediente, ServicioProducto servicioProducto) {
+    public Inicio(ServicioIngrediente servicioIngrediente, ServicioProducto servicioProducto, ServicioCategoria servicioCategoria) {
         this.servicioProducto = servicioProducto;
         this.servicioIngrediente = servicioIngrediente;
+        this.servicioCategoria = servicioCategoria;
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -48,6 +53,7 @@ public class Inicio extends javax.swing.JFrame {
         
         llenarTabla();
         llenarProducto();
+        llenarCategorias();
         
         ListSelectionModel model = TablaProductos.getSelectionModel();
         model.addListSelectionListener(new ListSelectionListener(){
@@ -157,6 +163,8 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setPreferredSize(new java.awt.Dimension(150, 100));
 
+        cat1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -172,6 +180,8 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.setPreferredSize(new java.awt.Dimension(150, 100));
+
+        cat2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -189,6 +199,8 @@ public class Inicio extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setPreferredSize(new java.awt.Dimension(150, 100));
 
+        cat3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -204,6 +216,8 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setPreferredSize(new java.awt.Dimension(150, 100));
+
+        cat4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -454,7 +468,35 @@ public class Inicio extends javax.swing.JFrame {
     
     private void llenarCategorias(){
     
+        categoria = servicioCategoria.getAll();
         
+        if (categoria.size()<5){
+            this.labeli.setEnabled(false);
+            this.labeld.setEnabled(false);
+            switch (categoria.size()) {
+                case 1:
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    break;
+                case 2:
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    this.cat2.setText(categoria.get(1).getDetalle());
+                    break;
+                case 3:
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    this.cat2.setText(categoria.get(1).getDetalle());
+                    this.cat3.setText(categoria.get(2).getDetalle());
+                    break;
+                case 4: 
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    this.cat2.setText(categoria.get(1).getDetalle());
+                    this.cat3.setText(categoria.get(2).getDetalle());
+                    this.cat4.setText(categoria.get(3).getDetalle());
+                    break;
+                default:
+                    break;
+            }
+            
+        }
     
     }
 
