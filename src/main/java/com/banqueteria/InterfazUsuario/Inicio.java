@@ -47,6 +47,7 @@ public class Inicio extends javax.swing.JFrame {
         corregirImagen(this.labeli,"src/imagenes/imageni.png");
         
         llenarTabla();
+        llenarProducto();
         
         ListSelectionModel model = TablaProductos.getSelectionModel();
         model.addListSelectionListener(new ListSelectionListener(){
@@ -60,8 +61,8 @@ public class Inicio extends javax.swing.JFrame {
                     int filaSeleccionada = TablaProductos.getSelectedRow();
                     if(filaSeleccionada != -1){
                         String nom = TablaProductos.getValueAt(filaSeleccionada, 0).toString();
-                        String receta = buscarReceta(nom).getReceta();
-                        String nombre = buscarReceta(nom).getNombre();
+                        String receta = buscarProducto(nom).getReceta();
+                        String nombre = buscarProducto(nom).getNombre();
                         TextoPreparacion.setText(receta);
                         LabelNombreProd.setText(nombre);
                     }
@@ -84,9 +85,13 @@ public class Inicio extends javax.swing.JFrame {
         PanelCalculo = new javax.swing.JPanel();
         labeli = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        cat1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        cat2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        cat3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        cat4 = new javax.swing.JLabel();
         labeld = new javax.swing.JLabel();
         TextBuscarProd = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -156,11 +161,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat1, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
         PanelFondo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 140, -1));
@@ -172,11 +177,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat2, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
         PanelFondo.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, 150, -1));
@@ -188,11 +193,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat3, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat3, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
         PanelFondo.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 50, 150, -1));
@@ -204,11 +209,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat4, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(cat4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
         PanelFondo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 50, 150, -1));
@@ -398,6 +403,10 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JScrollPane TextoReceta;
     private javax.swing.JButton btnAgregarProd;
     private javax.swing.JButton btnIniCalculo;
+    private javax.swing.JLabel cat1;
+    private javax.swing.JLabel cat2;
+    private javax.swing.JLabel cat3;
+    private javax.swing.JLabel cat4;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -432,7 +441,22 @@ public class Inicio extends javax.swing.JFrame {
             tabla.addRow(prod);
         }
     
-    }    
+    }
+
+    private void llenarProducto(){
+    
+        String receta = productos.get(0).getReceta();
+        String nombre  = productos.get(0).getNombre();
+        this.TextoPreparacion.setText(receta);
+        this.LabelNombreProd.setText(nombre);
+        
+    }
+    
+    private void llenarCategorias(){
+    
+        
+    
+    }
 
     private void filtrar(String texto){
     
@@ -449,7 +473,7 @@ public class Inicio extends javax.swing.JFrame {
     
     }
     
-    private Producto buscarReceta(String nombre){
+    private Producto buscarProducto(String nombre){
         
         for (Producto p : productos){
             if(p.getNombre().equals(nombre)){
