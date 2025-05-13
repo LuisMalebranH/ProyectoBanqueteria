@@ -1,13 +1,29 @@
 
 package com.banqueteria.InterfazUsuario;
 
+import com.banqueteria.recetario.cantidad.ServicioCantidad;
+import com.banqueteria.recetario.categoria.ServicioCategoria;
+import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
 
 
 public class Cantidad extends javax.swing.JFrame {
 
+    private ServicioIngrediente servicioIngrediente;
+    private ServicioCategoria servicioCategoria;
+    private ServicioCantidad servicioCantidad;
+    private final ServicioProducto servicioProducto;
   
-    public Cantidad() {
+    public Cantidad(
+            ServicioCantidad servicioCantidad,
+            ServicioCategoria servicioCategoria,
+            ServicioIngrediente servicioIngrediente, 
+            ServicioProducto servicioProducto) {
+        this.servicioCantidad = servicioCantidad;
+        this.servicioCategoria = servicioCategoria;
+        this.servicioIngrediente = servicioIngrediente;
+        this.servicioProducto = servicioProducto;
         initComponents();
     }
 
@@ -95,7 +111,9 @@ public class Cantidad extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Medida abrir = new Medida();
+        Medida abrir = new Medida(
+                servicioCantidad,servicioCategoria,
+                servicioIngrediente,servicioProducto);
         abrir.setVisible(true);
         abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
         abrir.nombre.setText(this.nombre.getText());

@@ -1,12 +1,28 @@
 
 package com.banqueteria.InterfazUsuario;
 
+import com.banqueteria.recetario.cantidad.ServicioCantidad;
+import com.banqueteria.recetario.categoria.Categoria;
+import com.banqueteria.recetario.categoria.ServicioCategoria;
+import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.producto.ServicioProducto;
 import javax.swing.JOptionPane;
 
 public class CrearCategoría extends javax.swing.JFrame {
 
+    private ServicioCategoria servicioCategoria;
+    private ServicioIngrediente servicioIngrediente;
+    private final ServicioCantidad servicioCantidad;
+    private final ServicioProducto servicioProducto;
 
-    public CrearCategoría() {
+    public CrearCategoría(ServicioCantidad servicioCantidad,
+            ServicioCategoria servicioCategoria,
+            ServicioIngrediente servicioIngrediente, 
+            ServicioProducto servicioProducto) {
+        this.servicioCantidad = servicioCantidad;
+        this.servicioCategoria = servicioCategoria;
+        this.servicioIngrediente = servicioIngrediente;
+        this.servicioProducto = servicioProducto;
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -22,7 +38,7 @@ public class CrearCategoría extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -56,6 +72,16 @@ public class CrearCategoría extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nuevaCategoria = this.jTextField1.getText();
+        Categoria cat = new Categoria();
+        cat.setDetalle(nuevaCategoria);
+        servicioCategoria.save(cat);
+        AgregarProducto reset = new AgregarProducto(
+                servicioCantidad,servicioCategoria,
+                servicioIngrediente,servicioProducto);
+        reset.llenarCategorias();
+        reset.setVisible(false);
+        reset.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

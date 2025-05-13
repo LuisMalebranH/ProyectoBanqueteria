@@ -31,7 +31,7 @@ public class Categoria {
         return detalle;
     }
 
-    public void setDetalle(String descripcion) {
+    public void setDetalle(String detalle) {
         this.detalle = detalle;
     }
 
