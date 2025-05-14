@@ -14,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class Medida extends javax.swing.JFrame {
     
+    DefaultTableModel tabla;
+    
     List<com.banqueteria.recetario.cantidad.Cantidad> cantidades;
 
     private ServicioIngrediente servicioIngrediente;
@@ -55,8 +57,10 @@ public class Medida extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setPreferredSize(new java.awt.Dimension(200, 100));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Cantidad.setText("Tipo de Medida");
+        jPanel1.add(Cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 110, 30));
 
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -64,46 +68,25 @@ public class Medida extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 110, 30));
 
         CBCantidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CBCantidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CBCantidadesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(CBCantidades, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 110, 30));
 
-        jButton2.setText("Agregar");
+        jButton2.setText("Nueva medida");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 110, 30));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Cantidad)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                    .addComponent(CBCantidades, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CBCantidades))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, -1));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -119,7 +102,7 @@ public class Medida extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
+                    .addComponent(cantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -132,7 +115,7 @@ public class Medida extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 220, 80));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 270, 80));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -145,9 +128,17 @@ public class Medida extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AgregarValorTabla();
+        String nombre = this.nombre.getText();
+        String cantidad = this.cantidad.getText();
+        String tipo = this.CBCantidades.getSelectedItem().toString();
+        AgregarValorTabla(nombre, cantidad, tipo);
+        AgregarProducto.TextoIng.setText("");
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void CBCantidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBCantidadesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CBCantidadesActionPerformed
 
     
 
@@ -162,19 +153,12 @@ public class Medida extends javax.swing.JFrame {
     public static javax.swing.JLabel nombre;
     // End of variables declaration//GEN-END:variables
 
-    private void AgregarValorTabla(){
+    private void AgregarValorTabla(String nombre, String cantidad, String medida){
         
-        String datos [] = new String[3];
+        String datos [] = {nombre, cantidad, medida};
         
-        datos[0] = this.nombre.getText();
-        datos[1] = this.Cantidad.getText();
-        datos[2] = this.CBCantidades.getSelectedItem().toString();
-        
-        AgregarProducto consultar = new AgregarProducto(
-                servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
-        
-        consultar.tablaIng.addRow(datos);
+        tabla = (DefaultTableModel) AgregarProducto.TablaListaIng.getModel();
+        tabla.addRow(datos);
         
     }
     

@@ -80,8 +80,8 @@ public class CrearCategoría extends javax.swing.JFrame {
                 servicioCantidad,servicioCategoria,
                 servicioIngrediente,servicioProducto);
         reset.llenarCategorias();
-        reset.setVisible(false);
-        reset.setVisible(true);
+//        reset.setVisible(false);
+//        reset.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

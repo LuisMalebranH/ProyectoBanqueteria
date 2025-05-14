@@ -1,5 +1,6 @@
 package com.banqueteria.recetario.producto;
 
+import com.banqueteria.recetario.categoria.Categoria;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Producto {
@@ -25,6 +27,10 @@ public class Producto {
     
     @Column(length = 5)
     private int precio;
+    
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="categoria")
+    private Categoria categoria;
    
 
     // Getters & setters
@@ -61,5 +67,14 @@ public class Producto {
         this.precio = precio;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    
 
 }

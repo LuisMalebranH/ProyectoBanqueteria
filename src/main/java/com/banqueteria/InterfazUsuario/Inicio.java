@@ -480,8 +480,8 @@ public class Inicio extends javax.swing.JFrame {
         categoria = servicioCategoria.getAll();
         
         if (categoria.size()<5){
-            this.labeli.setEnabled(false);
-            this.labeld.setEnabled(false);
+            this.labeli.setVisible(false);
+            this.labeld.setVisible(false);
             switch (categoria.size()) {
                 case 1:
                     this.cat1.setText(categoria.get(0).getDetalle());
@@ -505,6 +505,13 @@ public class Inicio extends javax.swing.JFrame {
                     break;
             }
             
+        } else {
+            this.labeli.setVisible(true);
+            this.labeld.setVisible(true);
+            this.cat1.setText(categoria.get(0).getDetalle());
+            this.cat2.setText(categoria.get(1).getDetalle());
+            this.cat3.setText(categoria.get(2).getDetalle());
+            this.cat4.setText(categoria.get(3).getDetalle());
         }
     
     }

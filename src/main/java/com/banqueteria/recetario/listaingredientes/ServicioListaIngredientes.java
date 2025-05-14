@@ -22,7 +22,7 @@ public class ServicioListaIngredientes{
         repo.deleteById(id);
     }
 
-    public Optional<ListaIngredientes> get(Long id) {
-        return repo.findById(id);
+    public Optional<ListaIngredientes> get(Long id_prod) {
+        return repo.findById(id_prod);
     }
 }

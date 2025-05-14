@@ -1,6 +1,7 @@
 package com.banqueteria.recetario.listaingredientes;
 
 
+import com.banqueteria.recetario.cantidad.Cantidad;
 import com.banqueteria.recetario.ingrediente.Ingrediente;
 import com.banqueteria.recetario.producto.Producto;
 import jakarta.persistence.Column;
@@ -27,13 +28,48 @@ public class ListaIngredientes {
     @JoinColumn(name="id_ingrediente")
     private Ingrediente ingrediente;
     
+    @Column(length = 3)
+    private int cantidad;
     
-    
-    
-    
-    
-    // Getters & setters
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="tipo_cantidad_ing")
+    private Cantidad medida;
 
+    public int getCantidad() {
+        return cantidad;
+    }
 
+    public Long getId() {
+        return id;
+    }
 
+    public Ingrediente getIngrediente() {
+        return ingrediente;
+    }
+
+    public Cantidad getMedida() {
+        return medida;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setIngrediente(Ingrediente ingrediente) {
+        this.ingrediente = ingrediente;
+    }
+
+    public void setMedida(Cantidad medida) {
+        this.medida = medida;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+    
+    
 }
