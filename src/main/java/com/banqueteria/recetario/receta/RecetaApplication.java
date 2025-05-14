@@ -19,13 +19,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
     "com.banqueteria.recetario.cantidad",
     "com.banqueteria.recetario.ingrediente",
     "com.banqueteria.recetario.producto",
-    "com.banqueteria.recetario.categoria"})
+    "com.banqueteria.recetario.categoria",
+    "com.banqueteria.recetario.listaingredientes"})
 @EnableJpaRepositories(basePackages = {
     "com.banqueteria.recetario.cantidad",
     "com.banqueteria.recetario.ingrediente",
     "com.banqueteria.recetario.producto",
-    "com.banqueteria.recetario.categoria"
-})
+    "com.banqueteria.recetario.categoria",
+    "com.banqueteria.recetario.listaingredientes"})
 @EntityScan(basePackages = "com.banqueteria.recetario")
 public class RecetaApplication {
 

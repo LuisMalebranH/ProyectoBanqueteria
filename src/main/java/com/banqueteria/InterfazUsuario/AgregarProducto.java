@@ -1,11 +1,14 @@
 package com.banqueteria.InterfazUsuario;
 
+import com.banqueteria.recetario.cantidad.Cantidad;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.Ingrediente;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.listaingredientes.ListaIngredientes;
 import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
+import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
 import java.util.List;
@@ -16,10 +19,10 @@ import javax.swing.table.TableRowSorter;
 public class AgregarProducto extends javax.swing.JFrame {
 
     DefaultTableModel tablaIng;
-    DefaultTableModel tablaListIng;
+    DefaultTableModel ListaIng;
     List<Ingrediente> ingredientes;
     List<Categoria> categorias;
-    
+    List<Cantidad> cantidades;
     
     
     private ServicioIngrediente servicioIngrediente;
@@ -46,10 +49,13 @@ public class AgregarProducto extends javax.swing.JFrame {
         
         llenarTabla();
         llenarCategorias();
-        llenarTablaListIng();
     }
 
+    AgregarProducto(){
     
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -72,9 +78,10 @@ public class AgregarProducto extends javax.swing.JFrame {
         TextoReceta = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        Jtbl_listaDeIngredientes = new javax.swing.JTable();
+        TablaListaIng = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
-        jBtn_Cancelaryvolverainicio = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jPopupMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -166,7 +173,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         jLabel7.setText("Listado de ingredientes");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 26, 160, 30));
 
-        Jtbl_listaDeIngredientes.setModel(new javax.swing.table.DefaultTableModel(
+        TablaListaIng.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -174,22 +181,35 @@ public class AgregarProducto extends javax.swing.JFrame {
                 "Nombre", "Cantidad", "Medida"
             }
         ));
-        Jtbl_listaDeIngredientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Jtbl_listaDeIngredientes.setShowGrid(true);
-        jScrollPane3.setViewportView(Jtbl_listaDeIngredientes);
+        TablaListaIng.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TablaListaIng.setShowGrid(true);
+        jScrollPane3.setViewportView(TablaListaIng);
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 320, 610));
 
         jButton4.setText("Guardar producto");
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 710, -1, 30));
-
-        jBtn_Cancelaryvolverainicio.setText("Cancelar");
-        jBtn_Cancelaryvolverainicio.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtn_CancelaryvolverainicioActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jBtn_Cancelaryvolverainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 710, 130, 30));
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 710, -1, 30));
+
+        jButton5.setText("Cancelar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 710, 130, 30));
+
+        jButton3.setText("Actualizar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, 140, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,7 +248,7 @@ public class AgregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_jPopupMenu1MouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       Cantidad abrir = new Cantidad(
+       CantidadIngrediente abrir = new CantidadIngrediente(
                servicioCantidad,servicioCategoria,
                 servicioIngrediente,servicioProducto, servicioListaIngredientes);
        abrir.setVisible(true); 
@@ -236,36 +256,85 @@ public class AgregarProducto extends javax.swing.JFrame {
        abrir.nombre.setText(AgregarIngrediente());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        Inicio abrir;
+        abrir = new Inicio(
+                servicioCantidad,servicioCategoria,
+                servicioIngrediente,servicioProducto,
+                servicioListaIngredientes);
+        abrir.setVisible(true);
+        dispose();
+// TODO add your handling code here:
+    }                                                           
+
     private void TextoIngKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoIngKeyReleased
         String texto = this.TextoIng.getText();
         filtrar(texto);
     }//GEN-LAST:event_TextoIngKeyReleased
 
-    private void jBtn_CancelaryvolverainicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_CancelaryvolverainicioActionPerformed
-      
-        Inicio initback = new Inicio(servicioCantidad,
-                                     servicioCategoria,
-                                     servicioIngrediente,
-                                     servicioProducto,
-                                     servicioListaIngredientes);
-        initback.setVisible(true);
-        dispose();
-// TODO add your handling code here:
-    }//GEN-LAST:event_jBtn_CancelaryvolverainicioActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+//        dispose();
+//        this.setVisible(true);
+//        llenarTabla();
+//        llenarCategorias();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String nombreProd = this.TextoNombre.getText();
+        String receta = this.TextoReceta.getText();
+        
+        String cat = this.CBCategoria.getSelectedItem().toString();
+        Categoria c = new Categoria();
+        c.setId(buscarCategoria(cat).getId());
+        c.setDetalle(buscarCategoria(cat).getDetalle());
+        
+        Producto p = new Producto();
+        p.setNombre(nombreProd);
+        p.setReceta(receta);
+        p.setCategoria(c);
+        
+        servicioProducto.save(p);
+        
+        ListaIng = (DefaultTableModel) this.TablaListaIng.getModel();
+        
+        for(int i=0;i<ListaIng.getRowCount();i++){
+            Ingrediente ing = new Ingrediente();
+            String nombreing = (String) ListaIng.getValueAt(i,0);
+            ing.setId(buscarIngrediente(nombreing).getId());
+            ing.setNombre(nombreing);
+            
+            String cantidad = (String) ListaIng.getValueAt(i,1);
+            
+            Cantidad m = new Cantidad();
+            String medida = (String) ListaIng.getValueAt(i,2);
+            m.setId(buscarCantidad(medida).getId());
+            m.setDescripcion(buscarCantidad(medida).getDescripcion());
+            
+            ListaIngredientes li = new ListaIngredientes();
+            li.setCantidad(cantidad);
+            li.setIngrediente(ing);
+            li.setMedida(m);
+            li.setProducto(p);
+            servicioListaIngredientes.save(li);
+
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JComboBox<String> CBCategoria;
-    public static javax.swing.JTable Jtbl_listaDeIngredientes;
     private javax.swing.JTable TablaIngredientes;
-    private javax.swing.JTextField TextoIng;
+    public static javax.swing.JTable TablaListaIng;
+    public static javax.swing.JTextField TextoIng;
     public static javax.swing.JTextField TextoNombre;
     private javax.swing.JTextArea TextoReceta;
-    private javax.swing.JButton jBtn_Cancelaryvolverainicio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -340,12 +409,38 @@ public class AgregarProducto extends javax.swing.JFrame {
         tr.setRowFilter(RowFilter.regexFilter(texto));
         
     }
-
-    public void llenarTablaListIng(){
-        
     
+    private Categoria buscarCategoria(String nombre){
+    
+        for(int i=0;i<categorias.size();i++){
+            if(categorias.get(i).getDetalle().equals(nombre)){
+                return categorias.get(i);
+            }
+        }
+        return null;
+    }
+    
+    private Ingrediente buscarIngrediente(String nombre){
+    
+        for(int i=0;i<ingredientes.size();i++){
+            if(ingredientes.get(i).getNombre().equals(nombre)){
+                return ingredientes.get(i);
+            }
+        }
+        return null;
     }
 
+    private Cantidad buscarCantidad(String nombre){
+        
+        cantidades = servicioCantidad.getAll();
+    
+        for(int i=0;i<cantidades.size();i++){
+            if(cantidades.get(i).getDescripcion().equals(nombre)){
+                return cantidades.get(i);
+            }
+        }
+        return null;
+    }
     
 }
 
