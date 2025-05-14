@@ -41,10 +41,7 @@ public class Inicio extends javax.swing.JFrame {
     private ServicioProducto servicioProducto;
 
     public Inicio(
-            ServicioCantidad servicioCantidad,
-            ServicioCategoria servicioCategoria,
-            ServicioIngrediente servicioIngrediente, 
-            ServicioProducto servicioProducto) {
+            ServicioCantidad servicioCantidad, ServicioCategoria servicioCategoria, ServicioIngrediente servicioIngrediente, ServicioProducto servicioProducto) {
         this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
         this.servicioIngrediente = servicioIngrediente;

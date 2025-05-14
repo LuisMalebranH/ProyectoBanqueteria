@@ -41,11 +41,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         llenarCategorias();
     }
 
-    AgregarProducto(){
     
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        
-    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -70,7 +66,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jBtn_Cancelaryvolverainicio = new javax.swing.JButton();
 
         jPopupMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -177,13 +173,13 @@ public class AgregarProducto extends javax.swing.JFrame {
         jButton4.setText("Guardar producto");
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 710, -1, 30));
 
-        jButton5.setText("Cancelar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jBtn_Cancelaryvolverainicio.setText("Cancelar");
+        jBtn_Cancelaryvolverainicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jBtn_CancelaryvolverainicioActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 710, -1, 30));
+        jPanel1.add(jBtn_Cancelaryvolverainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 710, 130, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -230,17 +226,18 @@ public class AgregarProducto extends javax.swing.JFrame {
        abrir.nombre.setText(AgregarIngrediente());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        Inicio abrir;
-        abrir = new Inicio();
-        abrir.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void TextoIngKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoIngKeyReleased
         String texto = this.TextoIng.getText();
         filtrar(texto);
     }//GEN-LAST:event_TextoIngKeyReleased
+
+    private void jBtn_CancelaryvolverainicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_CancelaryvolverainicioActionPerformed
+      
+        Inicio initback = new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente,servicioProducto);
+        initback.setVisible(true);
+        dispose();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jBtn_CancelaryvolverainicioActionPerformed
 
     
 
@@ -250,10 +247,10 @@ public class AgregarProducto extends javax.swing.JFrame {
     private javax.swing.JTextField TextoIng;
     public static javax.swing.JTextField TextoNombre;
     private javax.swing.JTextArea TextoReceta;
+    private javax.swing.JButton jBtn_Cancelaryvolverainicio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
