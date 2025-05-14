@@ -1,10 +1,13 @@
 package com.banqueteria.InterfazUsuario;
 
+import com.banqueteria.recetario.cantidad.Cantidad;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.Ingrediente;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.listaingredientes.ListaIngredientes;
+import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
@@ -19,21 +22,26 @@ public class AgregarProducto extends javax.swing.JFrame {
     DefaultTableModel ListaIng;
     List<Ingrediente> ingredientes;
     List<Categoria> categorias;
+    List<Cantidad> cantidades;
+    
     
     private ServicioIngrediente servicioIngrediente;
     private ServicioCategoria servicioCategoria;
     private ServicioCantidad servicioCantidad;
     private ServicioProducto servicioProducto;
+    private ServicioListaIngredientes servicioListaIngredientes;
     
     public AgregarProducto(
             ServicioCantidad servicioCantidad,
             ServicioCategoria servicioCategoria,
             ServicioIngrediente servicioIngrediente, 
-            ServicioProducto servicioProducto) {
+            ServicioProducto servicioProducto,
+            ServicioListaIngredientes servicioListaIngredientes) {
         this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
         this.servicioIngrediente = servicioIngrediente;
         this.servicioProducto = servicioProducto;
+        this.servicioListaIngredientes = servicioListaIngredientes;
         initComponents();
         
         this.setSize(1200, 800);
@@ -173,6 +181,8 @@ public class AgregarProducto extends javax.swing.JFrame {
                 "Nombre", "Cantidad", "Medida"
             }
         ));
+        TablaListaIng.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TablaListaIng.setShowGrid(true);
         jScrollPane3.setViewportView(TablaListaIng);
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 320, 610));
@@ -191,7 +201,7 @@ public class AgregarProducto extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 710, -1, 30));
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 710, 130, 30));
 
         jButton3.setText("Actualizar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -222,14 +232,14 @@ public class AgregarProducto extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CrearCategoría crear = new CrearCategoría(
                 servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto,servicioListaIngredientes);
         crear.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CrearIngrediente crear = new CrearIngrediente(
                 servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto, servicioListaIngredientes);
         crear.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -238,22 +248,24 @@ public class AgregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_jPopupMenu1MouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       Cantidad abrir = new Cantidad(
+       CantidadIngrediente abrir = new CantidadIngrediente(
                servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto, servicioListaIngredientes);
        abrir.setVisible(true); 
        abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
        abrir.nombre.setText(AgregarIngrediente());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         Inicio abrir;
         abrir = new Inicio(
                 servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto,
+                servicioListaIngredientes);
         abrir.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
+// TODO add your handling code here:
+    }                                                           
 
     private void TextoIngKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoIngKeyReleased
         String texto = this.TextoIng.getText();
@@ -286,7 +298,25 @@ public class AgregarProducto extends javax.swing.JFrame {
         ListaIng = (DefaultTableModel) this.TablaListaIng.getModel();
         
         for(int i=0;i<ListaIng.getRowCount();i++){
+            Ingrediente ing = new Ingrediente();
+            String nombreing = (String) ListaIng.getValueAt(i,0);
+            ing.setId(buscarIngrediente(nombreing).getId());
+            ing.setNombre(nombreing);
             
+            String cantidad = (String) ListaIng.getValueAt(i,1);
+            
+            Cantidad m = new Cantidad();
+            String medida = (String) ListaIng.getValueAt(i,2);
+            m.setId(buscarCantidad(medida).getId());
+            m.setDescripcion(buscarCantidad(medida).getDescripcion());
+            
+            ListaIngredientes li = new ListaIngredientes();
+            li.setCantidad(cantidad);
+            li.setIngrediente(ing);
+            li.setMedida(m);
+            li.setProducto(p);
+            servicioListaIngredientes.save(li);
+
         }
         
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -389,7 +419,29 @@ public class AgregarProducto extends javax.swing.JFrame {
         }
         return null;
     }
+    
+    private Ingrediente buscarIngrediente(String nombre){
+    
+        for(int i=0;i<ingredientes.size();i++){
+            if(ingredientes.get(i).getNombre().equals(nombre)){
+                return ingredientes.get(i);
+            }
+        }
+        return null;
+    }
 
+    private Cantidad buscarCantidad(String nombre){
+        
+        cantidades = servicioCantidad.getAll();
+    
+        for(int i=0;i<cantidades.size();i++){
+            if(cantidades.get(i).getDescripcion().equals(nombre)){
+                return cantidades.get(i);
+            }
+        }
+        return null;
+    }
+    
 }
 
 

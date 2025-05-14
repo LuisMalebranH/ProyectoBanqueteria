@@ -29,13 +29,13 @@ public class ListaIngredientes {
     private Ingrediente ingrediente;
     
     @Column(length = 3)
-    private int cantidad;
+    private String cantidad;
     
     @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="tipo_cantidad_ing")
     private Cantidad medida;
 
-    public int getCantidad() {
+    public String getCantidad() {
         return cantidad;
     }
 
@@ -55,7 +55,7 @@ public class ListaIngredientes {
         return producto;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
 

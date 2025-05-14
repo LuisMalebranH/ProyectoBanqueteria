@@ -1,9 +1,11 @@
 
 package com.banqueteria.InterfazUsuario;
 
+import com.banqueteria.recetario.cantidad.Cantidad;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -16,12 +18,13 @@ public class Medida extends javax.swing.JFrame {
     
     DefaultTableModel tabla;
     
-    List<com.banqueteria.recetario.cantidad.Cantidad> cantidades;
+    List<Cantidad> cantidades;
 
     private ServicioIngrediente servicioIngrediente;
     private ServicioCategoria servicioCategoria;
     private ServicioCantidad servicioCantidad;
     private final ServicioProducto servicioProducto;
+    private ServicioListaIngredientes servicioListaIngredientes;
     
     public Medida(
             ServicioCantidad servicioCantidad,
@@ -123,7 +126,7 @@ public class Medida extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CrearMedidaIng abrir = new CrearMedidaIng(
                 servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto, servicioListaIngredientes);
         abrir.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

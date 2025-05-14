@@ -5,6 +5,7 @@ import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Image;
@@ -39,16 +40,19 @@ public class Inicio extends javax.swing.JFrame {
     private ServicioCategoria servicioCategoria;
     private ServicioIngrediente servicioIngrediente;
     private ServicioProducto servicioProducto;
+    private ServicioListaIngredientes servicioListaIngredientes;
 
     public Inicio(
             ServicioCantidad servicioCantidad,
             ServicioCategoria servicioCategoria,
             ServicioIngrediente servicioIngrediente, 
-            ServicioProducto servicioProducto) {
+            ServicioProducto servicioProducto,
+            ServicioListaIngredientes servicioListaIngredientes) {
         this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
         this.servicioIngrediente = servicioIngrediente;
         this.servicioProducto = servicioProducto;
+        this.servicioListaIngredientes = servicioListaIngredientes;
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -384,7 +388,7 @@ public class Inicio extends javax.swing.JFrame {
     private void btnAgregarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProdActionPerformed
         AgregarProducto abrir = new AgregarProducto(
                 servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto, servicioListaIngredientes);
         abrir.setVisible(true);
         
         dispose();

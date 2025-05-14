@@ -6,6 +6,7 @@ import com.banqueteria.InterfazUsuario.Inicio;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import javax.swing.SwingUtilities;
 import org.springframework.boot.SpringApplication;
@@ -18,13 +19,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
     "com.banqueteria.recetario.cantidad",
     "com.banqueteria.recetario.ingrediente",
     "com.banqueteria.recetario.producto",
-    "com.banqueteria.recetario.categoria"})
+    "com.banqueteria.recetario.categoria",
+    "com.banqueteria.recetario.listaingredientes"})
 @EnableJpaRepositories(basePackages = {
     "com.banqueteria.recetario.cantidad",
     "com.banqueteria.recetario.ingrediente",
     "com.banqueteria.recetario.producto",
-    "com.banqueteria.recetario.categoria"
-})
+    "com.banqueteria.recetario.categoria",
+    "com.banqueteria.recetario.listaingredientes"})
 @EntityScan(basePackages = "com.banqueteria.recetario")
 public class RecetaApplication {
 
@@ -38,10 +40,11 @@ public class RecetaApplication {
                 ServicioIngrediente servicioIngrediente = context.getBean(ServicioIngrediente.class);
                 ServicioProducto servicioProducto = context.getBean(ServicioProducto.class);
                 ServicioCategoria servicioCategoria = context.getBean(ServicioCategoria.class);
+                ServicioListaIngredientes servicioListaIngredientes = context.getBean(ServicioListaIngredientes.class);
                 
                 System.out.println("AVER SI SALTA ESTA ESTUPIDEZ DE");
             SwingUtilities.invokeLater(() -> {
-            new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente,servicioProducto).setVisible(true);
+            new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente,servicioProducto,servicioListaIngredientes).setVisible(true);
                 System.out.println("SE SUPONE QUE PARTE LA VENTANA DESGRACIADA");
         });
     }

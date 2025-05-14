@@ -4,26 +4,30 @@ package com.banqueteria.InterfazUsuario;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
 
 
-public class Cantidad extends javax.swing.JFrame {
+public class CantidadIngrediente extends javax.swing.JFrame {
 
     private ServicioIngrediente servicioIngrediente;
     private ServicioCategoria servicioCategoria;
     private ServicioCantidad servicioCantidad;
     private final ServicioProducto servicioProducto;
+    private ServicioListaIngredientes servicioListaIngredientes;
   
-    public Cantidad(
+    public CantidadIngrediente(
             ServicioCantidad servicioCantidad,
             ServicioCategoria servicioCategoria,
             ServicioIngrediente servicioIngrediente, 
-            ServicioProducto servicioProducto) {
+            ServicioProducto servicioProducto,
+            ServicioListaIngredientes servicioListaIngredientes) {
         this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
         this.servicioIngrediente = servicioIngrediente;
         this.servicioProducto = servicioProducto;
+        this.servicioListaIngredientes = servicioListaIngredientes;
         initComponents();
     }
 
