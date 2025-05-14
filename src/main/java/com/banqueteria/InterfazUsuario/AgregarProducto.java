@@ -5,6 +5,7 @@ import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.Ingrediente;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
 import java.util.List;
@@ -15,23 +16,29 @@ import javax.swing.table.TableRowSorter;
 public class AgregarProducto extends javax.swing.JFrame {
 
     DefaultTableModel tablaIng;
+    DefaultTableModel tablaListIng;
     List<Ingrediente> ingredientes;
     List<Categoria> categorias;
+    
+    
     
     private ServicioIngrediente servicioIngrediente;
     private ServicioCategoria servicioCategoria;
     private ServicioCantidad servicioCantidad;
     private ServicioProducto servicioProducto;
+    private ServicioListaIngredientes servicioListaIngredientes;
     
     public AgregarProducto(
             ServicioCantidad servicioCantidad,
             ServicioCategoria servicioCategoria,
             ServicioIngrediente servicioIngrediente, 
-            ServicioProducto servicioProducto) {
+            ServicioProducto servicioProducto,
+            ServicioListaIngredientes servicioListaIngredientes) {
         this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
         this.servicioIngrediente = servicioIngrediente;
         this.servicioProducto = servicioProducto;
+        this.servicioListaIngredientes = servicioListaIngredientes;
         initComponents();
         
         this.setSize(1200, 800);
@@ -39,6 +46,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         
         llenarTabla();
         llenarCategorias();
+        llenarTablaListIng();
     }
 
     
@@ -64,7 +72,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         TextoReceta = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        Jtbl_listaDeIngredientes = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jBtn_Cancelaryvolverainicio = new javax.swing.JButton();
 
@@ -158,7 +166,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         jLabel7.setText("Listado de ingredientes");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 26, 160, 30));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        Jtbl_listaDeIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -166,7 +174,9 @@ public class AgregarProducto extends javax.swing.JFrame {
                 "Nombre", "Cantidad", "Medida"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        Jtbl_listaDeIngredientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Jtbl_listaDeIngredientes.setShowGrid(true);
+        jScrollPane3.setViewportView(Jtbl_listaDeIngredientes);
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 320, 610));
 
@@ -202,14 +212,14 @@ public class AgregarProducto extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         CrearCategoría crear = new CrearCategoría(
                 servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto,servicioListaIngredientes);
         crear.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CrearIngrediente crear = new CrearIngrediente(
                 servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto, servicioListaIngredientes);
         crear.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -220,7 +230,7 @@ public class AgregarProducto extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        Cantidad abrir = new Cantidad(
                servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto, servicioListaIngredientes);
        abrir.setVisible(true); 
        abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
        abrir.nombre.setText(AgregarIngrediente());
@@ -233,7 +243,11 @@ public class AgregarProducto extends javax.swing.JFrame {
 
     private void jBtn_CancelaryvolverainicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_CancelaryvolverainicioActionPerformed
       
-        Inicio initback = new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente,servicioProducto);
+        Inicio initback = new Inicio(servicioCantidad,
+                                     servicioCategoria,
+                                     servicioIngrediente,
+                                     servicioProducto,
+                                     servicioListaIngredientes);
         initback.setVisible(true);
         dispose();
 // TODO add your handling code here:
@@ -243,6 +257,7 @@ public class AgregarProducto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JComboBox<String> CBCategoria;
+    public static javax.swing.JTable Jtbl_listaDeIngredientes;
     private javax.swing.JTable TablaIngredientes;
     private javax.swing.JTextField TextoIng;
     public static javax.swing.JTextField TextoNombre;
@@ -262,7 +277,6 @@ public class AgregarProducto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    public static javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 
     public void llenarTabla (){
@@ -327,6 +341,12 @@ public class AgregarProducto extends javax.swing.JFrame {
         
     }
 
+    public void llenarTablaListIng(){
+        
+    
+    }
+
+    
 }
 
 

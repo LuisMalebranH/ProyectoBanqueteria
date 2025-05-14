@@ -5,6 +5,7 @@ import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import javax.swing.JOptionPane;
 
@@ -14,18 +15,25 @@ public class CrearCategoría extends javax.swing.JFrame {
     private ServicioIngrediente servicioIngrediente;
     private final ServicioCantidad servicioCantidad;
     private final ServicioProducto servicioProducto;
+    private ServicioListaIngredientes servicioListaIngredientes;
 
     public CrearCategoría(ServicioCantidad servicioCantidad,
             ServicioCategoria servicioCategoria,
             ServicioIngrediente servicioIngrediente, 
-            ServicioProducto servicioProducto) {
+            ServicioProducto servicioProducto,
+            ServicioListaIngredientes servicioListaIngredientes) {
         this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
         this.servicioIngrediente = servicioIngrediente;
         this.servicioProducto = servicioProducto;
+        this.servicioListaIngredientes = servicioListaIngredientes;
         initComponents();
         
         this.setLocationRelativeTo(null);
+    }
+
+    CrearCategoría(ServicioCantidad servicioCantidad, ServicioCategoria servicioCategoria, ServicioIngrediente servicioIngrediente, ServicioProducto servicioProducto) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     
@@ -78,7 +86,7 @@ public class CrearCategoría extends javax.swing.JFrame {
         servicioCategoria.save(cat);
         AgregarProducto reset = new AgregarProducto(
                 servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto);
+                servicioIngrediente,servicioProducto,servicioListaIngredientes);
         reset.llenarCategorias();
         reset.setVisible(false);
         reset.setVisible(true);
