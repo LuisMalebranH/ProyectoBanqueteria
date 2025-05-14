@@ -16,6 +16,7 @@ import javax.swing.table.TableRowSorter;
 public class AgregarProducto extends javax.swing.JFrame {
 
     DefaultTableModel tablaIng;
+    DefaultTableModel ListaIng;
     List<Ingrediente> ingredientes;
     List<Categoria> categorias;
     
@@ -282,6 +283,11 @@ public class AgregarProducto extends javax.swing.JFrame {
         
         servicioProducto.save(p);
         
+        ListaIng = (DefaultTableModel) this.TablaListaIng.getModel();
+        
+        for(int i=0;i<ListaIng.getRowCount();i++){
+            
+        }
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
