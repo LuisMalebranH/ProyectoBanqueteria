@@ -3,6 +3,7 @@ package com.banqueteria.recetario.receta;
 
 
 import com.banqueteria.InterfazUsuario.Inicio;
+import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.producto.ServicioProducto;
@@ -13,8 +14,13 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = {"com.banqueteria.recetario.ingrediente", "com.banqueteria.recetario.producto", "com.banqueteria.recetario.categoria"})
+@SpringBootApplication(scanBasePackages = {
+    "com.banqueteria.recetario.cantidad",
+    "com.banqueteria.recetario.ingrediente",
+    "com.banqueteria.recetario.producto",
+    "com.banqueteria.recetario.categoria"})
 @EnableJpaRepositories(basePackages = {
+    "com.banqueteria.recetario.cantidad",
     "com.banqueteria.recetario.ingrediente",
     "com.banqueteria.recetario.producto",
     "com.banqueteria.recetario.categoria"
@@ -28,13 +34,14 @@ public class RecetaApplication {
                 ConfigurableApplicationContext context = SpringApplication.run(RecetaApplication.class, args);
                 
                 System.out.println("partio Spring ahora parte el servicio");
+                ServicioCantidad servicioCantidad = context.getBean(ServicioCantidad.class);
                 ServicioIngrediente servicioIngrediente = context.getBean(ServicioIngrediente.class);
                 ServicioProducto servicioProducto = context.getBean(ServicioProducto.class);
                 ServicioCategoria servicioCategoria = context.getBean(ServicioCategoria.class);
                 
                 System.out.println("AVER SI SALTA ESTA ESTUPIDEZ DE");
             SwingUtilities.invokeLater(() -> {
-            new Inicio(servicioIngrediente, servicioProducto, servicioCategoria).setVisible(true);
+            new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente,servicioProducto).setVisible(true);
                 System.out.println("SE SUPONE QUE PARTE LA VENTANA DESGRACIADA");
         });
     }

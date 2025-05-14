@@ -1,11 +1,29 @@
 
 package com.banqueteria.InterfazUsuario;
 
+import com.banqueteria.recetario.cantidad.ServicioCantidad;
+import com.banqueteria.recetario.categoria.ServicioCategoria;
+import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.producto.ServicioProducto;
+
 
 public class CrearMedidaIng extends javax.swing.JFrame {
 
+    private final ServicioCantidad servicioCantidad;
+    private final ServicioCategoria servicioCategoria;
+    private final ServicioIngrediente servicioIngrediente;
+    private final ServicioProducto servicioProducto;
+
     
-    public CrearMedidaIng() {
+    public CrearMedidaIng(
+            ServicioCantidad servicioCantidad,
+            ServicioCategoria servicioCategoria,
+            ServicioIngrediente servicioIngrediente, 
+            ServicioProducto servicioProducto) {
+        this.servicioCantidad = servicioCantidad;
+        this.servicioCategoria = servicioCategoria;
+        this.servicioIngrediente = servicioIngrediente;
+        this.servicioProducto = servicioProducto;
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -53,7 +71,9 @@ public class CrearMedidaIng extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Medida cerrar = new Medida();
+        Medida cerrar = new Medida(
+                servicioCantidad,servicioCategoria,
+                servicioIngrediente,servicioProducto);
         cerrar.repaint();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

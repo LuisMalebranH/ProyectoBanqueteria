@@ -1,6 +1,7 @@
 package com.banqueteria.InterfazUsuario;
 
 
+import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
@@ -34,14 +35,20 @@ public class Inicio extends javax.swing.JFrame {
     List<Producto> productos;
     List<Categoria> categoria;
     
-    private ServicioProducto servicioProducto;
-    private ServicioIngrediente servicioIngrediente;
+    private ServicioCantidad servicioCantidad;
     private ServicioCategoria servicioCategoria;
+    private ServicioIngrediente servicioIngrediente;
+    private ServicioProducto servicioProducto;
 
-    public Inicio(ServicioIngrediente servicioIngrediente, ServicioProducto servicioProducto, ServicioCategoria servicioCategoria) {
-        this.servicioProducto = servicioProducto;
-        this.servicioIngrediente = servicioIngrediente;
+    public Inicio(
+            ServicioCantidad servicioCantidad,
+            ServicioCategoria servicioCategoria,
+            ServicioIngrediente servicioIngrediente, 
+            ServicioProducto servicioProducto) {
+        this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
+        this.servicioIngrediente = servicioIngrediente;
+        this.servicioProducto = servicioProducto;
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -79,7 +86,7 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     Inicio() {
-        
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     @SuppressWarnings("unchecked")
@@ -375,7 +382,9 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_TextBuscarProdMouseClicked
 
     private void btnAgregarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProdActionPerformed
-        AgregarProducto abrir = new AgregarProducto();
+        AgregarProducto abrir = new AgregarProducto(
+                servicioCantidad,servicioCategoria,
+                servicioIngrediente,servicioProducto);
         abrir.setVisible(true);
         
         dispose();

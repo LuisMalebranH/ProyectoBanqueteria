@@ -1,16 +1,38 @@
 
 package com.banqueteria.InterfazUsuario;
 
+import com.banqueteria.recetario.cantidad.ServicioCantidad;
+import com.banqueteria.recetario.categoria.ServicioCategoria;
+import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 
 public class Medida extends javax.swing.JFrame {
+    
+    List<com.banqueteria.recetario.cantidad.Cantidad> cantidades;
 
-    public Medida() {
+    private ServicioIngrediente servicioIngrediente;
+    private ServicioCategoria servicioCategoria;
+    private ServicioCantidad servicioCantidad;
+    private final ServicioProducto servicioProducto;
+    
+    public Medida(
+            ServicioCantidad servicioCantidad,
+            ServicioCategoria servicioCategoria,
+            ServicioIngrediente servicioIngrediente, 
+            ServicioProducto servicioProducto) {
+        this.servicioCantidad = servicioCantidad;
+        this.servicioCategoria = servicioCategoria;
+        this.servicioIngrediente = servicioIngrediente;
+        this.servicioProducto = servicioProducto;
         initComponents();
+        
+        llenarCantidades();
     }
 
    
@@ -21,7 +43,7 @@ public class Medida extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         Cantidad = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        CBCantidades = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         nombre = new javax.swing.JLabel();
@@ -43,7 +65,7 @@ public class Medida extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CBCantidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton2.setText("Agregar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -64,7 +86,7 @@ public class Medida extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(CBCantidades, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -73,7 +95,7 @@ public class Medida extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1))
+                    .addComponent(CBCantidades))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -116,7 +138,9 @@ public class Medida extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CrearMedidaIng abrir = new CrearMedidaIng();
+        CrearMedidaIng abrir = new CrearMedidaIng(
+                servicioCantidad,servicioCategoria,
+                servicioIngrediente,servicioProducto);
         abrir.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -128,11 +152,11 @@ public class Medida extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JComboBox<String> CBCantidades;
     private javax.swing.JLabel Cantidad;
     public static javax.swing.JLabel cantidad;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    public static javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JLabel nombre;
@@ -144,13 +168,26 @@ public class Medida extends javax.swing.JFrame {
         
         datos[0] = this.nombre.getText();
         datos[1] = this.Cantidad.getText();
-        datos[2] = this.jComboBox1.getSelectedItem().toString();
+        datos[2] = this.CBCantidades.getSelectedItem().toString();
         
-        AgregarProducto consultar = new AgregarProducto();
+        AgregarProducto consultar = new AgregarProducto(
+                servicioCantidad,servicioCategoria,
+                servicioIngrediente,servicioProducto);
         
-        consultar.ing.addRow(datos);
-        System.out.println(consultar.ing.getRowCount());
+        consultar.tablaIng.addRow(datos);
         
+    }
+    
+    public void llenarCantidades(){
+        
+        this.CBCantidades.removeAllItems();
+        
+        cantidades = servicioCantidad.getAll();
+        String nombre;
+        for(int i=0;i<cantidades.size();i++){
+            nombre = cantidades.get(i).getDescripcion();
+            this.CBCantidades.addItem(nombre);
+        }
         
     }
 
