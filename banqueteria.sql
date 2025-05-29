@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-05-2025 a las 13:19:11
+-- Tiempo de generación: 12-05-2025 a las 11:19:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -59,8 +59,7 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`id`, `detalle`) VALUES
-(1, 'postre'),
-(18, 'vegano');
+(1, 'postre');
 
 -- --------------------------------------------------------
 
@@ -117,13 +116,7 @@ INSERT INTO `ingrediente` (`id`, `nombre`, `precio`) VALUES
 (10, 'esencia de vainilla', 0),
 (11, 'manjar', 0),
 (12, 'nueces', 0),
-(13, 'azúcar flor', 0),
-(14, 'ingrediente de prueba', 0),
-(15, 'ing prueba 2', 0),
-(16, 'prueba n3', 0),
-(17, 'ingrediente 4', 0),
-(18, 'pan vegano', 0),
-(19, 'vienesa vegana', 0);
+(13, 'azúcar flor', 0);
 
 -- --------------------------------------------------------
 
@@ -135,7 +128,7 @@ CREATE TABLE `lista_ingredientes` (
   `id` bigint(20) NOT NULL,
   `id_prod` int(11) NOT NULL,
   `id_ingrediente` int(11) NOT NULL,
-  `cantidad` varchar(3) DEFAULT NULL,
+  `cantidad` int(11) NOT NULL,
   `tipo_cantidad_ing` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -144,21 +137,19 @@ CREATE TABLE `lista_ingredientes` (
 --
 
 INSERT INTO `lista_ingredientes` (`id`, `id_prod`, `id_ingrediente`, `cantidad`, `tipo_cantidad_ing`) VALUES
-(1, 3, 2, '1', 1),
-(2, 3, 4, '2', 1),
-(3, 3, 4, '2', 1),
-(4, 3, 5, '1', 3),
-(5, 3, 6, '1', 1),
-(6, 4, 7, '1', 4),
-(7, 4, 8, '1', 1),
-(8, 4, 9, '1', 1),
-(9, 4, 5, '1', 3),
-(10, 4, 3, '8', 2),
-(11, 4, 2, '1', 1),
-(12, 4, 11, '1', 5),
-(13, 4, 13, '1', 4),
-(15, 12, 18, '1', 2),
-(16, 12, 19, '1', 2);
+(1, 3, 2, 1, 1),
+(2, 3, 4, 2, 1),
+(3, 3, 4, 2, 1),
+(4, 3, 5, 1, 3),
+(5, 3, 6, 1, 1),
+(6, 4, 7, 1, 4),
+(7, 4, 8, 1, 1),
+(8, 4, 9, 1, 1),
+(9, 4, 5, 1, 3),
+(10, 4, 3, 8, 2),
+(11, 4, 2, 1, 1),
+(12, 4, 11, 1, 5),
+(13, 4, 13, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -180,8 +171,7 @@ CREATE TABLE `producto` (
 
 INSERT INTO `producto` (`id`, `nombre`, `receta`, `categoria`, `precio`) VALUES
 (3, 'queque', 'Precalienta tu horno a 180º grados.\r\nEn un bol bate la margarina con la taza de azúcar hasta que se mezclen totalmente.\r\nAñade los huevos a la mezcla uno a uno y encárgate de ir batiendo.\r\nLuego agrega la harina y los polvos de hornear ya cernidos y comienza a verter la leche de forma pausada mientras sigues batiendo.\r\nLo importante es que no queden grumos en la masa.\r\nFinalmente, enmantequilla un molde y dispón de la preparación\r\nDeja el molde dentro del horno por al menos 30 minutos.', 1, 5000),
-(4, 'brazo de reina', 'Precalentar el horno a 180C.  Poner papel mantequilla a una bandeja de horno* de 40 x 25 cms y luego enmantequillar el papel.\r\nEn un bol, cernir la harina junto a la maicena y los Polvos de Hornear Gourmet.\r\nEn otro recipiente, batir las claras a nieve e incorporar suavemente el azúcar, mientras se siguen batiendo las claras. Seguir batiendo y agregar las yemas de a una, y la Esencia de Vainilla Gourmet. Finalmente integrar con una espátula la mezcla de harina.\r\nVaciar la mezcla sobre la bandeja preparada, emparejar y llevar al horno por 8 a 10 minutos (sin dorar). Una vez listo, volcar la masa horneada sobre un papel mantequilla espolvoreado con azúcar flor, despegando la masa del papel en el cual se horneó.\r\nEnrollar la masa rápidamente ayudándose con el papel mantequilla y dejar enfriar.\r\nDesenrollar la masa, rellenar con manjar y volver a enrollar. Por último, espolvorear con azúcar flor o tapar con manjar y decorar con nueces picadas.', 1, 4000),
-(12, 'Completo vegano', '', 18, 0);
+(4, 'brazo de reina', 'Precalentar el horno a 180C.  Poner papel mantequilla a una bandeja de horno* de 40 x 25 cms y luego enmantequillar el papel.\r\nEn un bol, cernir la harina junto a la maicena y los Polvos de Hornear Gourmet.\r\nEn otro recipiente, batir las claras a nieve e incorporar suavemente el azúcar, mientras se siguen batiendo las claras. Seguir batiendo y agregar las yemas de a una, y la Esencia de Vainilla Gourmet. Finalmente integrar con una espátula la mezcla de harina.\r\nVaciar la mezcla sobre la bandeja preparada, emparejar y llevar al horno por 8 a 10 minutos (sin dorar). Una vez listo, volcar la masa horneada sobre un papel mantequilla espolvoreado con azúcar flor, despegando la masa del papel en el cual se horneó.\r\nEnrollar la masa rápidamente ayudándose con el papel mantequilla y dejar enfriar.\r\nDesenrollar la masa, rellenar con manjar y volver a enrollar. Por último, espolvorear con azúcar flor o tapar con manjar y decorar con nueces picadas.', 1, 4000);
 
 --
 -- Índices para tablas volcadas
@@ -249,7 +239,7 @@ ALTER TABLE `cantidad`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_encargo`
@@ -267,19 +257,19 @@ ALTER TABLE `encargo`
 -- AUTO_INCREMENT de la tabla `ingrediente`
 --
 ALTER TABLE `ingrediente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `lista_ingredientes`
 --
 ALTER TABLE `lista_ingredientes`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
