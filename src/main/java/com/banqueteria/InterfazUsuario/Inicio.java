@@ -1,10 +1,13 @@
 package com.banqueteria.InterfazUsuario;
 
 
+import com.banqueteria.recetario.cantidad.Cantidad;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
+import com.banqueteria.recetario.ingrediente.Ingrediente;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
+import com.banqueteria.recetario.listaingredientes.ListaIngredientes;
 import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
@@ -39,6 +42,9 @@ public class Inicio extends javax.swing.JFrame {
     List<Producto> productos;
     List<Producto> productosFiltrados;
     List<Categoria> categoria;
+    List<ListaIngredientes> ingredientesProductos;
+    List<Ingrediente> ingredientes;
+    List<Cantidad> medida;
     
     private ServicioCantidad servicioCantidad;
     private ServicioCategoria servicioCategoria;
@@ -83,9 +89,9 @@ public class Inicio extends javax.swing.JFrame {
                     if(filaSeleccionada != -1){
                         String nom = TablaProductos.getValueAt(filaSeleccionada, 0).toString();
                         String receta = buscarProducto(nom).getReceta();
-                        String nombre = buscarProducto(nom).getNombre();
+                        listarIngredientes(buscarProducto(nom));
                         TextoPreparacion.setText(receta);
-                        LabelNombreProd.setText(nombre);
+                        LabelNombreProd.setText(nom);
                     }
                 }
             }
@@ -102,6 +108,8 @@ public class Inicio extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         PanelFondo = new javax.swing.JPanel();
         PanelCalculo = new javax.swing.JPanel();
         labeli = new javax.swing.JLabel();
@@ -119,10 +127,10 @@ public class Inicio extends javax.swing.JFrame {
         TablaProductos = new javax.swing.JTable();
         PanelProducto = new javax.swing.JPanel();
         LabelNombreProd = new javax.swing.JLabel();
-        TextoIngredientes = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         TextoReceta = new javax.swing.JScrollPane();
         TextoPreparacion = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TablaIngredientes = new javax.swing.JTable();
         btnAgregarProd = new javax.swing.JButton();
         btnIniCalculo = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -132,6 +140,19 @@ public class Inicio extends javax.swing.JFrame {
                 jPopupMenu1MouseClicked(evt);
             }
         });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -339,38 +360,57 @@ public class Inicio extends javax.swing.JFrame {
         LabelNombreProd.setText("Nombre Producto");
         LabelNombreProd.setToolTipText("");
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        TextoIngredientes.setViewportView(jTextArea1);
-
         TextoPreparacion.setEditable(false);
         TextoPreparacion.setColumns(20);
         TextoPreparacion.setRows(5);
         TextoReceta.setViewportView(TextoPreparacion);
 
+        TablaIngredientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Ingrediente", "Cantidad", "Medida"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(TablaIngredientes);
+        if (TablaIngredientes.getColumnModel().getColumnCount() > 0) {
+            TablaIngredientes.getColumnModel().getColumn(0).setResizable(false);
+            TablaIngredientes.getColumnModel().getColumn(1).setResizable(false);
+            TablaIngredientes.getColumnModel().getColumn(2).setResizable(false);
+        }
+
         javax.swing.GroupLayout PanelProductoLayout = new javax.swing.GroupLayout(PanelProducto);
         PanelProducto.setLayout(PanelProductoLayout);
         PanelProductoLayout.setHorizontalGroup(
             PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelProductoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(TextoReceta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                    .addComponent(TextoIngredientes, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(10, 10, 10))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelProductoLayout.createSequentialGroup()
+                .addGap(0, 35, Short.MAX_VALUE)
                 .addComponent(LabelNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
+            .addGroup(PanelProductoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(TextoReceta, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelProductoLayout.setVerticalGroup(
             PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelProductoLayout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addComponent(LabelNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(TextoIngredientes, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(5, 5, 5)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TextoReceta, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -520,9 +560,9 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel PanelCalculo;
     private javax.swing.JPanel PanelFondo;
     private javax.swing.JPanel PanelProducto;
+    private javax.swing.JTable TablaIngredientes;
     private javax.swing.JTable TablaProductos;
     private javax.swing.JTextField TextBuscarProd;
-    private javax.swing.JScrollPane TextoIngredientes;
     private javax.swing.JTextArea TextoPreparacion;
     private javax.swing.JScrollPane TextoReceta;
     private javax.swing.JButton btnAgregarProd;
@@ -538,7 +578,9 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labeld;
     private javax.swing.JLabel labeli;
     // End of variables declaration//GEN-END:variables
@@ -654,6 +696,7 @@ public class Inicio extends javax.swing.JFrame {
             String nombre  = productos.get(0).getNombre();
             this.TextoPreparacion.setText(receta);
             this.LabelNombreProd.setText(nombre);
+            listarIngredientes(productos.get(0));
         }
         
     }
@@ -745,10 +788,54 @@ public class Inicio extends javax.swing.JFrame {
         
     }
     
-    private void listarIngredientes(){
+    private void listarIngredientes(Producto p){
         
+        tabla = (DefaultTableModel) this.TablaIngredientes.getModel();
         
+        while(tabla.getRowCount()>0)tabla.removeRow(0);
+        
+        Long id = p.getId();
+        
+        ingredientesProductos = servicioListaIngredientes.getAll();
+        
+        String ingrediente;
+        String cantidad;
+        String medida;
+        
+        for (int i = 0; i<ingredientesProductos.size();i++){
+            if(ingredientesProductos.get(i).getProducto().getId().equals(id)){
+                ingrediente = buscarIngrediente(ingredientesProductos.get(i).getIngrediente().getId());
+                cantidad = ingredientesProductos.get(i).getCantidad();
+                medida = buscarMedida(ingredientesProductos.get(i).getMedida().getId());
+                String[] prod = {ingrediente,cantidad,medida};
+                tabla.addRow(prod);
+            }
+        }
     
+    }
+    
+    private String buscarIngrediente(Long idingrediente){
+        
+        ingredientes = servicioIngrediente.getAll();
+        
+        for (Ingrediente i : ingredientes){
+            if(i.getId().equals(idingrediente)){
+                return i.getNombre();
+            }
+        }
+        return null;
+    }
+    
+    private String buscarMedida(Long idmedida){
+        
+        medida = servicioCantidad.getAll();
+        
+        for (Cantidad c : medida){
+            if(c.getId().equals(idmedida)){
+                return c.getDescripcion();
+            }
+        }
+        return null;
     }
     
     private Producto buscarProducto(String nombre){
