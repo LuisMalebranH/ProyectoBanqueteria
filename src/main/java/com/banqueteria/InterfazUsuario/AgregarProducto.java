@@ -12,6 +12,7 @@ import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -273,50 +274,75 @@ public class AgregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_TextoIngKeyReleased
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//        dispose();
-//        this.setVisible(true);
-//        llenarTabla();
-//        llenarCategorias();
+        AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,
+                                                    servicioIngrediente,servicioProducto,
+                servicioListaIngredientes);
+        abrir.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String nombreProd = this.TextoNombre.getText();
-        String receta = this.TextoReceta.getText();
         
-        String cat = this.CBCategoria.getSelectedItem().toString();
-        Categoria c = new Categoria();
-        c.setId(buscarCategoria(cat).getId());
-        c.setDetalle(buscarCategoria(cat).getDetalle());
+//        if(this.TextoNombre.getText().isEmpty()){
+//            JOptionPane.showMessageDialog(null,"El producto debe tener un nombre","Alerta",JOptionPane.INFORMATION_MESSAGE);
+//        }
+//        
+//        if(this.TextoReceta.getText().isEmpty()){
+//            JOptionPane.showMessageDialog(null,"El producto debe tener una receta","Alerta",JOptionPane.INFORMATION_MESSAGE);
+//        }
+//        
+//        ListaIng = (DefaultTableModel) this.TablaListaIng.getModel();
+//        int filas = this.ListaIng.getRowCount();
+//        
+//        if(filas==0){
+//            JOptionPane.showMessageDialog(null,"El producto debe tener al menos un ingrediente","Alerta",JOptionPane.INFORMATION_MESSAGE);
+//        }
         
-        Producto p = new Producto();
-        p.setNombre(nombreProd);
-        p.setReceta(receta);
-        p.setCategoria(c);
-        
-        servicioProducto.save(p);
-        
-        ListaIng = (DefaultTableModel) this.TablaListaIng.getModel();
-        
-        for(int i=0;i<ListaIng.getRowCount();i++){
-            Ingrediente ing = new Ingrediente();
-            String nombreing = (String) ListaIng.getValueAt(i,0);
-            ing.setId(buscarIngrediente(nombreing).getId());
-            ing.setNombre(nombreing);
+        if(validarCamposVacios()){
             
-            String cantidad = (String) ListaIng.getValueAt(i,1);
+            String nombreProd = this.TextoNombre.getText();
+            String receta = this.TextoReceta.getText();
+        
+            String cat = this.CBCategoria.getSelectedItem().toString();
+            Categoria c = new Categoria();
+            c.setId(buscarCategoria(cat).getId());
+            c.setDetalle(cat);
+        
+            Producto p = new Producto();
+            p.setNombre(nombreProd);
+            p.setReceta(receta);
+            p.setCategoria(c);
+        
+            servicioProducto.save(p);       
+        
+            for(int i=0;i<ListaIng.getRowCount();i++){
+                Ingrediente ing = new Ingrediente();
+                String nombreing = (String) ListaIng.getValueAt(i,0);
+                ing.setId(buscarIngrediente(nombreing).getId());
+                ing.setNombre(nombreing);
             
-            Cantidad m = new Cantidad();
-            String medida = (String) ListaIng.getValueAt(i,2);
-            m.setId(buscarCantidad(medida).getId());
-            m.setDescripcion(buscarCantidad(medida).getDescripcion());
+                String cantidad = (String) ListaIng.getValueAt(i,1);
             
-            ListaIngredientes li = new ListaIngredientes();
-            li.setCantidad(cantidad);
-            li.setIngrediente(ing);
-            li.setMedida(m);
-            li.setProducto(p);
-            servicioListaIngredientes.save(li);
+                Cantidad m = new Cantidad();
+                String medida = (String) ListaIng.getValueAt(i,2);
+                m.setId(buscarCantidad(medida).getId());
+                m.setDescripcion(buscarCantidad(medida).getDescripcion());
+            
+                ListaIngredientes li = new ListaIngredientes();
+                li.setCantidad(cantidad);
+                li.setIngrediente(ing);
+                li.setMedida(m);
+                li.setProducto(p);
+                servicioListaIngredientes.save(li);
+                
+                Inicio abrir = new Inicio();
+                abrir.setVisible(true);
+                dispose();
 
+            }
+            
+        }else{
+            
         }
         
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -348,8 +374,7 @@ public class AgregarProducto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 
-    public void llenarTabla (){
-        
+    public void llenarTabla (){    
         
         tablaIng = (DefaultTableModel) this.TablaIngredientes.getModel();
         
@@ -440,6 +465,25 @@ public class AgregarProducto extends javax.swing.JFrame {
             }
         }
         return null;
+    }
+    
+    private boolean validarCamposVacios(){
+        
+        ListaIng = (DefaultTableModel) this.TablaListaIng.getModel();
+        int filas = this.ListaIng.getRowCount();
+        
+        if(this.TextoNombre.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"El producto debe tener un nombre","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(this.TextoReceta.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"El producto debe tener una preparación","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(filas==0){
+            JOptionPane.showMessageDialog(null,"El producto debe tener al menos un ingrediente","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else{
+            return true;
+        }
     }
     
 }

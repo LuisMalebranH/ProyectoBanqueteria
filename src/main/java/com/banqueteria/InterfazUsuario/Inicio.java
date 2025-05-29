@@ -9,9 +9,12 @@ import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -34,6 +37,7 @@ public class Inicio extends javax.swing.JFrame {
     
     DefaultTableModel tabla;
     List<Producto> productos;
+    List<Producto> productosFiltrados;
     List<Categoria> categoria;
     
     private ServicioCantidad servicioCantidad;
@@ -59,12 +63,12 @@ public class Inicio extends javax.swing.JFrame {
         
         this.setSize(1200, 800);
         
-        corregirImagen(this.labeld,"src/imagenes/imagend.png");
-        corregirImagen(this.labeli,"src/imagenes/imageni.png");
+        corregirImagen(this.labeld,"src/main/resources/static/imagend.png");
+        corregirImagen(this.labeli,"src/main/resources/static/imageni.png");
         
-        llenarTabla();
-        llenarProducto();
         llenarCategorias();
+        llenarTablaInicio();
+        llenarProducto();
         
         ListSelectionModel model = TablaProductos.getSelectionModel();
         model.addListSelectionListener(new ListSelectionListener(){
@@ -157,16 +161,22 @@ public class Inicio extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 690));
+        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 730));
 
         labeli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/imageni.png"))); // NOI18N
         labeli.setAutoscrolls(true);
-        labeli.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        labeli.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         labeli.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labeli.setPreferredSize(new java.awt.Dimension(35, 15));
         labeli.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labeliMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labeliMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                labeliMouseExited(evt);
             }
         });
         PanelFondo.add(labeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, 100));
@@ -175,6 +185,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(150, 100));
 
         cat1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cat1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cat1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -193,6 +208,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(150, 100));
 
         cat2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cat2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cat2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -211,6 +231,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(150, 100));
 
         cat3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cat3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cat3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -229,6 +254,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(150, 100));
 
         cat4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cat4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cat4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -244,12 +274,18 @@ public class Inicio extends javax.swing.JFrame {
         PanelFondo.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 50, 150, -1));
 
         labeld.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/imagend.png"))); // NOI18N
-        labeld.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        labeld.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         labeld.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labeld.setPreferredSize(new java.awt.Dimension(35, 15));
         labeld.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labeldMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 labeldMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                labeldMouseExited(evt);
             }
         });
         PanelFondo.add(labeld, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 50, -1, 100));
@@ -378,10 +414,11 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_PanelCalculoMouseExited
 
     private void labeldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labeldMouseEntered
-        // TODO add your handling code here:
+        this.labeld.setBorder(new BevelBorder(0));
     }//GEN-LAST:event_labeldMouseEntered
 
     private void TextBuscarProdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TextBuscarProdMouseClicked
+        llenarTabla();
         this.TextBuscarProd.setText("");
     }//GEN-LAST:event_TextBuscarProdMouseClicked
 
@@ -395,7 +432,16 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarProdActionPerformed
 
     private void labeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labeliMouseClicked
-        this.labeli.setBorder(new EtchedBorder());
+        Categoria c = new Categoria();
+        
+        c.setId(categoria.get(0).getId());
+        c.setDetalle(categoria.get(0).getDetalle());
+        
+        categoria.remove(0);
+        
+        reordenarCategorias();
+        
+        categoria.add(c);
     }//GEN-LAST:event_labeliMouseClicked
 
     private void TextBuscarProdKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextBuscarProdKeyReleased
@@ -414,6 +460,57 @@ public class Inicio extends javax.swing.JFrame {
     private void jPopupMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPopupMenu1MouseClicked
 
     }//GEN-LAST:event_jPopupMenu1MouseClicked
+
+    private void labeliMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labeliMouseEntered
+        this.labeli.setBorder(new BevelBorder(0));
+    }//GEN-LAST:event_labeliMouseEntered
+
+    private void labeliMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labeliMouseExited
+        this.labeli.setBorder(new EtchedBorder());
+    }//GEN-LAST:event_labeliMouseExited
+
+    private void labeldMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labeldMouseExited
+        this.labeld.setBorder(new EtchedBorder());
+    }//GEN-LAST:event_labeldMouseExited
+
+    private void labeldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labeldMouseClicked
+        Categoria cn = new Categoria();
+        Categoria cv = new Categoria();
+        Categoria cu = new Categoria();
+
+        cu = categoria.getLast();
+        cv = categoria.get(0);
+
+        for(int i = 0;i<categoria.size()-1;i++){
+            cn = cv;
+            cv = categoria.get(i+1);
+            categoria.set(i+1, cn);
+        }
+        
+        categoria.set(0, cu);
+        
+        reordenarCategorias();
+    }//GEN-LAST:event_labeldMouseClicked
+
+    private void cat1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cat1MouseClicked
+        String categoria = this.cat1.getText();
+        llenarTablaPorCategoria(categoria);
+    }//GEN-LAST:event_cat1MouseClicked
+
+    private void cat2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cat2MouseClicked
+        String categoria = this.cat2.getText();
+        llenarTablaPorCategoria(categoria);
+    }//GEN-LAST:event_cat2MouseClicked
+
+    private void cat3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cat3MouseClicked
+        String categoria = this.cat3.getText();
+        llenarTablaPorCategoria(categoria);
+    }//GEN-LAST:event_cat3MouseClicked
+
+    private void cat4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cat4MouseClicked
+        String categoria = this.cat4.getText();
+        llenarTablaPorCategoria(categoria);
+    }//GEN-LAST:event_cat4MouseClicked
 
     
     
@@ -456,9 +553,44 @@ public class Inicio extends javax.swing.JFrame {
         
     }
         
-    private void llenarTabla(){
-    
+    private void llenarTablaInicio(){
+        
+        String nomcat=this.cat1.getText();
         String dato;
+        
+        productos = servicioProducto.getAllProducto();
+        
+        if(productos.isEmpty()){
+            dato = "lista vacía";
+            String[] prod = {dato};
+            tabla = (DefaultTableModel) this.TablaProductos.getModel();
+            tabla.addRow(prod);
+        }else{
+//            for(int i=0;i<productos.size();i++){
+//                if(!productos.get(i).getCategoria().getId().equals(filtrarCategoria(nomcat))){
+//                    productos.remove(i);
+//                }
+//            }
+            
+            for (int i = 0; i<productos.size();i++){
+                dato = productos.get(i).getNombre();
+                String[] prod = {dato};
+                tabla = (DefaultTableModel) this.TablaProductos.getModel();
+                tabla.addRow(prod);
+            }
+            
+        }
+           
+    }
+    
+    private void llenarTabla(){
+        
+        tabla = (DefaultTableModel) this.TablaProductos.getModel();
+        
+        while(tabla.getRowCount()>0)tabla.removeRow(0);
+        
+        String dato;  
+        
         productos = servicioProducto.getAllProducto();
         
         for (int i = 0; i<productos.size();i++){
@@ -469,13 +601,60 @@ public class Inicio extends javax.swing.JFrame {
         }
     
     }
+    
+    private void llenarTablaPorCategoria(String categoria){
+        
+        tabla = (DefaultTableModel) this.TablaProductos.getModel();
+        
+        while(tabla.getRowCount()>0)tabla.removeRow(0);
+        
+        String dato;
+        
+        productos = servicioProducto.getAllProducto();
+        productosFiltrados = new ArrayList();
+        
+        for(int i=0;i<productos.size();i++){
+            if(productos.get(i).getCategoria().getId().equals(filtrarCategoria(categoria))){
+                productosFiltrados.add(productos.get(i));
+            }
+        }   
+        
+        for (int i = 0; i<productosFiltrados.size();i++){
+            dato = productosFiltrados.get(i).getNombre();
+            String[] prod = {dato};
+            tabla = (DefaultTableModel) this.TablaProductos.getModel();
+            tabla.addRow(prod);
+        }
+    
+    }
+    
+    private Long filtrarCategoria(String nomcat){
+        
+        Categoria c = new Categoria();
+        Long id = null;
+        
+        for(int i=0;i<categoria.size();i++){
+            if(categoria.get(i).getDetalle().equals(nomcat)){
+                c = categoria.get(i);
+                id = c.getId();
+            }
+        }
+        
+        return id;
+        
+    }
 
     private void llenarProducto(){
-    
-        String receta = productos.get(0).getReceta();
-        String nombre  = productos.get(0).getNombre();
-        this.TextoPreparacion.setText(receta);
-        this.LabelNombreProd.setText(nombre);
+        
+        if(productos.isEmpty()){
+            this.TextoPreparacion.setText("");
+            this.LabelNombreProd.setText("Nombre Producto");
+        }else{
+            String receta = productos.get(0).getReceta();
+            String nombre  = productos.get(0).getNombre();
+            this.TextoPreparacion.setText(receta);
+            this.LabelNombreProd.setText(nombre);
+        }
         
     }
     
@@ -486,6 +665,43 @@ public class Inicio extends javax.swing.JFrame {
         if (categoria.size()<5){
             this.labeli.setVisible(false);
             this.labeld.setVisible(false);
+            switch (categoria.size()) {
+                case 1:
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    break;
+                case 2:
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    this.cat2.setText(categoria.get(1).getDetalle());
+                    break;
+                case 3:
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    this.cat2.setText(categoria.get(1).getDetalle());
+                    this.cat3.setText(categoria.get(2).getDetalle());
+                    break;
+                case 4: 
+                    this.cat1.setText(categoria.get(0).getDetalle());
+                    this.cat2.setText(categoria.get(1).getDetalle());
+                    this.cat3.setText(categoria.get(2).getDetalle());
+                    this.cat4.setText(categoria.get(3).getDetalle());
+                    break;
+                default:
+                    break;
+            }
+            
+        } else {
+            this.labeli.setVisible(true);
+            this.labeld.setVisible(true);
+            this.cat1.setText(categoria.get(0).getDetalle());
+            this.cat2.setText(categoria.get(1).getDetalle());
+            this.cat3.setText(categoria.get(2).getDetalle());
+            this.cat4.setText(categoria.get(3).getDetalle());
+        }
+    
+    }
+    
+    private void reordenarCategorias(){
+        
+        if (categoria.size()<5){
             switch (categoria.size()) {
                 case 1:
                     this.cat1.setText(categoria.get(0).getDetalle());

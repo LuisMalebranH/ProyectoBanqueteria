@@ -82,11 +82,6 @@ public class CrearIngrediente extends javax.swing.JFrame {
         ing.setNombre(nuevoIngrediente);
         ing.setPrecio(0);
         servicioIngrediente.save(ing);
-        AgregarProducto reset = new AgregarProducto(
-                servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto, servicioListaIngredientes);
-        reset.setVisible(false);
-        reset.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

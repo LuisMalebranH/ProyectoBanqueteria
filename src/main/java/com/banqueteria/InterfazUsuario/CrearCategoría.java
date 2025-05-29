@@ -84,12 +84,6 @@ public class CrearCategoría extends javax.swing.JFrame {
         Categoria cat = new Categoria();
         cat.setDetalle(nuevaCategoria);
         servicioCategoria.save(cat);
-        AgregarProducto reset = new AgregarProducto(
-                servicioCantidad,servicioCategoria,
-                servicioIngrediente,servicioProducto,servicioListaIngredientes);
-        reset.llenarCategorias();
-        reset.setVisible(false);
-        reset.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
