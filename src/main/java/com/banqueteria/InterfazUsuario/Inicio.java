@@ -69,6 +69,8 @@ public class Inicio extends javax.swing.JFrame {
         
         this.setSize(1200, 800);
         
+        this.PanelCalculo.setSize(300, 680); 
+        
         corregirImagen(this.labeld,"src/main/resources/static/imagend.png");
         corregirImagen(this.labeli,"src/main/resources/static/imageni.png");
         
@@ -107,9 +109,8 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         PanelFondo = new javax.swing.JPanel();
         PanelCalculo = new javax.swing.JPanel();
         labeli = new javax.swing.JLabel();
@@ -135,24 +136,13 @@ public class Inicio extends javax.swing.JFrame {
         btnIniCalculo = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
-        jPopupMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPopupMenu1MouseClicked(evt);
+        jMenuItem2.setText("Modificar producto");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
             }
         });
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        jPopupMenu2.add(jMenuItem2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,7 +172,7 @@ public class Inicio extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 730));
+        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 340, 730));
 
         labeli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/imageni.png"))); // NOI18N
         labeli.setAutoscrolls(true);
@@ -345,6 +335,7 @@ public class Inicio extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        TablaProductos.setComponentPopupMenu(jPopupMenu2);
         TablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TablaProductosMouseClicked(evt);
@@ -362,7 +353,9 @@ public class Inicio extends javax.swing.JFrame {
 
         TextoPreparacion.setEditable(false);
         TextoPreparacion.setColumns(20);
+        TextoPreparacion.setLineWrap(true);
         TextoPreparacion.setRows(5);
+        TextoPreparacion.setWrapStyleWord(true);
         TextoReceta.setViewportView(TextoPreparacion);
 
         TablaIngredientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -446,11 +439,11 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void PanelCalculoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanelCalculoMouseEntered
-        this.PanelCalculo.setSize(300, 680);        
+               
     }//GEN-LAST:event_PanelCalculoMouseEntered
 
     private void PanelCalculoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanelCalculoMouseExited
-        this.PanelCalculo.setSize(100, 680);        
+               
     }//GEN-LAST:event_PanelCalculoMouseExited
 
     private void labeldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labeldMouseEntered
@@ -496,10 +489,6 @@ public class Inicio extends javax.swing.JFrame {
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
 
     }//GEN-LAST:event_jScrollPane1MouseClicked
-
-    private void jPopupMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPopupMenu1MouseClicked
-
-    }//GEN-LAST:event_jPopupMenu1MouseClicked
 
     private void labeliMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labeliMouseEntered
         this.labeli.setBorder(new BevelBorder(0));
@@ -552,6 +541,56 @@ public class Inicio extends javax.swing.JFrame {
         llenarTablaPorCategoria(categoria);
     }//GEN-LAST:event_cat4MouseClicked
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        String nom = TablaProductos.getValueAt(TablaProductos.getSelectedRow(), 0).toString();
+        String preparacion = this.TextoPreparacion.getText();
+        
+        productos = servicioProducto.getAllProducto();
+        for(int i = 0;i<productos.size();i++){
+            if(nom.equals(productos.get(i).getNombre())){
+                Producto p = new Producto();
+                p.setId(productos.get(i).getId());
+                p.setCategoria(productos.get(i).getCategoria());
+                AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,
+                                                            servicioIngrediente,servicioProducto, servicioListaIngredientes);
+                abrir.setVisible(true);
+                abrir.TextoNombre.setText(nom);
+                abrir.TextoReceta.setText(preparacion);
+                abrir.labelid.setText(p.getId().toString());
+                
+                int index = 0;
+                String nomcat = obtenerDetalleCategoria(p.getCategoria().getId());
+                for(int a = 0;a<abrir.CBCategoria.getItemCount();a++){
+                    if(abrir.CBCategoria.getItemAt(index).equals(nomcat)){
+                        abrir.CBCategoria.setSelectedIndex(index);
+                    }else{
+                        index = index + 1;
+                    }
+                }
+                
+                ingredientesProductos = servicioListaIngredientes.getAll();
+                
+                tabla = (DefaultTableModel) abrir.TablaListaIng.getModel();
+        
+                String ingrediente;
+                String cantidad;
+                String medida;
+        
+                for (int q = 0; q<ingredientesProductos.size();q++){
+                    if(ingredientesProductos.get(q).getProducto().getId().equals(p.getId())){
+                        ingrediente = buscarIngrediente(ingredientesProductos.get(q).getIngrediente().getId());
+                        cantidad = ingredientesProductos.get(q).getCantidad();
+                        medida = buscarMedida(ingredientesProductos.get(q).getMedida().getId());
+                        String[] prod = {ingrediente,cantidad,medida};
+                        tabla.addRow(prod);
+                    }
+                }
+                dispose();
+            }
+        }
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     
     
     
@@ -572,15 +611,14 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel cat3;
     private javax.swing.JLabel cat4;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labeld;
     private javax.swing.JLabel labeli;
     // End of variables declaration//GEN-END:variables
@@ -843,6 +881,18 @@ public class Inicio extends javax.swing.JFrame {
         for (Producto p : productos){
             if(p.getNombre().equals(nombre)){
                 return p;
+            }
+        }
+        return null;
+    }
+    
+    private String obtenerDetalleCategoria(Long id){
+        
+        categoria = servicioCategoria.getAll();
+        
+        for(int i = 0;i<categoria.size();i++){
+            if(categoria.get(i).getId().equals(id)){
+                return categoria.get(i).getDetalle();
             }
         }
         return null;

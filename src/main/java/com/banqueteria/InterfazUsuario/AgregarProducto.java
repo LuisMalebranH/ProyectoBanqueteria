@@ -11,7 +11,9 @@ import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +26,7 @@ public class AgregarProducto extends javax.swing.JFrame {
     List<Ingrediente> ingredientes;
     List<Categoria> categorias;
     List<Cantidad> cantidades;
-    
+    Map<Long, String> catMap = new HashMap<>();
     
     private ServicioIngrediente servicioIngrediente;
     private ServicioCategoria servicioCategoria;
@@ -83,6 +85,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        labelid = new javax.swing.JLabel();
 
         jPopupMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -109,7 +112,6 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         jLabel2.setText("Categoría ");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 110, 30));
-
         jPanel1.add(CBCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 160, 30));
 
         jButton1.setText("Nueva Categoría");
@@ -166,7 +168,9 @@ public class AgregarProducto extends javax.swing.JFrame {
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 26, 140, 30));
 
         TextoReceta.setColumns(20);
+        TextoReceta.setLineWrap(true);
         TextoReceta.setRows(5);
+        TextoReceta.setWrapStyleWord(true);
         jScrollPane2.setViewportView(TextoReceta);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 300, 600));
@@ -211,6 +215,7 @@ public class AgregarProducto extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, 140, 30));
+        jPanel1.add(labelid, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 190, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -276,27 +281,12 @@ public class AgregarProducto extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,
                                                     servicioIngrediente,servicioProducto,
-                servicioListaIngredientes);
+                                                    servicioListaIngredientes);
         abrir.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
-//        if(this.TextoNombre.getText().isEmpty()){
-//            JOptionPane.showMessageDialog(null,"El producto debe tener un nombre","Alerta",JOptionPane.INFORMATION_MESSAGE);
-//        }
-//        
-//        if(this.TextoReceta.getText().isEmpty()){
-//            JOptionPane.showMessageDialog(null,"El producto debe tener una receta","Alerta",JOptionPane.INFORMATION_MESSAGE);
-//        }
-//        
-//        ListaIng = (DefaultTableModel) this.TablaListaIng.getModel();
-//        int filas = this.ListaIng.getRowCount();
-//        
-//        if(filas==0){
-//            JOptionPane.showMessageDialog(null,"El producto debe tener al menos un ingrediente","Alerta",JOptionPane.INFORMATION_MESSAGE);
-//        }
         
         if(validarCamposVacios()){
             
@@ -312,38 +302,72 @@ public class AgregarProducto extends javax.swing.JFrame {
             p.setNombre(nombreProd);
             p.setReceta(receta);
             p.setCategoria(c);
-        
-            servicioProducto.save(p);       
-        
-            for(int i=0;i<ListaIng.getRowCount();i++){
-                Ingrediente ing = new Ingrediente();
-                String nombreing = (String) ListaIng.getValueAt(i,0);
-                ing.setId(buscarIngrediente(nombreing).getId());
-                ing.setNombre(nombreing);
             
-                String cantidad = (String) ListaIng.getValueAt(i,1);
-            
-                Cantidad m = new Cantidad();
-                String medida = (String) ListaIng.getValueAt(i,2);
-                m.setId(buscarCantidad(medida).getId());
-                m.setDescripcion(buscarCantidad(medida).getDescripcion());
-            
-                ListaIngredientes li = new ListaIngredientes();
-                li.setCantidad(cantidad);
-                li.setIngrediente(ing);
-                li.setMedida(m);
-                li.setProducto(p);
-                servicioListaIngredientes.save(li);
+            if(this.labelid.getText().isBlank()){
                 
-                Inicio abrir = new Inicio();
-                abrir.setVisible(true);
-                dispose();
+                servicioProducto.save(p);       
+        
+                for(int i=0;i<ListaIng.getRowCount();i++){
+                    Ingrediente ing = new Ingrediente();
+                    String nombreing = (String) ListaIng.getValueAt(i,0);
+                    ing.setId(buscarIngrediente(nombreing).getId());
+                    ing.setNombre(nombreing);
+            
+                    String cantidad = (String) ListaIng.getValueAt(i,1);
+            
+                    Cantidad m = new Cantidad();
+                    String medida = (String) ListaIng.getValueAt(i,2);
+                    m.setId(buscarCantidad(medida).getId());
+                    m.setDescripcion(buscarCantidad(medida).getDescripcion());
+            
+                    ListaIngredientes li = new ListaIngredientes();
+                    li.setCantidad(cantidad);
+                    li.setIngrediente(ing);
+                    li.setMedida(m);
+                    li.setProducto(p);
+                    servicioListaIngredientes.save(li);
 
+                }
+                
+            } else {
+            
+                Long id = Long.parseLong(this.labelid.getText());
+                p.setId(id);
+                
+                servicioProducto.save(p);       
+        
+                for(int i=0;i<ListaIng.getRowCount();i++){
+                    Ingrediente ing = new Ingrediente();
+                    String nombreing = (String) ListaIng.getValueAt(i,0);
+                    ing.setId(buscarIngrediente(nombreing).getId());
+                    ing.setNombre(nombreing);
+            
+                    String cantidad = (String) ListaIng.getValueAt(i,1);
+            
+                    Cantidad m = new Cantidad();
+                    String medida = (String) ListaIng.getValueAt(i,2);
+                    m.setId(buscarCantidad(medida).getId());
+                    m.setDescripcion(buscarCantidad(medida).getDescripcion());
+            
+                    ListaIngredientes li = new ListaIngredientes();
+                    li.setCantidad(cantidad);
+                    li.setIngrediente(ing);
+                    li.setMedida(m);
+                    li.setProducto(p);
+                    servicioListaIngredientes.save(li);
+                }    
+                
             }
             
-        }else{
+            
             
         }
+        
+        Inicio abrir = new Inicio(servicioCantidad,servicioCategoria,
+                                          servicioIngrediente,servicioProducto,
+                                          servicioListaIngredientes);
+        abrir.setVisible(true);
+        dispose();
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -355,7 +379,7 @@ public class AgregarProducto extends javax.swing.JFrame {
     public static javax.swing.JTable TablaListaIng;
     public static javax.swing.JTextField TextoIng;
     public static javax.swing.JTextField TextoNombre;
-    private javax.swing.JTextArea TextoReceta;
+    public static javax.swing.JTextArea TextoReceta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -372,6 +396,7 @@ public class AgregarProducto extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    public static javax.swing.JLabel labelid;
     // End of variables declaration//GEN-END:variables
 
     public void llenarTabla (){    
@@ -415,13 +440,12 @@ public class AgregarProducto extends javax.swing.JFrame {
 
     public void llenarCategorias(){
         
-        this.CBCategoria.removeAllItems();
+        this.CBCategoria.removeAllItems();    
     
         categorias = servicioCategoria.getAll();
-        String nombre;
         for(int i=0;i<categorias.size();i++){
-            nombre = categorias.get(i).getDetalle();
-            this.CBCategoria.addItem(nombre);
+            this.CBCategoria.addItem(categorias.get(i).getDetalle());
+            catMap.put(categorias.get(i).getId(), categorias.get(i).getDetalle());
         }
         
     }
