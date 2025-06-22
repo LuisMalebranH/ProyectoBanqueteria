@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author UsuarioCompuElite
  */
-public interface TransformacionUnidades extends JpaRepository
-        <TransformacionUnidades>{}
+public interface TransformacionUnidadesRepositorio extends JpaRepository <TransformacionUnidades,String>{
+
+};
