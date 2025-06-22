@@ -269,6 +269,8 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         TablaProductos.setComponentPopupMenu(jPopupMenu2);
+        TablaProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TablaProductos.setFillsViewportHeight(true);
         TablaProductos.setSelectionBackground(new java.awt.Color(159, 173, 138));
         TablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -364,6 +366,7 @@ public class Inicio extends javax.swing.JFrame {
         PanelFondo.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 230, 340, 450));
 
         btnAgregarProd.setText("Agregar Producto");
+        btnAgregarProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAgregarProd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarProdActionPerformed(evt);
@@ -435,9 +438,7 @@ public class Inicio extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(1206, 1206, 1206)
-                .addComponent(cat2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(cat2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -512,7 +513,7 @@ public class Inicio extends javax.swing.JFrame {
         });
         PanelCategoria.add(labeld, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, -1, 100));
 
-        PanelFondo.add(PanelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, 780, 150));
+        PanelFondo.add(PanelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 810, 150));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
