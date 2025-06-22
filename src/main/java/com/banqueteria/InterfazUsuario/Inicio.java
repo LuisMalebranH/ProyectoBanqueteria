@@ -257,11 +257,11 @@ public class Inicio extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Productos"
+                "nombre", "porciones", "precio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -278,6 +278,10 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(TablaProductos);
+        if (TablaProductos.getColumnModel().getColumnCount() > 0) {
+            TablaProductos.getColumnModel().getColumn(0).setResizable(false);
+            TablaProductos.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 350, 450));
 
@@ -740,25 +744,27 @@ public class Inicio extends javax.swing.JFrame {
     private void llenarTablaInicio(){
         
         String nomcat=this.cat1.getText();
-        String dato;
         
         productos = servicioProducto.getAllProducto();
+        List<Producto> productosFiltrados = new ArrayList<>();
         
         if(productos.isEmpty()){
-            dato = "lista vacía";
-            String[] prod = {dato};
+            String dato = "lista vacía";
+            String[] prod = {dato,"",""};
             tabla = (DefaultTableModel) this.TablaProductos.getModel();
             tabla.addRow(prod);
         }else{
-//            for(int i=0;i<productos.size();i++){
-//                if(!productos.get(i).getCategoria().getId().equals(filtrarCategoria(nomcat))){
-//                    productos.remove(i);
-//                }
-//            }
+            for(int i=0;i<productos.size();i++){
+                if(productos.get(i).getCategoria().getId().equals(filtrarCategoria(nomcat))){
+                   productosFiltrados.add(productos.get(i));
+                }
+            }
             
-            for (int i = 0; i<productos.size();i++){
-                dato = productos.get(i).getNombre();
-                String[] prod = {dato};
+            for (int i = 0; i<productosFiltrados.size();i++){
+                String nombre = productosFiltrados.get(i).getNombre();
+                String porciones = productosFiltrados.get(i).getPorciones();
+                String precio = productosFiltrados.get(i).getPrecio();
+                String[] prod = {nombre,porciones,precio};
                 tabla = (DefaultTableModel) this.TablaProductos.getModel();
                 tabla.addRow(prod);
             }
@@ -771,15 +777,15 @@ public class Inicio extends javax.swing.JFrame {
         
         tabla = (DefaultTableModel) this.TablaProductos.getModel();
         
-        while(tabla.getRowCount()>0)tabla.removeRow(0);
-        
-        String dato;  
+        while(tabla.getRowCount()>0)tabla.removeRow(0); 
         
         productos = servicioProducto.getAllProducto();
         
         for (int i = 0; i<productos.size();i++){
-            dato = productos.get(i).getNombre();
-            String[] prod = {dato};
+            String nombre = productos.get(i).getNombre();
+            String porciones = productos.get(i).getPorciones();
+            String precio = productos.get(i).getPrecio();
+            String[] prod = {nombre,porciones,precio};
             tabla = (DefaultTableModel) this.TablaProductos.getModel();
             tabla.addRow(prod);
         }
@@ -792,8 +798,6 @@ public class Inicio extends javax.swing.JFrame {
         
         while(tabla.getRowCount()>0)tabla.removeRow(0);
         
-        String dato;
-        
         productos = servicioProducto.getAllProducto();
         productosFiltrados = new ArrayList();
         
@@ -804,8 +808,10 @@ public class Inicio extends javax.swing.JFrame {
         }   
         
         for (int i = 0; i<productosFiltrados.size();i++){
-            dato = productosFiltrados.get(i).getNombre();
-            String[] prod = {dato};
+            String nombre = productos.get(i).getNombre();
+            String porciones = productos.get(i).getPorciones();
+            String precio = productos.get(i).getPrecio();
+            String[] prod = {nombre,porciones,precio};
             tabla = (DefaultTableModel) this.TablaProductos.getModel();
             tabla.addRow(prod);
         }

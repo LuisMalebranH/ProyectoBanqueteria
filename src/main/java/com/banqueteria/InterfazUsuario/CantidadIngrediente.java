@@ -8,6 +8,7 @@ import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.medidaingredientes.ServicioMedidaIngrediente;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
+import javax.swing.JOptionPane;
 
 
 public class CantidadIngrediente extends javax.swing.JFrame {
@@ -56,6 +57,12 @@ public class CantidadIngrediente extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jLabel1.setText("Cantidad");
+
+        valorEntero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                valorEnteroMouseClicked(evt);
+            }
+        });
 
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -126,21 +133,32 @@ public class CantidadIngrediente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Medida abrir = new Medida(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
-        abrir.setVisible(true);
-        abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
-        abrir.nombre.setText(this.nombre.getText());
         
-        if(this.valorDecimal.getSelectedItem().toString().equals("0")){
-            abrir.cantidad.setText(this.valorEntero.getValue().toString());
-        }else{
-            String cant = this.valorEntero.getValue()+" "+this.valorDecimal.getSelectedItem().toString();
-            abrir.cantidad.setText(cant);
+        if(validaciones()){
+            
+            Medida abrir = new Medida(servicioCantidad,servicioCategoria,servicioIngrediente, 
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+            abrir.setVisible(true);
+            abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
+            abrir.nombre.setText(this.nombre.getText());
+
+            if(this.valorDecimal.getSelectedItem().toString().equals("0")){
+                abrir.cantidad.setText(this.valorEntero.getValue().toString());
+            }else{
+                String cant = this.valorEntero.getValue()+" "+this.valorDecimal.getSelectedItem().toString();
+                abrir.cantidad.setText(cant);
+            }
+
+            dispose();
+            
         }
-                
-        dispose();
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void valorEnteroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_valorEnteroMouseClicked
+
+    }//GEN-LAST:event_valorEnteroMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -165,6 +183,18 @@ public class CantidadIngrediente extends javax.swing.JFrame {
         Point mouse2 = this.jPanel1.getLocationOnScreen();
         int x = mouse1.x + mouse2.x;
         return x;
+    }
+    
+    private boolean validaciones(){
+    
+        Object valor = valorEntero.getValue();
+        if(!(valor instanceof Number)){
+            JOptionPane.showMessageDialog(null,"Sólo puede ingresar valores numéricos","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else{
+            return true;
+        }
+        
     }
 
 }

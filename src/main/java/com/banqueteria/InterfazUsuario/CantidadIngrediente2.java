@@ -45,6 +45,7 @@ public class CantidadIngrediente2 extends javax.swing.JFrame {
         valorEntero = new javax.swing.JSpinner();
         jButton1 = new javax.swing.JButton();
         valorDecimal = new javax.swing.JComboBox<>();
+        textprecioingrediente = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         nombre = new javax.swing.JLabel();
 
@@ -54,8 +55,11 @@ public class CantidadIngrediente2 extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setPreferredSize(new java.awt.Dimension(200, 100));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Cantidad");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 16, 63, 28));
+        jPanel1.add(valorEntero, new org.netbeans.lib.awtextra.AbsoluteConstraints(89, 19, 80, -1));
 
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -63,39 +67,11 @@ public class CantidadIngrediente2 extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 69, -1, -1));
 
         valorDecimal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1/4", "1/2", "3/4" }));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(valorEntero, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(valorDecimal, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(jButton1)))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(valorEntero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(valorDecimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
-        );
+        jPanel1.add(valorDecimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 19, 80, -1));
+        jPanel1.add(textprecioingrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 70, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
 
@@ -131,6 +107,7 @@ public class CantidadIngrediente2 extends javax.swing.JFrame {
         abrir.setVisible(true);
         abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
         abrir.nombre.setText(this.nombre.getText());
+        abrir.textprecioingrediente.setText(this.textprecioingrediente.getText());
         
         if(this.valorDecimal.getSelectedItem().toString().equals("0")){
             abrir.cantidad.setText(this.valorEntero.getValue().toString());
@@ -149,6 +126,7 @@ public class CantidadIngrediente2 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JLabel nombre;
+    public static javax.swing.JLabel textprecioingrediente;
     private javax.swing.JComboBox<String> valorDecimal;
     public static javax.swing.JSpinner valorEntero;
     // End of variables declaration//GEN-END:variables

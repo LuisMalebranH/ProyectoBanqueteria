@@ -281,6 +281,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         PanelAP.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 530, 130, 30));
 
         textPrecioIng.setEditable(false);
+        textPrecioIng.setText("0");
         PanelAP.add(textPrecioIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 530, 160, 30));
 
         jLabel8.setText("Precio del producto");
@@ -380,10 +381,12 @@ public class AgregarProducto extends javax.swing.JFrame {
         
         ListaIngredientesFiltrado = new ArrayList<>();
         
-        if(validarCamposVacios()){
+        if(validaciones()){
             //Si todos los campos están llenos, comienzo a guardar la información del producto
             String nombreProd = this.TextoNombre.getText();
             String receta = this.TextoReceta.getText();
+            String porciones = this.textPorcionesProd.getText();
+            String precio = this.textPrecioProd.getText();
         
             String cat = this.CBCategoria.getSelectedItem().toString();
             Categoria c = new Categoria();
@@ -394,6 +397,8 @@ public class AgregarProducto extends javax.swing.JFrame {
             p.setNombre(nombreProd);
             p.setReceta(receta);
             p.setCategoria(c);
+            p.setPorciones(porciones);
+            p.setPrecio(precio);
             
             if(!this.labelid.getText().isEmpty()){
                 //En caso de que exista un id, guardo el dato y luego actualizo el producto
@@ -507,18 +512,52 @@ public class AgregarProducto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        
+        String nombre = (String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 0);
+        String cantidad = (String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 1);
+        double cant = corregirDecimales(cantidad);
+        double precioIng = Double.parseDouble(obtenerIngrediente(nombre).getPrecio());
+        Long id = obtenerIngrediente(nombre).getMedidaingrediente().getId();
+        String medida = obtenerMedidaIngrediente(id);
+        int cantidadIng = Integer.parseInt(obtenerIngrediente(nombre).getCantidad());
+        
+        double precioProd = obtenerPrecio((String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 2),
+                                                       medida,
+                                                       cant,
+                                                       precioIng,
+                                                       cantidadIng);
+        double precioProdfinal = redondear(precioProd);        
+        
         CantidadIngrediente2 abrir = new CantidadIngrediente2(servicioCantidad,servicioCategoria,servicioIngrediente, 
                                                     servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
-       abrir.setVisible(true); 
-       abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
-       abrir.nombre.setText((String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 0));
+        abrir.setVisible(true); 
+        abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
+        abrir.nombre.setText((String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 0));
+        abrir.textprecioingrediente.setText(String.valueOf(precioProdfinal));
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+
+        String nombre = (String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 0);
+        String cantidad = (String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 1);
+        double cant = corregirDecimales(cantidad);
+        double precioIng = Double.parseDouble(obtenerIngrediente(nombre).getPrecio());
+        Long id = obtenerIngrediente(nombre).getMedidaingrediente().getId();
+        String medida = obtenerMedidaIngrediente(id);
+        int cantidadIng = Integer.parseInt(obtenerIngrediente(nombre).getCantidad());
+        
+        double precioProd = Double.parseDouble(this.textPrecioIng.getText());
+        precioProd = precioProd - obtenerPrecio((String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 2),
+                                                       medida,
+                                                       cant,
+                                                       precioIng,
+                                                       cantidadIng);
+        double precioProdfinal = redondear(precioProd);
         
         tablaIng = (DefaultTableModel) this.TablaListaIng.getModel();
         servicioListaIngredientes.delete(buscarIngrediente((String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 0)).getId());
         tablaIng.removeRow(this.TablaListaIng.getSelectedRow());
+        this.textPrecioIng.setText(String.valueOf(precioProdfinal));
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -650,6 +689,18 @@ public class AgregarProducto extends javax.swing.JFrame {
         return null;
     }
     
+    private Ingrediente obtenerIngrediente(String nombre){
+    
+        List<Ingrediente> ing = new ArrayList<>();
+        ing = servicioIngrediente.getAll();
+        for(Ingrediente i : ing){
+            if(i.getNombre().equals(nombre)){
+                return i;
+            }
+        }
+        return null;
+    }
+    
     private String obtenerMedidaIngrediente(Long id){
     
         ListaMedIng = servicioMedidaIngrediente.getAll();
@@ -661,7 +712,270 @@ public class AgregarProducto extends javax.swing.JFrame {
         return null;
     }
     
-    private boolean validarCamposVacios(){
+    private double obtenerPrecio(String desde, String hasta, double cantidad, double precio, int cantidadIng){
+    
+        switch (desde) {
+            case "taza":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 250;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0.25;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 125;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0.125;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "unidad":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;;
+                        return precio;
+                    case "unidad":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "cucharada":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 15;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0.015;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "criterio propio":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "mililitro":
+                switch (hasta) {
+                    case "mililitro":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0.001;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "litro":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 1000;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "gramos":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0.001;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "kilo":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 1000;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "diente":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0.2;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            default:
+                throw new AssertionError();
+        }
+        
+    }
+
+    private double corregirDecimales(String cantidad){
+    
+        cantidad = cantidad.trim();
+        
+        if(cantidad.matches("\\d+\\s+\\d+/\\d+")){
+            
+            String[] partes = cantidad.split("\\s+");
+            double entero = Double.parseDouble(partes[0]);
+            String[] fraccion = partes[1].split("/");
+            double numerador = Double.parseDouble(fraccion[0]);
+            double denominador = Double.parseDouble(fraccion[1]);
+            return entero + (numerador / denominador);
+            
+        }else if(cantidad.matches("\\d+/\\d+")){
+        
+            String[] fraccion = cantidad.split("/");
+            double numerador = Double.parseDouble(fraccion[0]);
+            double denominador = Double.parseDouble(fraccion[1]);
+            return numerador / denominador;
+        
+        }else{
+        
+            return Double.parseDouble(cantidad);
+            
+        }
+        
+    }
+    
+    private double redondear(double valor){
+        
+        double redondeado = Math.round(valor * 10.0) / 10.0;
+        return redondeado;
+    }
+    
+    private boolean validaciones(){
         
         ListaIng = (DefaultTableModel) this.TablaListaIng.getModel();
         int filas = this.ListaIng.getRowCount();
@@ -674,6 +988,18 @@ public class AgregarProducto extends javax.swing.JFrame {
             return false;
         }else if(filas==0){
             JOptionPane.showMessageDialog(null,"El producto debe tener al menos un ingrediente","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(this.textPorcionesProd.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"El producto debe especificar una cantidad de porciones","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(!this.textPorcionesProd.getText().matches("\\d+")){
+            JOptionPane.showMessageDialog(null,"Las porciones sólo pueden ser de caracter numércio","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(this.textPrecioProd.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"El producto debe tener un precio","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(!this.textPrecioProd.getText().matches("\\d+")){
+            JOptionPane.showMessageDialog(null,"El precio debe ser de caracter numérico","Alerta",JOptionPane.INFORMATION_MESSAGE);
             return false;
         }else{
             return true;
