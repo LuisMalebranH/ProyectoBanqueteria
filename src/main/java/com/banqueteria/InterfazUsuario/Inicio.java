@@ -13,6 +13,7 @@ import com.banqueteria.recetario.medidaingredientes.ServicioMedidaIngrediente;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Image;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -115,12 +116,17 @@ public class Inicio extends javax.swing.JFrame {
 
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         PanelFondo = new javax.swing.JPanel();
         PanelCalculo = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaIngEncargo = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        TablaEncargo = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        textencargo = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        textprecio = new javax.swing.JTextField();
         TextBuscarProd = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaProductos = new javax.swing.JTable();
@@ -132,7 +138,6 @@ public class Inicio extends javax.swing.JFrame {
         TablaIngredientes = new javax.swing.JTable();
         labelImagen = new javax.swing.JLabel();
         btnAgregarProd = new javax.swing.JButton();
-        btnIniCalculo = new javax.swing.JButton();
         PanelCategoria = new javax.swing.JPanel();
         labeli = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -153,6 +158,14 @@ public class Inicio extends javax.swing.JFrame {
         });
         jPopupMenu2.add(jMenuItem2);
 
+        jMenuItem1.setText("Agregar al Encargo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu2.add(jMenuItem1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         PanelFondo.setBackground(new java.awt.Color(220, 209, 199));
@@ -171,66 +184,69 @@ public class Inicio extends javax.swing.JFrame {
                 PanelCalculoMouseExited(evt);
             }
         });
+        PanelCalculo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Ingrediente", "Cantidad"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-        }
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        TablaIngEncargo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Producto", "Cantidad"
+                "Ingrediente", "Cantidad", "Medida"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setResizable(false);
-            jTable2.getColumnModel().getColumn(1).setResizable(false);
+        jScrollPane2.setViewportView(TablaIngEncargo);
+        if (TablaIngEncargo.getColumnModel().getColumnCount() > 0) {
+            TablaIngEncargo.getColumnModel().getColumn(0).setResizable(false);
+            TablaIngEncargo.getColumnModel().getColumn(1).setResizable(false);
+            TablaIngEncargo.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        javax.swing.GroupLayout PanelCalculoLayout = new javax.swing.GroupLayout(PanelCalculo);
-        PanelCalculo.setLayout(PanelCalculoLayout);
-        PanelCalculoLayout.setHorizontalGroup(
-            PanelCalculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelCalculoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelCalculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
-        );
-        PanelCalculoLayout.setVerticalGroup(
-            PanelCalculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCalculoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        PanelCalculo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 389, 320, 280));
+
+        TablaEncargo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Producto", "Cantidad", "Total Porciones"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(TablaEncargo);
+        if (TablaEncargo.getColumnModel().getColumnCount() > 0) {
+            TablaEncargo.getColumnModel().getColumn(0).setResizable(false);
+            TablaEncargo.getColumnModel().getColumn(1).setResizable(false);
+            TablaEncargo.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        PanelCalculo.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 320, 250));
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Cliente");
+        PanelCalculo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, 30));
+        PanelCalculo.add(textencargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(191, 20, 130, 30));
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Precio estimado");
+        PanelCalculo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 120, 30));
+
+        textprecio.setText("0");
+        PanelCalculo.add(textprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 130, 30));
 
         PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 340, 730));
 
@@ -283,14 +299,16 @@ public class Inicio extends javax.swing.JFrame {
             TablaProductos.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 350, 450));
+        PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, 350, 450));
 
         PanelProducto.setBackground(new java.awt.Color(189, 160, 127));
         PanelProducto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PanelProducto.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         LabelNombreProd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelNombreProd.setText("Nombre Producto");
         LabelNombreProd.setToolTipText("");
+        PanelProducto.add(LabelNombreProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, 39));
 
         TextoPreparacion.setEditable(false);
         TextoPreparacion.setColumns(20);
@@ -298,6 +316,8 @@ public class Inicio extends javax.swing.JFrame {
         TextoPreparacion.setRows(5);
         TextoPreparacion.setWrapStyleWord(true);
         TextoReceta.setViewportView(TextoPreparacion);
+
+        PanelProducto.add(TextoReceta, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 235, 324, 207));
 
         TablaIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -329,43 +349,18 @@ public class Inicio extends javax.swing.JFrame {
             TablaIngredientes.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        PanelProducto.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 53, 324, 170));
+
         labelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelImagen.setText("Imagen del Producto");
         labelImagen.setToolTipText("");
+        labelImagen.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         labelImagen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelImagenMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout PanelProductoLayout = new javax.swing.GroupLayout(PanelProducto);
-        PanelProducto.setLayout(PanelProductoLayout);
-        PanelProductoLayout.setHorizontalGroup(
-            PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelProductoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TextoReceta, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelProductoLayout.createSequentialGroup()
-                        .addComponent(LabelNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        PanelProductoLayout.setVerticalGroup(
-            PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelProductoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PanelProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LabelNombreProd, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TextoReceta, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        PanelProducto.add(labelImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 9, 140, 40));
 
         PanelFondo.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 230, 340, 450));
 
@@ -376,10 +371,7 @@ public class Inicio extends javax.swing.JFrame {
                 btnAgregarProdActionPerformed(evt);
             }
         });
-        PanelFondo.add(btnAgregarProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 710, 170, -1));
-
-        btnIniCalculo.setText("Iniciar Cálculo");
-        PanelFondo.add(btnIniCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 710, 170, -1));
+        PanelFondo.add(btnAgregarProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 710, 170, -1));
 
         PanelCategoria.setBackground(new java.awt.Color(186, 192, 165));
         PanelCategoria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -694,6 +686,16 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_labelImagenMouseClicked
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        
+        CantidadProducto abrir = new CantidadProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+        abrir.setVisible(true); 
+        abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
+        abrir.nombre.setText((String) this.TablaProductos.getValueAt(this.TablaProductos.getSelectedRow(),0));
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     
     
     
@@ -703,17 +705,21 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JPanel PanelCategoria;
     private javax.swing.JPanel PanelFondo;
     private javax.swing.JPanel PanelProducto;
-    private javax.swing.JTable TablaIngredientes;
-    private javax.swing.JTable TablaProductos;
+    public static javax.swing.JTable TablaEncargo;
+    public static javax.swing.JTable TablaIngEncargo;
+    public static javax.swing.JTable TablaIngredientes;
+    public static javax.swing.JTable TablaProductos;
     private javax.swing.JTextField TextBuscarProd;
     private javax.swing.JTextArea TextoPreparacion;
     private javax.swing.JScrollPane TextoReceta;
     private javax.swing.JButton btnAgregarProd;
-    private javax.swing.JButton btnIniCalculo;
     private javax.swing.JLabel cat1;
     private javax.swing.JLabel cat2;
     private javax.swing.JLabel cat3;
     private javax.swing.JLabel cat4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -724,11 +730,11 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel labeld;
     private javax.swing.JLabel labeli;
+    private javax.swing.JTextField textencargo;
+    public static javax.swing.JTextField textprecio;
     // End of variables declaration//GEN-END:variables
 
     private void corregirImagen(JLabel label, String root){
@@ -1006,6 +1012,20 @@ public class Inicio extends javax.swing.JFrame {
             }
         }
         return null;
+    }
+    
+    private int obtenerPosicionY(){
+        Point mouse1 = this.PanelFondo.getMousePosition();
+        Point mouse2 = this.PanelFondo.getLocationOnScreen();
+        int y = mouse1.y + mouse2.y;
+        return y;
+    }
+
+    private int obtenerPosicionX(){
+        Point mouse1 = this.PanelFondo.getMousePosition();
+        Point mouse2 = this.PanelFondo.getLocationOnScreen();
+        int x = mouse1.x + mouse2.x;
+        return x;
     }
 
 }

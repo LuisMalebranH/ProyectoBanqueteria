@@ -58,12 +58,9 @@ public class Medida extends javax.swing.JFrame {
         Cantidad = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         CBCantidades = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         nombre = new javax.swing.JLabel();
         cantidad = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -82,7 +79,7 @@ public class Medida extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 110, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 110, 30));
 
         CBCantidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         CBCantidades.addActionListener(new java.awt.event.ActionListener() {
@@ -91,14 +88,6 @@ public class Medida extends javax.swing.JFrame {
             }
         });
         jPanel1.add(CBCantidades, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 110, 30));
-
-        jButton2.setText("Nueva medida");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 110, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, -1));
 
@@ -131,41 +120,21 @@ public class Medida extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 270, 80));
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton3.setText("Actualizar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 8, 140, 34));
-
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 270, 50));
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CrearMedidaIng abrir = new CrearMedidaIng(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
-        abrir.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String nombre = this.nombre.getText();
         String cantidad = this.cantidad.getText();
         double cant = corregirDecimales(cantidad);
-        System.out.println(cant);
         String tipo = this.CBCantidades.getSelectedItem().toString();
         AgregarValorTabla(nombre, cantidad, tipo);
         AgregarProducto.TextoIng.setText("");
         
         Long id = obtenerIngrediente(nombre).getMedidaingrediente().getId();
+        String medida = obtenerMedidaIngrediente(id);
         int cantidadIng = Integer.parseInt(obtenerIngrediente(nombre).getCantidad());
         double precioIng = Double.parseDouble(obtenerIngrediente(nombre).getPrecio());
-        String medida = obtenerMedidaIngrediente(id);
 
         double precioProd = Double.parseDouble(AgregarProducto.textPrecioIng.getText());        
         precioProd = precioProd + obtenerPrecio(tipo, medida, cant, precioIng, cantidadIng);
@@ -179,20 +148,6 @@ public class Medida extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CBCantidadesActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    String nom = Medida.nombre.getText();
-    String cant = Medida.cantidad.getText();
-        
-    Medida abrir = new Medida(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
-    
-    abrir.nombre.setText(nom);
-    abrir.cantidad.setText(cant);
-    abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
-    abrir.setVisible(true);
-    dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -200,11 +155,8 @@ public class Medida extends javax.swing.JFrame {
     private javax.swing.JLabel Cantidad;
     public static javax.swing.JLabel cantidad;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     public static javax.swing.JLabel nombre;
     // End of variables declaration//GEN-END:variables
 
@@ -498,7 +450,7 @@ public class Medida extends javax.swing.JFrame {
     
         cantidad = cantidad.trim();
         
-        if(cantidad.matches("\\d+\\s+\\d+/\\d+")){
+        if(cantidad.matches("\\d+\\s+\\d+/\\d+")){//2 1/2 -> 2+0.5 -> 2.5
             
             String[] partes = cantidad.split("\\s+");
             double entero = Double.parseDouble(partes[0]);
