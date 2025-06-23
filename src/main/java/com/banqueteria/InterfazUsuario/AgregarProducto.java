@@ -139,6 +139,7 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        PanelAP.setBackground(new java.awt.Color(220, 209, 199));
         PanelAP.setPreferredSize(new java.awt.Dimension(1200, 800));
         PanelAP.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -168,7 +169,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         });
         PanelAP.add(TextoIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 160, 30));
 
-        jButton2.setText("Nuevo ingrediente");
+        jButton2.setText("Nuevo Ingrediente");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -247,6 +248,7 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         PanelAP.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 340, 610));
 
+        jButton4.setBackground(new java.awt.Color(159, 173, 138));
         jButton4.setText("Guardar producto");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,6 +257,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         });
         PanelAP.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 710, -1, 30));
 
+        jButton5.setBackground(new java.awt.Color(186, 192, 165));
         jButton5.setText("Cancelar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,6 +266,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         });
         PanelAP.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 710, 130, 30));
 
+        jButton3.setBackground(new java.awt.Color(189, 160, 127));
         jButton3.setText("Actualizar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
