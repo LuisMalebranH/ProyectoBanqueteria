@@ -300,7 +300,6 @@ public class Inicio extends javax.swing.JFrame {
             TablaProductos.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, 350, 450));
         PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, 350, 450));
 
         PanelProducto.setBackground(new java.awt.Color(189, 160, 127));
