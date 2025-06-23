@@ -271,6 +271,7 @@ public class Inicio extends javax.swing.JFrame {
         TablaProductos.setComponentPopupMenu(jPopupMenu2);
         TablaProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         TablaProductos.setFillsViewportHeight(true);
+        TablaProductos.setName("TablaProductos"); // NOI18N
         TablaProductos.setSelectionBackground(new java.awt.Color(159, 173, 138));
         TablaProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -283,7 +284,7 @@ public class Inicio extends javax.swing.JFrame {
             TablaProductos.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 350, 450));
+        PanelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 230, 350, 450));
 
         PanelProducto.setBackground(new java.awt.Color(189, 160, 127));
         PanelProducto.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -523,11 +524,14 @@ public class Inicio extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -650,12 +654,16 @@ public class Inicio extends javax.swing.JFrame {
                 Producto p = new Producto();
                 p.setId(productos.get(i).getId());
                 p.setCategoria(productos.get(i).getCategoria());
+                p.setPorciones(productos.get(i).getPorciones());
+                p.setPrecio(productos.get(i).getPrecio());
                 AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
                                                     servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
                 abrir.setVisible(true);
                 abrir.TextoNombre.setText(nom);
                 abrir.TextoReceta.setText(preparacion);
                 abrir.labelid.setText(p.getId().toString());
+                abrir.textPorcionesProd.setText(p.getPorciones());
+                abrir.textPrecioProd.setText(p.getPrecio());
                 
                 int index = 0;
                 String nomcat = obtenerDetalleCategoria(p.getCategoria().getId());
