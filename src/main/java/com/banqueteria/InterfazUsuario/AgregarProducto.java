@@ -119,6 +119,11 @@ public class AgregarProducto extends javax.swing.JFrame {
         popmenuIng.add(jMenuItem1);
 
         jMenuItem4.setText("Modificar Ingrediente");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         popmenuIng.add(jMenuItem4);
 
         jMenuItem2.setText("Editar ingrediente");
@@ -560,6 +565,33 @@ public class AgregarProducto extends javax.swing.JFrame {
         this.textPrecioIng.setText(String.valueOf(precioProdfinal));
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        
+        String nombre = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),0).toString();
+        String precio = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),1).toString();
+        String cantidad = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),2).toString();
+        String medida = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),3).toString();
+        String id = String.valueOf(obtenerIngrediente(nombre).getId());
+        
+        CrearIngrediente abrir = new CrearIngrediente(servicioCantidad,servicioCategoria,servicioIngrediente, 
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+        abrir.setVisible(true);
+        
+        abrir.textnombre.setText(nombre);
+        abrir.textprecio.setText(precio);
+        abrir.cantidad.setValue(Integer.parseInt(cantidad));
+        int index = 0;
+            for(int a = 0;a<abrir.cbcanting.getItemCount();a++){
+                if(abrir.cbcanting.getItemAt(index).equals(medida)){
+                    abrir.cbcanting.setSelectedIndex(index);
+                }else{
+                    index = index + 1;
+                }
+            }
+        abrir.labelid.setText(id);
+        
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     
 

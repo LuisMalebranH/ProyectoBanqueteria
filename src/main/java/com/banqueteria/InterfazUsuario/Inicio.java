@@ -661,12 +661,16 @@ public class Inicio extends javax.swing.JFrame {
                 Producto p = new Producto();
                 p.setId(productos.get(i).getId());
                 p.setCategoria(productos.get(i).getCategoria());
+                p.setPorciones(productos.get(i).getPorciones());
+                p.setPrecio(productos.get(i).getPrecio());
                 AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
                                                     servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
                 abrir.setVisible(true);
                 abrir.TextoNombre.setText(nom);
                 abrir.TextoReceta.setText(preparacion);
                 abrir.labelid.setText(p.getId().toString());
+                abrir.textPorcionesProd.setText(p.getPorciones());
+                abrir.textPrecioProd.setText(p.getPrecio());
                 
                 int index = 0;
                 String nomcat = obtenerDetalleCategoria(p.getCategoria().getId());
@@ -685,6 +689,7 @@ public class Inicio extends javax.swing.JFrame {
                 String ingrediente;
                 String cantidad;
                 String medida;
+                double contador = 0;
         
                 for (int q = 0; q<ingredientesProductos.size();q++){
                     if(ingredientesProductos.get(q).getProducto().getId().equals(p.getId())){
@@ -693,8 +698,18 @@ public class Inicio extends javax.swing.JFrame {
                         medida = buscarMedida(ingredientesProductos.get(q).getMedida().getId());
                         String[] prod = {ingrediente,cantidad,medida};
                         tabla.addRow(prod);
+                        
+                        Long id = obtenerIngrediente(ingrediente).getMedidaingrediente().getId();
+                        String medida2 = obtenerMedidaIngrediente(id);
+                        int cantidadIng = Integer.parseInt(obtenerIngrediente(ingrediente).getCantidad());
+                        double precioIng = Double.parseDouble(obtenerIngrediente(ingrediente).getPrecio());
+                        
+                        contador = contador +redondear(obtenerPrecio(medida,medida2,corregirDecimales(cantidad),precioIng,cantidadIng));
+                        
+                        
                     }
                 }
+                AgregarProducto.textPrecioIng.setText(String.valueOf(contador));
                 dispose();
             }
         }
@@ -1153,5 +1168,286 @@ public class Inicio extends javax.swing.JFrame {
         double redondeado = Math.round(valor * 10) / 10;
         return redondeado;
     }
+    
+    private Ingrediente obtenerIngrediente(String nombre){
+    
+        List<Ingrediente> ing = new ArrayList<>();
+        ing = servicioIngrediente.getAll();
+        for(Ingrediente i : ing){
+            if(i.getNombre().equals(nombre)){
+                return i;
+            }
+        }
+        return null;
+    }
+    
+    private String obtenerMedidaIngrediente(Long id){
+    
+        List <MedidaIngrediente> ListaMedIng = servicioMedidaIngrediente.getAll();
+        for(MedidaIngrediente mi : ListaMedIng){
+            if(mi.getId().equals(id)){
+                return mi.getDetalle();
+            }
+        }
+        return null;
+    }
+    
+    private double obtenerPrecio(String desde, String hasta, double cantidad, double precio, int cantidadIng){
+    
+        switch (desde) {
+            case "taza":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 250;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0.25;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 125;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0.125;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "unidad":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;;
+                        return precio;
+                    case "unidad":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "cucharada":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 15;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0.015;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "criterio propio":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "mililitro":
+                switch (hasta) {
+                    case "mililitro":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0.001;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "litro":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 1000;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "gramos":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0.001;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "kilo":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 1000;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "diente":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0.2;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            default:
+                throw new AssertionError();
+        }
+        
+    }
+    
+    private double corregirDecimales(String cantidad){
+    
+        cantidad = cantidad.trim();
+        
+        if(cantidad.matches("\\d+\\s+\\d+/\\d+")){//2 1/2 -> 2+0.5 -> 2.5
+            
+            String[] partes = cantidad.split("\\s+");
+            double entero = Double.parseDouble(partes[0]);
+            String[] fraccion = partes[1].split("/");
+            double numerador = Double.parseDouble(fraccion[0]);
+            double denominador = Double.parseDouble(fraccion[1]);
+            return entero + (numerador / denominador);
+            
+        }else if(cantidad.matches("\\d+/\\d+")){
+        
+            String[] fraccion = cantidad.split("/");
+            double numerador = Double.parseDouble(fraccion[0]);
+            double denominador = Double.parseDouble(fraccion[1]);
+            return numerador / denominador;
+        
+        }else{
+        
+            return Double.parseDouble(cantidad);
+            
+        }
+        
+    }
+
 
 }

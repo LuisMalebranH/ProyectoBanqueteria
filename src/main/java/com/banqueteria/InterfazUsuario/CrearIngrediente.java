@@ -59,6 +59,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         cantidad = new javax.swing.JSpinner();
         jSeparator1 = new javax.swing.JSeparator();
+        labelid = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -101,6 +102,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 110, 30));
         jPanel1.add(cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 160, 30));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 380, -1));
+        jPanel1.add(labelid, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 110, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,10 +139,16 @@ public class CrearIngrediente extends javax.swing.JFrame {
             mi.setId(obtenerIdMedida(medida));
             mi.setDetalle(medida);
             ing.setMedidaingrediente(mi);
-
-            servicioIngrediente.save(ing);
-            dispose();
-        
+            
+            if(this.labelid.getText().isEmpty()){
+                servicioIngrediente.save(ing);
+                dispose();
+            }else{
+                ing.setId(Long.parseLong(this.labelid.getText()));
+                servicioIngrediente.save(ing);
+                dispose();
+            }
+    
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -156,8 +164,8 @@ public class CrearIngrediente extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSpinner cantidad;
-    private javax.swing.JComboBox<String> cbcanting;
+    public static javax.swing.JSpinner cantidad;
+    public static javax.swing.JComboBox<String> cbcanting;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -165,8 +173,9 @@ public class CrearIngrediente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField textnombre;
-    private javax.swing.JTextField textprecio;
+    public static javax.swing.JLabel labelid;
+    public static javax.swing.JTextField textnombre;
+    public static javax.swing.JTextField textprecio;
     // End of variables declaration//GEN-END:variables
 
     private Long obtenerIdMedida(String nombre){
