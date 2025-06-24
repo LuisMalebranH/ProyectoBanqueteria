@@ -76,16 +76,18 @@ public class AgregarProducto extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         PanelAP = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel_Ingredientes = new javax.swing.JPanel();
         TextoNombre = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        jlbl_NombreProducto = new javax.swing.JLabel();
+        jLbl_Categoria = new javax.swing.JLabel();
         CBCategoria = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        jBttn_NuevaCategoria = new javax.swing.JButton();
+        jLbl_Ingrediente = new javax.swing.JLabel();
         TextoIng = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jBttn_NuevoIngrediente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaIngredientes = new javax.swing.JTable();
+        jBttn_ActualizarPantalla = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         TextoReceta = new javax.swing.JTextArea();
@@ -94,7 +96,6 @@ public class AgregarProducto extends javax.swing.JFrame {
         TablaListaIng = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         labelid = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         textPorcionesProd = new javax.swing.JTextField();
@@ -143,39 +144,42 @@ public class AgregarProducto extends javax.swing.JFrame {
         PanelAP.setPreferredSize(new java.awt.Dimension(1200, 800));
         PanelAP.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Nombre Producto");
-        PanelAP.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 110, 30));
-        PanelAP.add(TextoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 160, 30));
+        jPanel_Ingredientes.setBackground(new java.awt.Color(159, 173, 138));
+        jPanel_Ingredientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel_Ingredientes.add(TextoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 160, 30));
 
-        jLabel2.setText("Categoría ");
-        PanelAP.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 110, 30));
-        PanelAP.add(CBCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 160, 30));
+        jlbl_NombreProducto.setText("Nombre Producto");
+        jPanel_Ingredientes.add(jlbl_NombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 110, 30));
 
-        jButton1.setText("Nueva Categoría");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLbl_Categoria.setText("Categoría ");
+        jPanel_Ingredientes.add(jLbl_Categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 110, 30));
+        jPanel_Ingredientes.add(CBCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 160, 30));
+
+        jBttn_NuevaCategoria.setText("Nueva Categoría");
+        jBttn_NuevaCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBttn_NuevaCategoriaActionPerformed(evt);
             }
         });
-        PanelAP.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 160, -1));
+        jPanel_Ingredientes.add(jBttn_NuevaCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 160, -1));
 
-        jLabel3.setText("Ingrediente");
-        PanelAP.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 110, 30));
+        jLbl_Ingrediente.setText("Ingrediente");
+        jPanel_Ingredientes.add(jLbl_Ingrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 110, 30));
 
         TextoIng.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TextoIngKeyReleased(evt);
             }
         });
-        PanelAP.add(TextoIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 160, 30));
+        jPanel_Ingredientes.add(TextoIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 160, 30));
 
-        jButton2.setText("Nuevo Ingrediente");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jBttn_NuevoIngrediente.setText("Nuevo Ingrediente");
+        jBttn_NuevoIngrediente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jBttn_NuevoIngredienteActionPerformed(evt);
             }
         });
-        PanelAP.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 160, -1));
+        jPanel_Ingredientes.add(jBttn_NuevoIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 160, -1));
 
         TablaIngredientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -194,6 +198,7 @@ public class AgregarProducto extends javax.swing.JFrame {
             }
         });
         TablaIngredientes.setComponentPopupMenu(popmenuIng);
+        TablaIngredientes.setSelectionBackground(new java.awt.Color(159, 173, 138));
         jScrollPane1.setViewportView(TablaIngredientes);
         if (TablaIngredientes.getColumnModel().getColumnCount() > 0) {
             TablaIngredientes.getColumnModel().getColumn(0).setResizable(false);
@@ -202,7 +207,19 @@ public class AgregarProducto extends javax.swing.JFrame {
             TablaIngredientes.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        PanelAP.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 340, 420));
+        jPanel_Ingredientes.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 340, 420));
+
+        jBttn_ActualizarPantalla.setBackground(new java.awt.Color(186, 192, 165));
+        jBttn_ActualizarPantalla.setText("Actualizar");
+        jBttn_ActualizarPantalla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jBttn_ActualizarPantalla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBttn_ActualizarPantallaActionPerformed(evt);
+            }
+        });
+        jPanel_Ingredientes.add(jBttn_ActualizarPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, 140, 30));
+
+        PanelAP.add(jPanel_Ingredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 770));
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Preparación");
@@ -238,6 +255,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         });
         TablaListaIng.setComponentPopupMenu(popmenuProd);
         TablaListaIng.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TablaListaIng.setSelectionBackground(new java.awt.Color(159, 173, 138));
         TablaListaIng.setShowGrid(true);
         jScrollPane3.setViewportView(TablaListaIng);
         if (TablaListaIng.getColumnModel().getColumnCount() > 0) {
@@ -255,7 +273,7 @@ public class AgregarProducto extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        PanelAP.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 710, -1, 30));
+        PanelAP.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 710, 140, 40));
 
         jButton5.setBackground(new java.awt.Color(186, 192, 165));
         jButton5.setText("Cancelar");
@@ -264,16 +282,7 @@ public class AgregarProducto extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        PanelAP.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 710, 130, 30));
-
-        jButton3.setBackground(new java.awt.Color(189, 160, 127));
-        jButton3.setText("Actualizar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        PanelAP.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, 140, 30));
+        PanelAP.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 710, 140, 40));
         PanelAP.add(labelid, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 190, 30));
 
         jLabel4.setText("Cantidad de porciones");
@@ -308,17 +317,17 @@ public class AgregarProducto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jBttn_NuevaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBttn_NuevaCategoriaActionPerformed
         CrearCategoría crear = new CrearCategoría(servicioCantidad,servicioCategoria,servicioIngrediente, 
                                                     servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
         crear.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jBttn_NuevaCategoriaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jBttn_NuevoIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBttn_NuevoIngredienteActionPerformed
         CrearIngrediente crear = new CrearIngrediente(servicioCantidad,servicioCategoria,servicioIngrediente, 
                                                     servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
         crear.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jBttn_NuevoIngredienteActionPerformed
 
     private void popmenuIngMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_popmenuIngMouseClicked
        
@@ -345,7 +354,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         filtrar(texto);
     }//GEN-LAST:event_TextoIngKeyReleased
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jBttn_ActualizarPantallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBttn_ActualizarPantallaActionPerformed
         String id = this.labelid.getText();
         String nom = this.TextoNombre.getText();
         int cat = this.CBCategoria.getSelectedIndex();
@@ -379,7 +388,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         
         abrir.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jBttn_ActualizarPantallaActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         
@@ -575,27 +584,28 @@ public class AgregarProducto extends javax.swing.JFrame {
     public static javax.swing.JTextField TextoIng;
     public static javax.swing.JTextField TextoNombre;
     public static javax.swing.JTextArea TextoReceta;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jBttn_ActualizarPantalla;
+    private javax.swing.JButton jBttn_NuevaCategoria;
+    private javax.swing.JButton jBttn_NuevoIngrediente;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLbl_Categoria;
+    private javax.swing.JLabel jLbl_Ingrediente;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JPanel jPanel_Ingredientes;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel jlbl_NombreProducto;
     public static javax.swing.JLabel labelid;
     private javax.swing.JPopupMenu popmenuIng;
     private javax.swing.JPopupMenu popmenuProd;

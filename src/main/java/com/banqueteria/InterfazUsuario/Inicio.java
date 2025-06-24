@@ -174,7 +174,6 @@ public class Inicio extends javax.swing.JFrame {
         PanelFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PanelCalculo.setBackground(new java.awt.Color(186, 192, 165));
-        PanelCalculo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         PanelCalculo.setPreferredSize(new java.awt.Dimension(100, 780));
         PanelCalculo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -209,7 +208,7 @@ public class Inicio extends javax.swing.JFrame {
             TablaIngEncargo.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        PanelCalculo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 389, 320, 280));
+        PanelCalculo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 320, 280));
 
         TablaEncargo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -234,12 +233,13 @@ public class Inicio extends javax.swing.JFrame {
             TablaEncargo.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        PanelCalculo.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 320, 250));
+        PanelCalculo.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 320, 250));
 
+        jLabel1.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cliente");
-        PanelCalculo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 120, 30));
-        PanelCalculo.add(textencargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(191, 20, 130, 30));
+        PanelCalculo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 120, 30));
+        PanelCalculo.add(textencargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 130, 30));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Precio estimado");
@@ -248,7 +248,7 @@ public class Inicio extends javax.swing.JFrame {
         textprecio.setText("0");
         PanelCalculo.add(textprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 130, 30));
 
-        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 340, 730));
+        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 740));
 
         TextBuscarProd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -363,8 +363,9 @@ public class Inicio extends javax.swing.JFrame {
         });
         PanelProducto.add(labelImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 9, 140, 40));
 
-        PanelFondo.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 230, 340, 450));
+        PanelFondo.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 230, 340, 450));
 
+        btnAgregarProd.setBackground(new java.awt.Color(163, 181, 135));
         btnAgregarProd.setText("Agregar Producto");
         btnAgregarProd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAgregarProd.addActionListener(new java.awt.event.ActionListener() {
@@ -393,7 +394,7 @@ public class Inicio extends javax.swing.JFrame {
                 labeliMouseExited(evt);
             }
         });
-        PanelCategoria.add(labeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, 100));
+        PanelCategoria.add(labeli, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 100));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setPreferredSize(new java.awt.Dimension(150, 100));
@@ -413,13 +414,10 @@ public class Inicio extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cat1, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(cat1, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
-        PanelCategoria.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 30, 150, 100));
+        PanelCategoria.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 150, 100));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.setPreferredSize(new java.awt.Dimension(150, 100));
@@ -442,7 +440,7 @@ public class Inicio extends javax.swing.JFrame {
             .addComponent(cat2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        PanelCategoria.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 30, 150, -1));
+        PanelCategoria.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, 150, -1));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.setPreferredSize(new java.awt.Dimension(150, 100));
@@ -468,7 +466,7 @@ public class Inicio extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        PanelCategoria.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 30, 150, 100));
+        PanelCategoria.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 150, 100));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -491,7 +489,7 @@ public class Inicio extends javax.swing.JFrame {
             .addComponent(cat4, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
         );
 
-        PanelCategoria.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 30, 150, 100));
+        PanelCategoria.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 30, 150, 100));
 
         labeld.setIcon(new javax.swing.ImageIcon(getClass().getResource("/static/imagend.png"))); // NOI18N
         labeld.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -508,22 +506,21 @@ public class Inicio extends javax.swing.JFrame {
                 labeldMouseExited(evt);
             }
         });
-        PanelCategoria.add(labeld, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, -1, 100));
+        PanelCategoria.add(labeld, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, -1, 100));
 
-        PanelFondo.add(PanelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 810, 150));
+        PanelFondo.add(PanelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 840, 160));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(PanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

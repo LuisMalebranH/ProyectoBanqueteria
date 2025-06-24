@@ -53,6 +53,7 @@ public class CantidadIngrediente extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(220, 209, 199));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setPreferredSize(new java.awt.Dimension(200, 100));
 
@@ -106,6 +107,7 @@ public class CantidadIngrediente extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
 
+        jPanel2.setBackground(new java.awt.Color(196, 178, 161));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         nombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
