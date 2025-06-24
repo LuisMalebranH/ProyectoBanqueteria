@@ -56,8 +56,9 @@ public class CrearIngrediente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         textprecio = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        textcantidad = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        cantidad = new javax.swing.JSpinner();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -69,14 +70,14 @@ public class CrearIngrediente extends javax.swing.JFrame {
         jPanel1.add(textnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 160, 30));
 
         jLabel2.setText("Medida Ingrediente");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 130, 30));
 
         cbcanting.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbcantingActionPerformed(evt);
             }
         });
-        jPanel1.add(cbcanting, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 160, 30));
+        jPanel1.add(cbcanting, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 160, 30));
 
         jLabel3.setText("Precio Ingrediente ");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 130, 30));
@@ -89,14 +90,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
         jPanel1.add(textprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 160, 30));
 
         jLabel4.setText("Cantidad");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 130, 30));
-
-        textcantidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textcantidadActionPerformed(evt);
-            }
-        });
-        jPanel1.add(textcantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 160, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 130, 30));
 
         jButton1.setText("Agregar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -104,7 +98,9 @@ public class CrearIngrediente extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 233, 110, 30));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 110, 30));
+        jPanel1.add(cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 160, 30));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 380, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,7 +110,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
         );
 
         pack();
@@ -123,7 +119,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         
-        if(validarCamposVacios()){
+        if(validar()){
         
             Ingrediente ing = new Ingrediente();
         
@@ -133,7 +129,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
             String precio = this.textprecio.getText();
             ing.setPrecio(precio);
 
-            String cantidad = this.textcantidad.getText();
+            String cantidad = this.cantidad.getValue().toString();
             ing.setCantidad(cantidad);
 
             String medida = this.cbcanting.getSelectedItem().toString();
@@ -157,13 +153,10 @@ public class CrearIngrediente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textprecioActionPerformed
 
-    private void textcantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textcantidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textcantidadActionPerformed
-
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSpinner cantidad;
     private javax.swing.JComboBox<String> cbcanting;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -171,7 +164,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField textcantidad;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField textnombre;
     private javax.swing.JTextField textprecio;
     // End of variables declaration//GEN-END:variables
@@ -198,7 +191,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
         
     }
     
-    private boolean validarCamposVacios(){
+    private boolean validar(){
         
         if(this.textnombre.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"El ingrediente debe tener un nombre","Alerta",JOptionPane.INFORMATION_MESSAGE);
@@ -206,8 +199,11 @@ public class CrearIngrediente extends javax.swing.JFrame {
         }else if(this.textprecio.getText().isEmpty()){
             JOptionPane.showMessageDialog(null,"El ingrerdiente debe tener un precio","Alerta",JOptionPane.INFORMATION_MESSAGE);
             return false;
-        }else if(this.textcantidad.getText().isEmpty()){
+        }else if(this.cantidad.getValue().equals(0)){
             JOptionPane.showMessageDialog(null,"El ingrediente debe tener una cantidad asociada","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(!this.textprecio.getText().matches("\\d+")){
+            JOptionPane.showMessageDialog(null,"El precio debe ser de caracter numérico","Alerta",JOptionPane.INFORMATION_MESSAGE);
             return false;
         }else{
             return true;
