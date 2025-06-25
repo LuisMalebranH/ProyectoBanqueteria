@@ -46,6 +46,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 
 public class Inicio extends javax.swing.JFrame {
@@ -83,8 +84,6 @@ public class Inicio extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         
         this.setSize(1200, 800);
-        
-        this.PanelCalculo.setSize(300, 680); 
         
         corregirImagen(this.labeld,"src/main/resources/static/imagend.png");
         corregirImagen(this.labeli,"src/main/resources/static/imageni.png");
@@ -124,9 +123,12 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu2 = new javax.swing.JPopupMenu();
+        popmenuproductos = new javax.swing.JPopupMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        popmenuencargoprod = new javax.swing.JPopupMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         PanelFondo = new javax.swing.JPanel();
         PanelCalculo = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -166,7 +168,7 @@ public class Inicio extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jPopupMenu2.add(jMenuItem2);
+        popmenuproductos.add(jMenuItem2);
 
         jMenuItem1.setText("Agregar al Encargo");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +176,24 @@ public class Inicio extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jPopupMenu2.add(jMenuItem1);
+        popmenuproductos.add(jMenuItem1);
+
+        jMenuItem3.setText("^");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        popmenuencargoprod.add(jMenuItem3);
+
+        jMenuItem4.setText("v");
+        jMenuItem4.setToolTipText("");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        popmenuencargoprod.add(jMenuItem4);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -218,7 +237,7 @@ public class Inicio extends javax.swing.JFrame {
             TablaIngEncargo.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        PanelCalculo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 320, 280));
+        PanelCalculo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 320, 280));
 
         TablaEncargo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -236,6 +255,7 @@ public class Inicio extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        TablaEncargo.setComponentPopupMenu(popmenuencargoprod);
         jScrollPane4.setViewportView(TablaEncargo);
         if (TablaEncargo.getColumnModel().getColumnCount() > 0) {
             TablaEncargo.getColumnModel().getColumn(0).setResizable(false);
@@ -243,7 +263,7 @@ public class Inicio extends javax.swing.JFrame {
             TablaEncargo.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        PanelCalculo.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 320, 250));
+        PanelCalculo.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 320, 250));
 
         jLabel1.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -258,7 +278,6 @@ public class Inicio extends javax.swing.JFrame {
         textprecio.setText("0");
         PanelCalculo.add(textprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 130, 30));
 
-        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 740));
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,7 +286,7 @@ public class Inicio extends javax.swing.JFrame {
         });
         PanelCalculo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 690, 120, -1));
 
-        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 340, 730));
+        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 770));
 
         TextBuscarProd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -303,7 +322,7 @@ public class Inicio extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        TablaProductos.setComponentPopupMenu(jPopupMenu2);
+        TablaProductos.setComponentPopupMenu(popmenuproductos);
         TablaProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         TablaProductos.setFillsViewportHeight(true);
         TablaProductos.setName("TablaProductos"); // NOI18N
@@ -371,7 +390,7 @@ public class Inicio extends javax.swing.JFrame {
 
         PanelProducto.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 53, 324, 170));
 
-        PanelFondo.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 230, 340, 450));
+        PanelFondo.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 230, 340, 450));
 
         btnAgregarProd.setBackground(new java.awt.Color(163, 181, 135));
         btnAgregarProd.setText("Agregar Producto");
@@ -791,6 +810,74 @@ public class Inicio extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        
+        int fila = this.TablaEncargo.getSelectedRow();
+        int cantidad  = Integer.parseInt(this.TablaEncargo.getValueAt(fila,1).toString());
+        cantidad = cantidad + 1;
+        this.TablaEncargo.setValueAt(cantidad,fila,1);
+        
+        String producto = this.TablaEncargo.getValueAt(this.TablaEncargo.getSelectedRow(),0).toString();
+        int precio = Integer.parseInt(this.textprecio.getText());
+        for(int q = 0;q<this.TablaProductos.getRowCount();q++){
+            if(this.TablaProductos.getValueAt(q,0).equals(producto)){
+                precio = precio + Integer.parseInt(this.TablaProductos.getValueAt(q,2).toString());
+                this.textprecio.setText(String.valueOf(precio));
+            }
+        }
+        
+        for(int i = 0;i<this.TablaIngredientes.getRowCount();i++){
+            String ingrediente = this.TablaIngredientes.getValueAt(i,0).toString();
+            String cantidading = this.TablaIngredientes.getValueAt(i,1).toString();
+            String medida = this.TablaIngredientes.getValueAt(i,2).toString();
+            
+            for(int t = 0;t<this.TablaIngEncargo.getRowCount();t++){
+                if(this.TablaIngEncargo.getValueAt(t,0).equals(ingrediente)){
+                    Double cantidadn = obtenerCantidad(medida,this.TablaIngEncargo.getValueAt(t,2).toString(),corregirDecimales(cantidading));
+                    Double cantidade = Double.parseDouble(this.TablaIngEncargo.getValueAt(t,1).toString());
+                    Double cantidadf = cantidadn + cantidade;
+                    this.TablaIngEncargo.setValueAt(String.format(Locale.ENGLISH,"%.2f",cantidadf),t,1);
+                }
+            }
+                                  
+        }
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+       
+        int fila = this.TablaEncargo.getSelectedRow();
+        int cantidad  = Integer.parseInt(this.TablaEncargo.getValueAt(fila,1).toString());
+        cantidad = cantidad - 1;
+        this.TablaEncargo.setValueAt(cantidad,fila,1);
+        
+        String producto = this.TablaEncargo.getValueAt(this.TablaEncargo.getSelectedRow(),0).toString();
+        int precio = Integer.parseInt(this.textprecio.getText());
+        for(int q = 0;q<this.TablaProductos.getRowCount();q++){
+            if(this.TablaProductos.getValueAt(q,0).equals(producto)){
+                precio = precio - Integer.parseInt(this.TablaProductos.getValueAt(q,2).toString());
+                this.textprecio.setText(String.valueOf(precio));
+            }
+        }
+        
+        for(int i = 0;i<this.TablaIngredientes.getRowCount();i++){
+            String ingrediente = this.TablaIngredientes.getValueAt(i,0).toString();
+            String cantidading = this.TablaIngredientes.getValueAt(i,1).toString();
+            String medida = this.TablaIngredientes.getValueAt(i,2).toString();
+            
+            for(int t = 0;t<this.TablaIngEncargo.getRowCount();t++){
+                if(this.TablaIngEncargo.getValueAt(t,0).equals(ingrediente)){
+                    Double cantidadn = obtenerCantidad(medida,this.TablaIngEncargo.getValueAt(t,2).toString(),corregirDecimales(cantidading));
+                    Double cantidade = Double.parseDouble(this.TablaIngEncargo.getValueAt(t,1).toString());
+                    Double cantidadf = cantidade - cantidadn;
+                    this.TablaIngEncargo.setValueAt(String.format(Locale.ENGLISH,"%.2f",cantidadf),t,1);
+                }
+            }
+                                  
+        }
+        
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     
     
     
@@ -817,17 +904,20 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel labeld;
     private javax.swing.JLabel labeli;
+    private javax.swing.JPopupMenu popmenuencargoprod;
+    private javax.swing.JPopupMenu popmenuproductos;
     private javax.swing.JTextField textencargo;
     public static javax.swing.JTextField textprecio;
     // End of variables declaration//GEN-END:variables
@@ -1434,5 +1524,188 @@ public class Inicio extends javax.swing.JFrame {
         
     }
 
+    private double obtenerCantidad(String desde, String hasta, double cantidad){
+    
+        switch (desde) {
+            case "taza":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 250;
+                        return cantidad;
+                    case "litro":
+                        cantidad = cantidad * 0.25;
+                        return cantidad;
+                    case "gramos":
+                        cantidad = cantidad * 125;
+                        return cantidad;
+                    case "kilo":
+                        cantidad = cantidad * 0.125;
+                        return cantidad;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    default:
+                        throw new AssertionError();
+                }
+            case "unidad":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "unidad":
+                        return cantidad;
+                    default:
+                        throw new AssertionError();
+                }
+            case "cucharada":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 15;
+                        return cantidad;
+                    case "litro":
+                        cantidad = cantidad * 0.015;
+                        return cantidad;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    default:
+                        throw new AssertionError();
+                }
+            case "criterio propio":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    default:
+                        throw new AssertionError();
+                }
+            case "mililitro":
+                switch (hasta) {
+                    case "mililitro":
+                        return cantidad;
+                    case "litro":
+                        cantidad = cantidad * 0.001;
+                        return cantidad;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    default:
+                        throw new AssertionError();
+                }
+            case "litro":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 1000;
+                        return cantidad;
+                    case "litro":
+                        return cantidad;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    default:
+                        throw new AssertionError();
+                }
+            case "gramos":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "gramos":
+                        return cantidad;
+                    case "kilo":
+                        cantidad = cantidad * 0.001;
+                        return cantidad;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    default:
+                        throw new AssertionError();
+                }
+            case "kilo":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "gramos":
+                        cantidad = cantidad * 1000;
+                        return cantidad;
+                    case "kilo":
+                        return cantidad;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    default:
+                        throw new AssertionError();
+                }
+            case "diente":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        return cantidad;
+                    case "unidad":
+                        cantidad = cantidad * 0.2;
+                        return cantidad;
+                    default:
+                        throw new AssertionError();
+                }
+            default:
+                throw new AssertionError();
+        }
+        
+    }
 
 }

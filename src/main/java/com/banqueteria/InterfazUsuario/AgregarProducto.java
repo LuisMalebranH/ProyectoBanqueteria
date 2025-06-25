@@ -94,8 +94,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaListaIng = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jBtn_GuardarProducto = new javax.swing.JButton();
         labelid = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         textPorcionesProd = new javax.swing.JTextField();
@@ -104,6 +103,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         textPrecioIng = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         textPrecioProd = new javax.swing.JTextField();
+        jBtn_Cancelar = new javax.swing.JButton();
 
         popmenuIng.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -232,7 +232,7 @@ public class AgregarProducto extends javax.swing.JFrame {
                 jBttn_ActualizarPantallaActionPerformed(evt);
             }
         });
-        jPanel_Ingredientes.add(jBttn_ActualizarPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, 140, 30));
+        jPanel_Ingredientes.add(jBttn_ActualizarPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 710, 140, 30));
 
         PanelAP.add(jPanel_Ingredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 770));
 
@@ -281,23 +281,14 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         PanelAP.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 340, 610));
 
-        jButton4.setBackground(new java.awt.Color(159, 173, 138));
-        jButton4.setText("Guardar producto");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jBtn_GuardarProducto.setBackground(new java.awt.Color(159, 173, 138));
+        jBtn_GuardarProducto.setText("Guardar Prodcuto");
+        jBtn_GuardarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jBtn_GuardarProductoActionPerformed(evt);
             }
         });
-        PanelAP.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 710, 140, 40));
-
-        jButton5.setBackground(new java.awt.Color(186, 192, 165));
-        jButton5.setText("Cancelar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        PanelAP.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 710, 140, 40));
+        PanelAP.add(jBtn_GuardarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 710, 140, 40));
         PanelAP.add(labelid, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 190, 30));
 
         jLabel4.setText("Cantidad de porciones");
@@ -315,6 +306,15 @@ public class AgregarProducto extends javax.swing.JFrame {
         jLabel8.setText("Precio del producto");
         PanelAP.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 610, 130, 30));
         PanelAP.add(textPrecioProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 610, 160, 30));
+
+        jBtn_Cancelar.setBackground(new java.awt.Color(159, 173, 138));
+        jBtn_Cancelar.setText("Cancelar");
+        jBtn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtn_CancelarActionPerformed(evt);
+            }
+        });
+        PanelAP.add(jBtn_Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 710, 140, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -414,7 +414,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jBttn_ActualizarPantallaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jBtn_GuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_GuardarProductoActionPerformed
         
         ListaIngredientesFiltrado = new ArrayList<>();
         
@@ -546,7 +546,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jBtn_GuardarProductoActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         
@@ -630,6 +630,16 @@ public class AgregarProducto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CBCategoriaActionPerformed
 
+    private void jBtn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_CancelarActionPerformed
+        
+        Inicio abrir = new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente, 
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+        
+        abrir.setVisible(true);
+        dispose();
+        
+    }//GEN-LAST:event_jBtn_CancelarActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -640,11 +650,11 @@ public class AgregarProducto extends javax.swing.JFrame {
     public static javax.swing.JTextField TextoIng;
     public static javax.swing.JTextField TextoNombre;
     public static javax.swing.JTextArea TextoReceta;
+    private javax.swing.JButton jBtn_Cancelar;
+    private javax.swing.JButton jBtn_GuardarProducto;
     private javax.swing.JButton jBttn_ActualizarPantalla;
     private javax.swing.JButton jBttn_NuevaCategoria;
     private javax.swing.JButton jBttn_NuevoIngrediente;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

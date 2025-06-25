@@ -12,6 +12,7 @@ import com.banqueteria.recetario.medidaingredientes.ServicioMedidaIngrediente;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
