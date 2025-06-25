@@ -9,6 +9,7 @@ import com.banqueteria.recetario.ingrediente.Ingrediente;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.listaingredientes.ListaIngredientes;
 import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
+import com.banqueteria.recetario.medidaingredientes.MedidaIngrediente;
 import com.banqueteria.recetario.medidaingredientes.ServicioMedidaIngrediente;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
@@ -36,6 +37,15 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 
 public class Inicio extends javax.swing.JFrame {
@@ -127,6 +137,7 @@ public class Inicio extends javax.swing.JFrame {
         textencargo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         textprecio = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         TextBuscarProd = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaProductos = new javax.swing.JTable();
@@ -136,7 +147,6 @@ public class Inicio extends javax.swing.JFrame {
         TextoPreparacion = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaIngredientes = new javax.swing.JTable();
-        labelImagen = new javax.swing.JLabel();
         btnAgregarProd = new javax.swing.JButton();
         PanelCategoria = new javax.swing.JPanel();
         labeli = new javax.swing.JLabel();
@@ -249,6 +259,15 @@ public class Inicio extends javax.swing.JFrame {
         PanelCalculo.add(textprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 130, 30));
 
         PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 360, 740));
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        PanelCalculo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 690, 120, -1));
+
+        PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 340, 730));
 
         TextBuscarProd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -309,7 +328,7 @@ public class Inicio extends javax.swing.JFrame {
         LabelNombreProd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelNombreProd.setText("Nombre Producto");
         LabelNombreProd.setToolTipText("");
-        PanelProducto.add(LabelNombreProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, 39));
+        PanelProducto.add(LabelNombreProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 150, 39));
 
         TextoPreparacion.setEditable(false);
         TextoPreparacion.setColumns(20);
@@ -352,18 +371,7 @@ public class Inicio extends javax.swing.JFrame {
 
         PanelProducto.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 53, 324, 170));
 
-        labelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelImagen.setText("Imagen del Producto");
-        labelImagen.setToolTipText("");
-        labelImagen.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        labelImagen.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelImagenMouseClicked(evt);
-            }
-        });
-        PanelProducto.add(labelImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 9, 140, 40));
-
-        PanelFondo.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 230, 340, 450));
+        PanelFondo.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 230, 340, 450));
 
         btnAgregarProd.setBackground(new java.awt.Color(163, 181, 135));
         btnAgregarProd.setText("Agregar Producto");
@@ -671,25 +679,32 @@ public class Inicio extends javax.swing.JFrame {
                 String ingrediente;
                 String cantidad;
                 String medida;
+                double contador = 0;
         
                 for (int q = 0; q<ingredientesProductos.size();q++){
                     if(ingredientesProductos.get(q).getProducto().getId().equals(p.getId())){
-                        ingrediente = buscarIngrediente(ingredientesProductos.get(q).getIngrediente().getId());
+                        ingrediente = buscarNombreIngrediente(ingredientesProductos.get(q).getIngrediente().getId());
                         cantidad = ingredientesProductos.get(q).getCantidad();
                         medida = buscarMedida(ingredientesProductos.get(q).getMedida().getId());
                         String[] prod = {ingrediente,cantidad,medida};
                         tabla.addRow(prod);
+                        
+                        Long id = obtenerIngrediente(ingrediente).getMedidaingrediente().getId();
+                        String medida2 = obtenerMedidaIngrediente(id);
+                        int cantidadIng = Integer.parseInt(obtenerIngrediente(ingrediente).getCantidad());
+                        double precioIng = Double.parseDouble(obtenerIngrediente(ingrediente).getPrecio());
+                        
+                        contador = contador +redondear(obtenerPrecio(medida,medida2,corregirDecimales(cantidad),precioIng,cantidadIng));
+                        
+                        
                     }
                 }
+                AgregarProducto.textPrecioIng.setText(String.valueOf(contador));
                 dispose();
             }
         }
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void labelImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelImagenMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_labelImagenMouseClicked
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         
@@ -700,6 +715,81 @@ public class Inicio extends javax.swing.JFrame {
         abrir.nombre.setText((String) this.TablaProductos.getValueAt(this.TablaProductos.getSelectedRow(),0));
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+       String nom = this.textencargo.getText();
+       Document documento = new Document();
+       String ruta = "ListaEncargo"+nom+".pdf";
+       
+        try {
+            
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+            documento.open();
+            
+            documento.add(new Paragraph("Lista Productos:"));
+            documento.add(new Paragraph(" "));
+            
+            int contadorprod = 0;
+            
+            for(int a = 0;a<TablaEncargo.getRowCount();a++){
+                
+                String nombre = TablaEncargo.getValueAt(a,0).toString();
+                String cantidad = TablaEncargo.getValueAt(a,1).toString();
+                   
+                documento.add(new Paragraph(cantidad+" "+nombre));
+                String precio = buscarProducto(nombre).getPrecio();
+                documento.add(new Paragraph("Precio por unidad: "+precio+" pesos"));
+                int preciototal = Integer.parseInt(precio)*Integer.parseInt(cantidad);
+                documento.add(new Paragraph("Precio total del producto: "+preciototal+" pesos"));
+                documento.add(new Paragraph("-----------------------------------------"));
+                contadorprod = contadorprod + preciototal;
+                
+            }
+            
+            documento.add(new Paragraph(" "));
+            documento.add(new Paragraph("Costo total del encargo: "+contadorprod));
+            documento.add(new Paragraph(" "));
+            documento.add(new Paragraph("Lista Ingredientes:"));
+            documento.add(new Paragraph(" "));
+            
+            int contadoring = 0;
+            
+            for(int b=0;b<TablaIngEncargo.getRowCount();b++){
+            
+                String nombre = TablaIngEncargo.getValueAt(b,0).toString();
+                String cantidad = TablaIngEncargo.getValueAt(b,1).toString();
+                String medida = TablaIngEncargo.getValueAt(b,2).toString();
+                documento.add(new Paragraph(cantidad+" "+medida+" de "+nombre));
+                double precio = Double.parseDouble(buscarIngrediente(nombre).getPrecio());
+                double cantidading = Double.parseDouble(buscarIngrediente(nombre).getCantidad());
+                documento.add(new Paragraph("Precio estimado del ingrediente: "+String.valueOf(precio)+" pesos por "+cantidading+" "+medida));
+                double preciofinal = redondear((precio*Double.parseDouble(cantidad))/cantidading);
+                documento.add(new Paragraph("Precio estimado del total necesario: "+preciofinal+" pesos por "+cantidad+" "+medida));
+                documento.add(new Paragraph("-----------------------------------------"));
+                contadoring = (int) (contadoring + preciofinal);
+                
+            }
+            
+            documento.add(new Paragraph(" "));
+            documento.add(new Paragraph("Precio final estimado: "+String.valueOf(contadoring)));
+            
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            documento.close();
+        }
+        
+        File archivo = new File(ruta);
+        if(archivo.exists()){
+           try {
+               Desktop.getDesktop().open(archivo);
+           } catch (IOException ex) {
+               System.out.println("Error al abrir el archivo");
+           }
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     
@@ -722,6 +812,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel cat2;
     private javax.swing.JLabel cat3;
     private javax.swing.JLabel cat4;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -735,7 +826,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel labeld;
     private javax.swing.JLabel labeli;
     private javax.swing.JTextField textencargo;
@@ -819,9 +909,9 @@ public class Inicio extends javax.swing.JFrame {
         }   
         
         for (int i = 0; i<productosFiltrados.size();i++){
-            String nombre = productos.get(i).getNombre();
-            String porciones = productos.get(i).getPorciones();
-            String precio = productos.get(i).getPrecio();
+            String nombre = productosFiltrados.get(i).getNombre();
+            String porciones = productosFiltrados.get(i).getPorciones();
+            String precio = productosFiltrados.get(i).getPrecio();
             String[] prod = {nombre,porciones,precio};
             tabla = (DefaultTableModel) this.TablaProductos.getModel();
             tabla.addRow(prod);
@@ -963,7 +1053,7 @@ public class Inicio extends javax.swing.JFrame {
         
         for (int i = 0; i<ingredientesProductos.size();i++){
             if(ingredientesProductos.get(i).getProducto().getId().equals(id)){
-                ingrediente = buscarIngrediente(ingredientesProductos.get(i).getIngrediente().getId());
+                ingrediente = buscarNombreIngrediente(ingredientesProductos.get(i).getIngrediente().getId());
                 cantidad = ingredientesProductos.get(i).getCantidad();
                 medida = buscarMedida(ingredientesProductos.get(i).getMedida().getId());
                 String[] prod = {ingrediente,cantidad,medida};
@@ -973,13 +1063,38 @@ public class Inicio extends javax.swing.JFrame {
     
     }
     
-    private String buscarIngrediente(Long idingrediente){
+    private String buscarNombreIngrediente(Long idingrediente){
         
         ingredientes = servicioIngrediente.getAll();
         
         for (Ingrediente i : ingredientes){
             if(i.getId().equals(idingrediente)){
                 return i.getNombre();
+            }
+        }
+        return null;
+    }
+    
+    private Ingrediente buscarIngrediente(String nombre){
+    
+        ingredientes = servicioIngrediente.getAll();
+        
+        for (Ingrediente i : ingredientes){
+            if(i.getNombre().equals(nombre)){
+                return i;
+            }
+        }
+        return null;
+        
+    }
+    
+    private String buscarMedidaCompraIngrediente(Long id){
+        
+        List<MedidaIngrediente> medida = servicioMedidaIngrediente.getAll();
+        
+        for (MedidaIngrediente mi : medida){
+            if(mi.getId().equals(id)){
+                return mi.getDetalle();
             }
         }
         return null;
@@ -1032,5 +1147,292 @@ public class Inicio extends javax.swing.JFrame {
         int x = mouse1.x + mouse2.x;
         return x;
     }
+    
+    private double redondear(double valor){
+        
+        double redondeado = Math.round(valor * 10) / 10;
+        return redondeado;
+    }
+    
+    private Ingrediente obtenerIngrediente(String nombre){
+    
+        List<Ingrediente> ing = new ArrayList<>();
+        ing = servicioIngrediente.getAll();
+        for(Ingrediente i : ing){
+            if(i.getNombre().equals(nombre)){
+                return i;
+            }
+        }
+        return null;
+    }
+    
+    private String obtenerMedidaIngrediente(Long id){
+    
+        List <MedidaIngrediente> ListaMedIng = servicioMedidaIngrediente.getAll();
+        for(MedidaIngrediente mi : ListaMedIng){
+            if(mi.getId().equals(id)){
+                return mi.getDetalle();
+            }
+        }
+        return null;
+    }
+    
+    private double obtenerPrecio(String desde, String hasta, double cantidad, double precio, int cantidadIng){
+    
+        switch (desde) {
+            case "taza":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 250;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0.25;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 125;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0.125;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "unidad":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;;
+                        return precio;
+                    case "unidad":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "cucharada":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 15;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0.015;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "criterio propio":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "mililitro":
+                switch (hasta) {
+                    case "mililitro":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0.001;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "litro":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 1000;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "gramos":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0.001;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "kilo":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 1000;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            case "diente":
+                switch (hasta) {
+                    case "mililitro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "litro":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "gramos":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "kilo":
+                        cantidad = cantidad * 0;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    case "unidad":
+                        cantidad = cantidad * 0.2;
+                        precio = (precio * cantidad)/cantidadIng;
+                        return precio;
+                    default:
+                        throw new AssertionError();
+                }
+            default:
+                throw new AssertionError();
+        }
+        
+    }
+    
+    private double corregirDecimales(String cantidad){
+    
+        cantidad = cantidad.trim();
+        
+        if(cantidad.matches("\\d+\\s+\\d+/\\d+")){//2 1/2 -> 2+0.5 -> 2.5
+            
+            String[] partes = cantidad.split("\\s+");
+            double entero = Double.parseDouble(partes[0]);
+            String[] fraccion = partes[1].split("/");
+            double numerador = Double.parseDouble(fraccion[0]);
+            double denominador = Double.parseDouble(fraccion[1]);
+            return entero + (numerador / denominador);
+            
+        }else if(cantidad.matches("\\d+/\\d+")){
+        
+            String[] fraccion = cantidad.split("/");
+            double numerador = Double.parseDouble(fraccion[0]);
+            double denominador = Double.parseDouble(fraccion[1]);
+            return numerador / denominador;
+        
+        }else{
+        
+            return Double.parseDouble(cantidad);
+            
+        }
+        
+    }
+
 
 }

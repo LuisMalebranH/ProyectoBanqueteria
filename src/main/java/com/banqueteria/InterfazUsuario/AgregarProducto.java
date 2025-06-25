@@ -120,6 +120,11 @@ public class AgregarProducto extends javax.swing.JFrame {
         popmenuIng.add(jMenuItem1);
 
         jMenuItem4.setText("Modificar Ingrediente");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         popmenuIng.add(jMenuItem4);
 
         jMenuItem2.setText("Editar ingrediente");
@@ -368,18 +373,27 @@ public class AgregarProducto extends javax.swing.JFrame {
         String id = this.labelid.getText();
         String nom = this.TextoNombre.getText();
         int cat = this.CBCategoria.getSelectedIndex();
-        List<String[]>IngredientesAgregados = new ArrayList<>();
-        for(int i = 0;i<this.TablaListaIng.getRowCount();i++){
-            String dato0 = (String) TablaListaIng.getValueAt(i, 0);
-            String dato1 = (String) TablaListaIng.getValueAt(i, 1);
-            String dato2 = (String) TablaListaIng.getValueAt(i, 2);
-            String [] dato = {dato0,dato1,dato2};
-            IngredientesAgregados.add(dato);
-        }
         String preparacion = this.TextoReceta.getText();
         String porciones = this.textPorcionesProd.getText();
-        String precioS = this.textPrecioIng.getText();
         String precio = this.textPrecioProd.getText();
+        
+        Double precioS = 0.0;
+        List<String[]>IngredientesAgregados = new ArrayList<>();
+        for(int i = 0;i<this.TablaListaIng.getRowCount();i++){
+            String ingrediente = (String) TablaListaIng.getValueAt(i, 0);
+            String cantidad = (String) TablaListaIng.getValueAt(i, 1);
+            String medida = (String) TablaListaIng.getValueAt(i, 2);
+            String [] dato = {ingrediente,cantidad,medida};
+            IngredientesAgregados.add(dato);
+            
+            Long idmedida = obtenerIngrediente(ingrediente).getMedidaingrediente().getId();
+            String medida2 = obtenerMedidaIngrediente(idmedida);
+            int cantidadIng = Integer.parseInt(obtenerIngrediente(ingrediente).getCantidad());
+            double precioIng = Double.parseDouble(obtenerIngrediente(ingrediente).getPrecio());
+            
+            precioS = redondear(precioS + obtenerPrecio(medida,medida2,corregirDecimales(cantidad),precioIng,cantidadIng));
+            
+        }
         
         AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
                                                     servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
@@ -393,7 +407,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         }
         abrir.TextoReceta.setText(preparacion);
         abrir.textPorcionesProd.setText(porciones);
-        abrir.textPrecioIng.setText(precioS);
+        abrir.textPrecioIng.setText(String.valueOf(precioS));
         abrir.textPrecioProd.setText(precio);
         
         abrir.setVisible(true);
@@ -584,6 +598,34 @@ public class AgregarProducto extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        
+        String nombre = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),0).toString();
+        String precio = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),1).toString();
+        String cantidad = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),2).toString();
+        String medida = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),3).toString();
+        String id = String.valueOf(obtenerIngrediente(nombre).getId());
+        
+        
+        
+        CrearIngrediente abrir = new CrearIngrediente(servicioCantidad,servicioCategoria,servicioIngrediente, 
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+        abrir.setVisible(true);
+        
+        abrir.textnombre.setText(nombre);
+        abrir.textprecio.setText(precio);
+        abrir.cantidad.setValue(Integer.parseInt(cantidad));
+        int index = 0;
+            for(int a = 0;a<abrir.cbcanting.getItemCount();a++){
+                if(abrir.cbcanting.getItemAt(index).equals(medida)){
+                    abrir.cbcanting.setSelectedIndex(index);
+                }else{
+                    index = index + 1;
+                }
+            }
+        abrir.labelid.setText(id);
+        
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
     private void CBCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CBCategoriaActionPerformed

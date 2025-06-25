@@ -180,7 +180,7 @@ public class CantidadProducto extends javax.swing.JFrame {
                                 String desde = tablaingi.getValueAt(a,2).toString();
                                 String hasta = obtenerMedida(tablaingi.getValueAt(a,0).toString());
                                 double cantidadi = corregirDecimales(tablaingi.getValueAt(a,1).toString());
-                                cantidadf = cantidadf + redondear(obtenerCantidad(desde,hasta,cantidadi))*cant;
+                                cantidadf = redondear(cantidadf + obtenerCantidad(desde,hasta,cantidadi)*cant);
                                 tablaingf.setValueAt(String.valueOf(cantidadf), b, 1);
                                 
                                 encontrado = true;
@@ -194,7 +194,7 @@ public class CantidadProducto extends javax.swing.JFrame {
                             String nombreing = tablaingi.getValueAt(a,0).toString();
                             double cantidading = corregirDecimales(tablaingi.getValueAt(a,1).toString());
                             String medidaing = obtenerMedida(tablaingi.getValueAt(a,0).toString());
-                            double cantidadingf = redondear(obtenerCantidad(tablaingi.getValueAt(a,2).toString(),medidaing,cantidading))*cant;
+                            double cantidadingf = redondear(obtenerCantidad(tablaingi.getValueAt(a,2).toString(),medidaing,cantidading)*cant);
 
                             String[] nuevoing = {nombreing,String.valueOf(cantidadingf),medidaing};
                             tablaingf.addRow(nuevoing);
