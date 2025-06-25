@@ -66,6 +66,7 @@ public class Medida extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(220, 209, 199));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setPreferredSize(new java.awt.Dimension(200, 100));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -73,7 +74,9 @@ public class Medida extends javax.swing.JFrame {
         Cantidad.setText("Tipo de Medida");
         jPanel1.add(Cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 110, 30));
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 254));
         jButton1.setText("Confirmar");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -81,7 +84,9 @@ public class Medida extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 110, 30));
 
+        CBCantidades.setBackground(new java.awt.Color(255, 255, 254));
         CBCantidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CBCantidades.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         CBCantidades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CBCantidadesActionPerformed(evt);
@@ -91,6 +96,7 @@ public class Medida extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 270, -1));
 
+        jPanel2.setBackground(new java.awt.Color(196, 178, 161));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         nombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

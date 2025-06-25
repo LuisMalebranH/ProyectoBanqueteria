@@ -153,8 +153,17 @@ public class AgregarProducto extends javax.swing.JFrame {
 
         jLbl_Categoria.setText("Categoría ");
         jPanel_Ingredientes.add(jLbl_Categoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 110, 30));
+
+        CBCategoria.setBackground(new java.awt.Color(255, 255, 254));
+        CBCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        CBCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CBCategoriaActionPerformed(evt);
+            }
+        });
         jPanel_Ingredientes.add(CBCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 160, 30));
 
+        jBttn_NuevaCategoria.setBackground(new java.awt.Color(255, 255, 254));
         jBttn_NuevaCategoria.setText("Nueva Categoría");
         jBttn_NuevaCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +182,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         });
         jPanel_Ingredientes.add(TextoIng, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 160, 30));
 
+        jBttn_NuevoIngrediente.setBackground(new java.awt.Color(255, 255, 254));
         jBttn_NuevoIngrediente.setText("Nuevo Ingrediente");
         jBttn_NuevoIngrediente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -573,6 +583,10 @@ public class AgregarProducto extends javax.swing.JFrame {
         this.textPrecioIng.setText(String.valueOf(precioProdfinal));
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void CBCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CBCategoriaActionPerformed
 
     
 

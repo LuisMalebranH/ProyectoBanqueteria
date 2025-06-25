@@ -51,6 +51,7 @@ public class CrearMedidaIng extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(220, 209, 199));
         jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -58,6 +59,7 @@ public class CrearMedidaIng extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 130, 30));
         jPanel1.add(textnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 160, 30));
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 254));
         jButton1.setText("Agregar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -61,6 +61,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(220, 209, 199));
         jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -71,6 +72,8 @@ public class CrearIngrediente extends javax.swing.JFrame {
         jLabel2.setText("Medida Ingrediente");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 130, 30));
 
+        cbcanting.setBackground(new java.awt.Color(255, 255, 254));
+        cbcanting.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         cbcanting.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbcantingActionPerformed(evt);
@@ -98,7 +101,9 @@ public class CrearIngrediente extends javax.swing.JFrame {
         });
         jPanel1.add(textcantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 160, 30));
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 254));
         jButton1.setText("Agregar");
+        jButton1.setBorder(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
