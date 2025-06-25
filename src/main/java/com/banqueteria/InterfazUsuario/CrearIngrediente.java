@@ -60,6 +60,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
         cantidad = new javax.swing.JSpinner();
         jSeparator1 = new javax.swing.JSeparator();
         labelid = new javax.swing.JLabel();
+        labelprecio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -103,6 +104,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
         jPanel1.add(cantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 160, 30));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 380, -1));
         jPanel1.add(labelid, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 110, 30));
+        jPanel1.add(labelprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 110, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,6 +176,7 @@ public class CrearIngrediente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     public static javax.swing.JLabel labelid;
+    public static javax.swing.JLabel labelprecio;
     public static javax.swing.JTextField textnombre;
     public static javax.swing.JTextField textprecio;
     // End of variables declaration//GEN-END:variables

@@ -147,7 +147,6 @@ public class Inicio extends javax.swing.JFrame {
         TextoPreparacion = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaIngredientes = new javax.swing.JTable();
-        labelImagen = new javax.swing.JLabel();
         btnAgregarProd = new javax.swing.JButton();
         PanelCategoria = new javax.swing.JPanel();
         labeli = new javax.swing.JLabel();
@@ -327,7 +326,7 @@ public class Inicio extends javax.swing.JFrame {
         LabelNombreProd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelNombreProd.setText("Nombre Producto");
         LabelNombreProd.setToolTipText("");
-        PanelProducto.add(LabelNombreProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, 39));
+        PanelProducto.add(LabelNombreProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 150, 39));
 
         TextoPreparacion.setEditable(false);
         TextoPreparacion.setColumns(20);
@@ -369,17 +368,6 @@ public class Inicio extends javax.swing.JFrame {
         }
 
         PanelProducto.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 53, 324, 170));
-
-        labelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelImagen.setText("Imagen del Producto");
-        labelImagen.setToolTipText("");
-        labelImagen.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        labelImagen.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelImagenMouseClicked(evt);
-            }
-        });
-        PanelProducto.add(labelImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 9, 140, 40));
 
         PanelFondo.add(PanelProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 230, 340, 450));
 
@@ -716,10 +704,6 @@ public class Inicio extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void labelImagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelImagenMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_labelImagenMouseClicked
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         
         CantidadProducto abrir = new CantidadProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
@@ -840,7 +824,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel labeld;
     private javax.swing.JLabel labeli;
     private javax.swing.JTextField textencargo;
@@ -924,9 +907,9 @@ public class Inicio extends javax.swing.JFrame {
         }   
         
         for (int i = 0; i<productosFiltrados.size();i++){
-            String nombre = productos.get(i).getNombre();
-            String porciones = productos.get(i).getPorciones();
-            String precio = productos.get(i).getPrecio();
+            String nombre = productosFiltrados.get(i).getNombre();
+            String porciones = productosFiltrados.get(i).getPorciones();
+            String precio = productosFiltrados.get(i).getPrecio();
             String[] prod = {nombre,porciones,precio};
             tabla = (DefaultTableModel) this.TablaProductos.getModel();
             tabla.addRow(prod);

@@ -274,7 +274,7 @@ public class AgregarProducto extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        PanelAP.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 710, 140, 30));
+        PanelAP.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 710, 140, 30));
         PanelAP.add(labelid, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, 190, 30));
 
         jLabel4.setText("Cantidad de porciones");
@@ -350,18 +350,27 @@ public class AgregarProducto extends javax.swing.JFrame {
         String id = this.labelid.getText();
         String nom = this.TextoNombre.getText();
         int cat = this.CBCategoria.getSelectedIndex();
-        List<String[]>IngredientesAgregados = new ArrayList<>();
-        for(int i = 0;i<this.TablaListaIng.getRowCount();i++){
-            String dato0 = (String) TablaListaIng.getValueAt(i, 0);
-            String dato1 = (String) TablaListaIng.getValueAt(i, 1);
-            String dato2 = (String) TablaListaIng.getValueAt(i, 2);
-            String [] dato = {dato0,dato1,dato2};
-            IngredientesAgregados.add(dato);
-        }
         String preparacion = this.TextoReceta.getText();
         String porciones = this.textPorcionesProd.getText();
-        String precioS = this.textPrecioIng.getText();
         String precio = this.textPrecioProd.getText();
+        
+        Double precioS = 0.0;
+        List<String[]>IngredientesAgregados = new ArrayList<>();
+        for(int i = 0;i<this.TablaListaIng.getRowCount();i++){
+            String ingrediente = (String) TablaListaIng.getValueAt(i, 0);
+            String cantidad = (String) TablaListaIng.getValueAt(i, 1);
+            String medida = (String) TablaListaIng.getValueAt(i, 2);
+            String [] dato = {ingrediente,cantidad,medida};
+            IngredientesAgregados.add(dato);
+            
+            Long idmedida = obtenerIngrediente(ingrediente).getMedidaingrediente().getId();
+            String medida2 = obtenerMedidaIngrediente(idmedida);
+            int cantidadIng = Integer.parseInt(obtenerIngrediente(ingrediente).getCantidad());
+            double precioIng = Double.parseDouble(obtenerIngrediente(ingrediente).getPrecio());
+            
+            precioS = redondear(precioS + obtenerPrecio(medida,medida2,corregirDecimales(cantidad),precioIng,cantidadIng));
+            
+        }
         
         AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
                                                     servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
@@ -375,7 +384,7 @@ public class AgregarProducto extends javax.swing.JFrame {
         }
         abrir.TextoReceta.setText(preparacion);
         abrir.textPorcionesProd.setText(porciones);
-        abrir.textPrecioIng.setText(precioS);
+        abrir.textPrecioIng.setText(String.valueOf(precioS));
         abrir.textPrecioProd.setText(precio);
         
         abrir.setVisible(true);
@@ -573,6 +582,8 @@ public class AgregarProducto extends javax.swing.JFrame {
         String cantidad = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),2).toString();
         String medida = this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),3).toString();
         String id = String.valueOf(obtenerIngrediente(nombre).getId());
+        
+        
         
         CrearIngrediente abrir = new CrearIngrediente(servicioCantidad,servicioCategoria,servicioIngrediente, 
                                                     servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
