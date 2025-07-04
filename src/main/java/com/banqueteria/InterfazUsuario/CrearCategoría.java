@@ -4,6 +4,8 @@ package com.banqueteria.InterfazUsuario;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
+import com.banqueteria.recetario.detalleencargo.ServicioDetalleEncargo;
+import com.banqueteria.recetario.encargo.ServicioEncargo;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.medidaingredientes.ServicioMedidaIngrediente;
@@ -14,23 +16,30 @@ public class CrearCategoría extends javax.swing.JFrame {
 
     private ServicioCategoria servicioCategoria;
     private ServicioIngrediente servicioIngrediente;
-    private final ServicioCantidad servicioCantidad;
-    private final ServicioProducto servicioProducto;
+    private ServicioCantidad servicioCantidad;
+    private ServicioProducto servicioProducto;
     private ServicioListaIngredientes servicioListaIngredientes;
     private ServicioMedidaIngrediente servicioMedidaIngrediente;
+    private ServicioEncargo servicioEncargo;
+    private ServicioDetalleEncargo servicioDetalleEncargo;
 
-    public CrearCategoría(ServicioCantidad servicioCantidad,
+    public CrearCategoría(
+            ServicioCantidad servicioCantidad,
             ServicioCategoria servicioCategoria,
             ServicioIngrediente servicioIngrediente, 
             ServicioProducto servicioProducto,
             ServicioListaIngredientes servicioListaIngredientes,
-            ServicioMedidaIngrediente servicioMedidaIngrediente) {
+            ServicioMedidaIngrediente servicioMedidaIngrediente,
+            ServicioEncargo servicioEncargo,
+            ServicioDetalleEncargo servicioDetalleEncargo) {
         this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
         this.servicioIngrediente = servicioIngrediente;
         this.servicioProducto = servicioProducto;
         this.servicioListaIngredientes = servicioListaIngredientes;
         this.servicioMedidaIngrediente = servicioMedidaIngrediente;
+        this.servicioEncargo = servicioEncargo;
+        this.servicioDetalleEncargo = servicioDetalleEncargo;
         initComponents();
         
         this.setLocationRelativeTo(null);

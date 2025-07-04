@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import java.sql.Date;
 
 import java.time.LocalDate;
 
@@ -23,10 +24,15 @@ public class Encargo {
     @Column(length = 20)
     private String cliente;
     
+    @Column (name ="fecha_elaboracion")
+    private Date fechaElaboracion;
+    
     
     @Column (name ="fecha_entrega")
-    private LocalDate fechaEntrega;
+    private Date fechaEntrega;
     
+    @Column(length = 10)
+    private String precio;
 
     // Getters & setters
 
@@ -46,14 +52,30 @@ public class Encargo {
         this.cliente = cliente;
     }
 
-    public LocalDate getFechaEntrega() {
+    public Date getFechaEntrega() {
         return fechaEntrega;
     }
 
-    public void setFechaEntrega(LocalDate fechaEntrega) {
+    public void setFechaEntrega(Date fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
 
-  
+    public Date getFechaElaboracion() {
+        return fechaElaboracion;
+    }
+
+    public void setFechaElaboracion(Date fechaElaboracion) {
+        this.fechaElaboracion = fechaElaboracion;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+
+    
 
 }

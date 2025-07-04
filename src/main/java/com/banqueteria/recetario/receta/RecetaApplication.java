@@ -5,6 +5,8 @@ package com.banqueteria.recetario.receta;
 import com.banqueteria.InterfazUsuario.Inicio;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
+import com.banqueteria.recetario.detalleencargo.ServicioDetalleEncargo;
+import com.banqueteria.recetario.encargo.ServicioEncargo;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.listaingredientes.ServicioListaIngredientes;
 import com.banqueteria.recetario.medidaingredientes.ServicioMedidaIngrediente;
@@ -22,14 +24,18 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
     "com.banqueteria.recetario.producto",
     "com.banqueteria.recetario.categoria",
     "com.banqueteria.recetario.listaingredientes",
-    "com.banqueteria.recetario.medidaingredientes"})
+    "com.banqueteria.recetario.medidaingredientes",
+    "com.banqueteria.recetario.encargo",
+    "com.banqueteria.recetario.detalleencargo"})
 @EnableJpaRepositories(basePackages = {
     "com.banqueteria.recetario.cantidad",
     "com.banqueteria.recetario.ingrediente",
     "com.banqueteria.recetario.producto",
     "com.banqueteria.recetario.categoria",
     "com.banqueteria.recetario.listaingredientes",
-    "com.banqueteria.recetario.medidaingredientes"})
+    "com.banqueteria.recetario.medidaingredientes",
+    "com.banqueteria.recetario.encargo",
+    "com.banqueteria.recetario.detalleencargo"})
 @EntityScan(basePackages = "com.banqueteria.recetario")
 public class RecetaApplication {
 
@@ -45,10 +51,14 @@ public class RecetaApplication {
                 ServicioCategoria servicioCategoria = context.getBean(ServicioCategoria.class);
                 ServicioListaIngredientes servicioListaIngredientes = context.getBean(ServicioListaIngredientes.class);
                 ServicioMedidaIngrediente servicioMedidaIngrediente = context.getBean(ServicioMedidaIngrediente.class);
+                ServicioEncargo servicioEncargo = context.getBean(ServicioEncargo.class);
+                ServicioDetalleEncargo servicioDetalleEncargo = context.getBean(ServicioDetalleEncargo.class);
                 
                 System.out.println("AVER SI SALTA ESTA ESTUPIDEZ DE");
             SwingUtilities.invokeLater(() -> {
-            new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente,servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente).setVisible(true);
+            new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente,
+                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                    servicioEncargo,servicioDetalleEncargo).setVisible(true);
                 System.out.println("SE SUPONE QUE PARTE LA VENTANA DESGRACIADA");
         });
     }

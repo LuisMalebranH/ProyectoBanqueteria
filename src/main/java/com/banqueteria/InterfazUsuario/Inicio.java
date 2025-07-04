@@ -5,6 +5,10 @@ import com.banqueteria.recetario.cantidad.Cantidad;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
+import com.banqueteria.recetario.detalleencargo.DetalleEncargo;
+import com.banqueteria.recetario.detalleencargo.ServicioDetalleEncargo;
+import com.banqueteria.recetario.encargo.Encargo;
+import com.banqueteria.recetario.encargo.ServicioEncargo;
 import com.banqueteria.recetario.ingrediente.Ingrediente;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.listaingredientes.ListaIngredientes;
@@ -46,7 +50,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Locale;
+import javax.swing.JOptionPane;
 
 
 public class Inicio extends javax.swing.JFrame {
@@ -61,10 +67,12 @@ public class Inicio extends javax.swing.JFrame {
     
     private ServicioCategoria servicioCategoria;
     private ServicioIngrediente servicioIngrediente;
-    private final ServicioCantidad servicioCantidad;
-    private final ServicioProducto servicioProducto;
+    private ServicioCantidad servicioCantidad;
+    private ServicioProducto servicioProducto;
     private ServicioListaIngredientes servicioListaIngredientes;
     private ServicioMedidaIngrediente servicioMedidaIngrediente;
+    private ServicioEncargo servicioEncargo;
+    private ServicioDetalleEncargo servicioDetalleEncargo;
 
     public Inicio(
             ServicioCantidad servicioCantidad,
@@ -72,13 +80,17 @@ public class Inicio extends javax.swing.JFrame {
             ServicioIngrediente servicioIngrediente, 
             ServicioProducto servicioProducto,
             ServicioListaIngredientes servicioListaIngredientes,
-            ServicioMedidaIngrediente servicioMedidaIngrediente) {
+            ServicioMedidaIngrediente servicioMedidaIngrediente,
+            ServicioEncargo servicioEncargo,
+            ServicioDetalleEncargo servicioDetalleEncargo) {
         this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
         this.servicioIngrediente = servicioIngrediente;
         this.servicioProducto = servicioProducto;
         this.servicioListaIngredientes = servicioListaIngredientes;
         this.servicioMedidaIngrediente = servicioMedidaIngrediente;
+        this.servicioEncargo = servicioEncargo;
+        this.servicioDetalleEncargo = servicioDetalleEncargo;
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -92,11 +104,10 @@ public class Inicio extends javax.swing.JFrame {
         llenarTablaInicio();
         llenarProducto();
         
-        ListSelectionModel model = TablaProductos.getSelectionModel();
-        model.addListSelectionListener(new ListSelectionListener(){
-            public void ValueChanged(ListSelectionEvent e){
-                
-            }
+        ListSelectionModel model1 = TablaProductos.getSelectionModel();
+        model1.addListSelectionListener(new ListSelectionListener(){
+        public void ValueChanged(ListSelectionEvent e){}
+            
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -104,6 +115,25 @@ public class Inicio extends javax.swing.JFrame {
                     int filaSeleccionada = TablaProductos.getSelectedRow();
                     if(filaSeleccionada != -1){
                         String nom = TablaProductos.getValueAt(filaSeleccionada, 0).toString();
+                        String receta = buscarProducto(nom).getReceta();
+                        listarIngredientes(buscarProducto(nom));
+                        TextoPreparacion.setText(receta);
+                        LabelNombreProd.setText(nom);
+                    }
+                }
+            }
+        });
+        
+        ListSelectionModel model2 = TablaEncargo.getSelectionModel();
+        model2.addListSelectionListener(new ListSelectionListener(){
+        public void ValueChanged(ListSelectionEvent e){}
+        
+        @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()){
+                    int filaSeleccionada = TablaEncargo.getSelectedRow();
+                    if(filaSeleccionada != -1){
+                        String nom = TablaEncargo.getValueAt(filaSeleccionada, 0).toString();
                         String receta = buscarProducto(nom).getReceta();
                         listarIngredientes(buscarProducto(nom));
                         TextoPreparacion.setText(receta);
@@ -129,6 +159,7 @@ public class Inicio extends javax.swing.JFrame {
         popmenuencargoprod = new javax.swing.JPopupMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         PanelFondo = new javax.swing.JPanel();
         PanelCalculo = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -140,6 +171,7 @@ public class Inicio extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         textprecio = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jfecha = new com.toedter.calendar.JDateChooser();
         TextBuscarProd = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaProductos = new javax.swing.JTable();
@@ -161,6 +193,7 @@ public class Inicio extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         cat4 = new javax.swing.JLabel();
         labeld = new javax.swing.JLabel();
+        btnAgregarProd1 = new javax.swing.JButton();
 
         jMenuItem2.setText("Modificar producto");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +227,14 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
         popmenuencargoprod.add(jMenuItem4);
+
+        jMenuItem5.setText("Retirar Producto");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        popmenuencargoprod.add(jMenuItem5);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -237,7 +278,7 @@ public class Inicio extends javax.swing.JFrame {
             TablaIngEncargo.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        PanelCalculo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 320, 280));
+        PanelCalculo.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 320, 270));
 
         TablaEncargo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -263,9 +304,8 @@ public class Inicio extends javax.swing.JFrame {
             TablaEncargo.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        PanelCalculo.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 320, 250));
+        PanelCalculo.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 320, 180));
 
-        jLabel1.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cliente");
         PanelCalculo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 120, 30));
@@ -273,10 +313,10 @@ public class Inicio extends javax.swing.JFrame {
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Precio estimado");
-        PanelCalculo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 120, 30));
+        PanelCalculo.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 120, 30));
 
         textprecio.setText("0");
-        PanelCalculo.add(textprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 130, 30));
+        PanelCalculo.add(textprecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 360, 130, 30));
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -284,7 +324,8 @@ public class Inicio extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        PanelCalculo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 690, 120, -1));
+        PanelCalculo.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 720, 120, -1));
+        PanelCalculo.add(jfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 82, 130, 30));
 
         PanelFondo.add(PanelCalculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 770));
 
@@ -400,7 +441,7 @@ public class Inicio extends javax.swing.JFrame {
                 btnAgregarProdActionPerformed(evt);
             }
         });
-        PanelFondo.add(btnAgregarProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 710, 170, -1));
+        PanelFondo.add(btnAgregarProd, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 720, 170, -1));
 
         PanelCategoria.setBackground(new java.awt.Color(186, 192, 165));
         PanelCategoria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -537,6 +578,16 @@ public class Inicio extends javax.swing.JFrame {
 
         PanelFondo.add(PanelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 840, 160));
 
+        btnAgregarProd1.setBackground(new java.awt.Color(163, 181, 135));
+        btnAgregarProd1.setText("Encargos");
+        btnAgregarProd1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarProd1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarProd1ActionPerformed(evt);
+            }
+        });
+        PanelFondo.add(btnAgregarProd1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 720, 170, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -547,7 +598,9 @@ public class Inicio extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelFondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 769, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
@@ -572,7 +625,8 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnAgregarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProdActionPerformed
         AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
         abrir.setVisible(true);
         
         dispose();
@@ -582,8 +636,9 @@ public class Inicio extends javax.swing.JFrame {
     Categoria cn = new Categoria();
             Categoria cv = new Categoria();
             Categoria cu = new Categoria();
-
-            cu = categoria.getLast();
+            
+            int u = categoria.size()-1;
+            cu = categoria.get(u);
             cv = categoria.get(0);
 
             for(int i = 0;i<categoria.size()-1;i++){
@@ -673,7 +728,8 @@ public class Inicio extends javax.swing.JFrame {
                 p.setPorciones(productos.get(i).getPorciones());
                 p.setPrecio(productos.get(i).getPrecio());
                 AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
                 abrir.setVisible(true);
                 abrir.TextoNombre.setText(nom);
                 abrir.TextoReceta.setText(preparacion);
@@ -728,7 +784,8 @@ public class Inicio extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         
         CantidadProducto abrir = new CantidadProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
         abrir.setVisible(true); 
         abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
         abrir.nombre.setText((String) this.TablaProductos.getValueAt(this.TablaProductos.getSelectedRow(),0));
@@ -737,76 +794,108 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
-       String nom = this.textencargo.getText();
-       Document documento = new Document();
-       String ruta = "ListaEncargo"+nom+".pdf";
-       
-        try {
-            
-            PdfWriter.getInstance(documento, new FileOutputStream(ruta));
-            documento.open();
-            
-            documento.add(new Paragraph("Lista Productos:"));
-            documento.add(new Paragraph(" "));
-            
-            int contadorprod = 0;
-            
-            for(int a = 0;a<TablaEncargo.getRowCount();a++){
-                
-                String nombre = TablaEncargo.getValueAt(a,0).toString();
-                String cantidad = TablaEncargo.getValueAt(a,1).toString();
-                   
-                documento.add(new Paragraph(cantidad+" "+nombre));
-                String precio = buscarProducto(nombre).getPrecio();
-                documento.add(new Paragraph("Precio por unidad: "+precio+" pesos"));
-                int preciototal = Integer.parseInt(precio)*Integer.parseInt(cantidad);
-                documento.add(new Paragraph("Precio total del producto: "+preciototal+" pesos"));
-                documento.add(new Paragraph("-----------------------------------------"));
-                contadorprod = contadorprod + preciototal;
-                
-            }
-            
-            documento.add(new Paragraph(" "));
-            documento.add(new Paragraph("Costo total del encargo: "+contadorprod));
-            documento.add(new Paragraph(" "));
-            documento.add(new Paragraph("Lista Ingredientes:"));
-            documento.add(new Paragraph(" "));
-            
-            int contadoring = 0;
-            
-            for(int b=0;b<TablaIngEncargo.getRowCount();b++){
-            
-                String nombre = TablaIngEncargo.getValueAt(b,0).toString();
-                String cantidad = TablaIngEncargo.getValueAt(b,1).toString();
-                String medida = TablaIngEncargo.getValueAt(b,2).toString();
-                documento.add(new Paragraph(cantidad+" "+medida+" de "+nombre));
-                double precio = Double.parseDouble(buscarIngrediente(nombre).getPrecio());
-                double cantidading = Double.parseDouble(buscarIngrediente(nombre).getCantidad());
-                documento.add(new Paragraph("Precio estimado del ingrediente: "+String.valueOf(precio)+" pesos por "+cantidading+" "+medida));
-                double preciofinal = redondear((precio*Double.parseDouble(cantidad))/cantidading);
-                documento.add(new Paragraph("Precio estimado del total necesario: "+preciofinal+" pesos por "+cantidad+" "+medida));
-                documento.add(new Paragraph("-----------------------------------------"));
-                contadoring = (int) (contadoring + preciofinal);
-                
-            }
-            
-            documento.add(new Paragraph(" "));
-            documento.add(new Paragraph("Precio final estimado: "+String.valueOf(contadoring)));
-            
-        } catch (DocumentException | FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            documento.close();
-        }
+        if(validaciones()){
         
-        File archivo = new File(ruta);
-        if(archivo.exists()){
-           try {
-               Desktop.getDesktop().open(archivo);
-           } catch (IOException ex) {
-               System.out.println("Error al abrir el archivo");
-           }
+            String nom = this.textencargo.getText();
+
+            long fecha = jfecha.getDate().getTime();
+            java.sql.Date sqlfecha = new java.sql.Date(fecha);
+            
+            Date hoy = new Date(System.currentTimeMillis());
+            java.sql.Date sqlfechahoy = new java.sql.Date(hoy.getTime());
+
+
+            Document documento = new Document();
+            String ruta = "ListaEncargo"+nom+".pdf";
+
+            try {
+
+                PdfWriter.getInstance(documento, new FileOutputStream(ruta));
+                documento.open();
+
+                documento.add(new Paragraph("Lista Productos:"));
+                documento.add(new Paragraph(" "));
+
+                int contadorprod = 0;
+
+                for(int a = 0;a<TablaEncargo.getRowCount();a++){
+
+                    String nombre = TablaEncargo.getValueAt(a,0).toString();
+                    String cantidad = TablaEncargo.getValueAt(a,1).toString();
+
+                    documento.add(new Paragraph(cantidad+" "+nombre));
+                    String precio = buscarProducto(nombre).getPrecio();
+                    documento.add(new Paragraph("Precio por unidad: "+precio+" pesos"));
+                    int preciototal = Integer.parseInt(precio)*Integer.parseInt(cantidad);
+                    documento.add(new Paragraph("Precio total del producto: "+preciototal+" pesos"));
+                    documento.add(new Paragraph("-----------------------------------------"));
+                    contadorprod = contadorprod + preciototal;
+
+                }
+
+                documento.add(new Paragraph(" "));
+                documento.add(new Paragraph("Costo total del encargo: "+contadorprod));
+                documento.add(new Paragraph(" "));
+                documento.add(new Paragraph("Lista Ingredientes:"));
+                documento.add(new Paragraph(" "));
+
+                int contadoring = 0;
+
+                for(int b=0;b<TablaIngEncargo.getRowCount();b++){
+
+                    String nombre = TablaIngEncargo.getValueAt(b,0).toString();
+                    String cantidad = TablaIngEncargo.getValueAt(b,1).toString();
+                    String medida = TablaIngEncargo.getValueAt(b,2).toString();
+                    documento.add(new Paragraph(cantidad+" "+medida+" de "+nombre));
+                    double precio = Double.parseDouble(buscarIngrediente(nombre).getPrecio());
+                    double cantidading = Double.parseDouble(buscarIngrediente(nombre).getCantidad());
+                    documento.add(new Paragraph("Precio estimado del ingrediente: "+String.valueOf(precio)+" pesos por "+cantidading+" "+medida));
+                    double preciofinal = redondear((precio*Double.parseDouble(cantidad))/cantidading);
+                    documento.add(new Paragraph("Precio estimado del total necesario: "+preciofinal+" pesos por "+cantidad+" "+medida));
+                    documento.add(new Paragraph("-----------------------------------------"));
+                    contadoring = (int) (contadoring + preciofinal);
+
+                }
+
+                documento.add(new Paragraph(" "));
+                documento.add(new Paragraph("Precio final estimado: "+String.valueOf(contadoring)));
+
+            } catch (DocumentException | FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                documento.close();
+            }
+
+            File archivo = new File(ruta);
+            if(archivo.exists()){
+               try {
+                   Desktop.getDesktop().open(archivo);
+               } catch (IOException ex) {
+                   System.out.println("Error al abrir el archivo");
+               }
+            }
+
+
+
+            Encargo e = new Encargo();
+            e.setCliente(nom);
+            e.setFechaEntrega(sqlfecha);
+            e.setFechaElaboracion(sqlfechahoy);
+            e.setPrecio(this.textprecio.getText());
+
+            servicioEncargo.save(e);    
+
+            for(int i = 0;i<TablaEncargo.getRowCount();i++){
+                DetalleEncargo de = new DetalleEncargo();
+                de.setEncargo(e);
+                de.setProducto(obtenerProducto(TablaEncargo.getValueAt(i,0).toString()));
+                de.setCantidad(TablaEncargo.getValueAt(i,1).toString());
+                servicioDetalleEncargo.save(de);
+            } 
+            
         }
+
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -878,6 +967,49 @@ public class Inicio extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        
+        DefaultTableModel tabla = (DefaultTableModel) this.TablaEncargo.getModel();
+        int fila = this.TablaEncargo.getSelectedRow();
+        int cantidad  = Integer.parseInt(this.TablaEncargo.getValueAt(fila,1).toString());
+        
+        String producto = this.TablaEncargo.getValueAt(this.TablaEncargo.getSelectedRow(),0).toString();
+        int precio = Integer.parseInt(this.textprecio.getText());
+        for(int q = 0;q<this.TablaProductos.getRowCount();q++){
+            if(this.TablaProductos.getValueAt(q,0).equals(producto)){
+                precio = precio - (Integer.parseInt(this.TablaProductos.getValueAt(q,2).toString())*cantidad);
+                this.textprecio.setText(String.valueOf(precio));
+            }
+        }
+        
+        for(int i = 0;i<this.TablaIngredientes.getRowCount();i++){
+            String ingrediente = this.TablaIngredientes.getValueAt(i,0).toString();
+            String cantidading = this.TablaIngredientes.getValueAt(i,1).toString();
+            String medida = this.TablaIngredientes.getValueAt(i,2).toString();
+            
+            for(int t = 0;t<this.TablaIngEncargo.getRowCount();t++){
+                if(this.TablaIngEncargo.getValueAt(t,0).equals(ingrediente)){
+                    Double cantidadn = obtenerCantidad(medida,this.TablaIngEncargo.getValueAt(t,2).toString(),corregirDecimales(cantidading))*cantidad;
+                    Double cantidade = Double.parseDouble(this.TablaIngEncargo.getValueAt(t,1).toString());
+                    Double cantidadf = cantidade - cantidadn;
+                    this.TablaIngEncargo.setValueAt(String.format(Locale.ENGLISH,"%.2f",cantidadf),t,1);
+                }
+            }
+                                  
+        }
+        
+        tabla.removeRow(fila);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void btnAgregarProd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProd1ActionPerformed
+        ListadoEncargos abrir = new ListadoEncargos(servicioCantidad,servicioCategoria,servicioIngrediente, 
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
+        
+        abrir.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnAgregarProd1ActionPerformed
+
     
     
     
@@ -895,6 +1027,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JTextArea TextoPreparacion;
     private javax.swing.JScrollPane TextoReceta;
     private javax.swing.JButton btnAgregarProd;
+    private javax.swing.JButton btnAgregarProd1;
     private javax.swing.JLabel cat1;
     private javax.swing.JLabel cat2;
     private javax.swing.JLabel cat3;
@@ -906,6 +1039,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -914,6 +1048,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private com.toedter.calendar.JDateChooser jfecha;
     private javax.swing.JLabel labeld;
     private javax.swing.JLabel labeli;
     private javax.swing.JPopupMenu popmenuencargoprod;
@@ -1040,6 +1175,32 @@ public class Inicio extends javax.swing.JFrame {
         
     }
     
+    private void listarIngredientes(Producto p){
+        
+        tabla = (DefaultTableModel) this.TablaIngredientes.getModel();
+        
+        while(tabla.getRowCount()>0)tabla.removeRow(0);
+        
+        Long id = p.getId();
+        
+        ingredientesProductos = servicioListaIngredientes.getAll();
+        
+        String ingrediente;
+        String cantidad;
+        String medida;
+        
+        for (int i = 0; i<ingredientesProductos.size();i++){
+            if(ingredientesProductos.get(i).getProducto().getId().equals(id)){
+                ingrediente = buscarNombreIngrediente(ingredientesProductos.get(i).getIngrediente().getId());
+                cantidad = ingredientesProductos.get(i).getCantidad();
+                medida = buscarMedida(ingredientesProductos.get(i).getMedida().getId());
+                String[] prod = {ingrediente,cantidad,medida};
+                tabla.addRow(prod);
+            }
+        }
+    
+    }
+    
     private void llenarCategorias(){
     
         categoria = servicioCategoria.getAll();
@@ -1125,33 +1286,7 @@ public class Inicio extends javax.swing.JFrame {
         
         tr.setRowFilter(RowFilter.regexFilter(texto));
         
-    }
-    
-    private void listarIngredientes(Producto p){
-        
-        tabla = (DefaultTableModel) this.TablaIngredientes.getModel();
-        
-        while(tabla.getRowCount()>0)tabla.removeRow(0);
-        
-        Long id = p.getId();
-        
-        ingredientesProductos = servicioListaIngredientes.getAll();
-        
-        String ingrediente;
-        String cantidad;
-        String medida;
-        
-        for (int i = 0; i<ingredientesProductos.size();i++){
-            if(ingredientesProductos.get(i).getProducto().getId().equals(id)){
-                ingrediente = buscarNombreIngrediente(ingredientesProductos.get(i).getIngrediente().getId());
-                cantidad = ingredientesProductos.get(i).getCantidad();
-                medida = buscarMedida(ingredientesProductos.get(i).getMedida().getId());
-                String[] prod = {ingrediente,cantidad,medida};
-                tabla.addRow(prod);
-            }
-        }
-    
-    }
+    } 
     
     private String buscarNombreIngrediente(Long idingrediente){
         
@@ -1251,6 +1386,18 @@ public class Inicio extends javax.swing.JFrame {
         for(Ingrediente i : ing){
             if(i.getNombre().equals(nombre)){
                 return i;
+            }
+        }
+        return null;
+    }
+    
+    private Producto obtenerProducto(String nombre){
+    
+        List<Producto> prod = new ArrayList<>();
+        prod = servicioProducto.getAllProducto();
+        for(Producto p : prod){
+            if(p.getNombre().equals(nombre)){
+                return p;
             }
         }
         return null;
@@ -1706,6 +1853,28 @@ public class Inicio extends javax.swing.JFrame {
                 throw new AssertionError();
         }
         
+    }
+    
+    private boolean validaciones(){
+        
+        int filas = TablaEncargo.getRowCount();
+        
+        if(this.textencargo.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Ingresar nombre cliente","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(jfecha.getDate() == null){
+            JOptionPane.showMessageDialog(null,"El encargo debe tener una fecha de entrega","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(filas==0){
+            JOptionPane.showMessageDialog(null,"El encargo debe tener al menos un producto","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else if(this.textprecio.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"El encargo debe tener un precio ","Alerta",JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }else{
+            return true;
+        }
+    
     }
 
 }

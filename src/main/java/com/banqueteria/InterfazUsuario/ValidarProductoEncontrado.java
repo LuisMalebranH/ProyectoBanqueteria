@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
-public class CantidadProducto extends javax.swing.JFrame {
+public class ValidarProductoEncontrado extends javax.swing.JFrame {
     
     List<ListaIngredientes> listaingredientes;
     List<ListaIngredientes> listaingredientesfiltrados;
@@ -35,7 +35,7 @@ public class CantidadProducto extends javax.swing.JFrame {
     private ServicioEncargo servicioEncargo;
     private ServicioDetalleEncargo servicioDetalleEncargo;
 
-    public CantidadProducto(
+    public ValidarProductoEncontrado(
             ServicioCantidad servicioCantidad,
             ServicioCategoria servicioCategoria,
             ServicioIngrediente servicioIngrediente, 
@@ -53,6 +53,8 @@ public class CantidadProducto extends javax.swing.JFrame {
         this.servicioEncargo = servicioEncargo;
         this.servicioDetalleEncargo = servicioDetalleEncargo;
         initComponents();
+        
+        this.setLocationRelativeTo(null);
     }
 
 
@@ -62,10 +64,13 @@ public class CantidadProducto extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cantidad = new javax.swing.JSpinner();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        btncancelar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         nombre = new javax.swing.JLabel();
+        cantidad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -74,75 +79,71 @@ public class CantidadProducto extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(220, 209, 199));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setPreferredSize(new java.awt.Dimension(200, 100));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Cantidad");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("El Producto seleccionado ya se encuentra ingresado en el encargo");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(9, 10, 380, 28));
 
-        cantidad.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        cantidad.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cantidadMouseClicked(evt);
-            }
-        });
-
-        jButton1.setText("Confirmar");
+        jButton1.setText("Reemplazar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jButton1)
-                .addContainerGap(110, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
-        );
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("¿Qué desea hacer?");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 329, 28));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 290, -1));
+        jButton2.setText("Sumar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 100, 90, -1));
+
+        btncancelar.setText("Cancelar");
+        btncancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncancelarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btncancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 100, 90, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 130));
 
         jPanel2.setBackground(new java.awt.Color(196, 178, 161));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         nombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        cantidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                    .addComponent(nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 290, 40));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 400, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -152,7 +153,8 @@ public class CantidadProducto extends javax.swing.JFrame {
         if(validaciones()){
             
             String nombre = this.nombre.getText();
-            int cant = Integer.parseInt(this.cantidad.getValue().toString());
+            int cant = Integer.parseInt(this.cantidad.getText());
+            int cantv = 0;
             
             for(int i = 0;i<Inicio.TablaProductos.getRowCount();i++){
                 if(Inicio.TablaProductos.getValueAt(i,0).equals(nombre)){
@@ -161,16 +163,22 @@ public class CantidadProducto extends javax.swing.JFrame {
                     int precioencargo = Integer.parseInt(Inicio.textprecio.getText());
                     
                     porciones = porciones*cant;
-                    precioprod = precioprod*cant;
-                    precioencargo = precioencargo + precioprod;
                     
                     String porcion = String.valueOf(porciones);
-                    String precio = String.valueOf(precioencargo);
                     String cantidadprod = String.valueOf(cant);
+                    String precio = "";                   
                     
                     DefaultTableModel tabla = (DefaultTableModel) Inicio.TablaEncargo.getModel();
-                    String [] dato = {nombre,cantidadprod,porcion};
-                    tabla.addRow(dato);
+                    
+                    for(int q = 0;q<tabla.getRowCount();q++){
+                        if(tabla.getValueAt(q,0).equals(nombre)){
+                            cantv = Integer.parseInt(tabla.getValueAt(q,1).toString());
+                            tabla.setValueAt(cantidadprod,q,1);
+                            tabla.setValueAt(porcion,q,2);
+                            precioencargo = precioencargo - (precioprod*cantv) + (precioprod*cant);
+                            precio = String.valueOf(precioencargo); 
+                        }
+                    }
                     
                     Inicio.textprecio.setText(precio);
                     
@@ -189,7 +197,7 @@ public class CantidadProducto extends javax.swing.JFrame {
                                 String desde = tablaingi.getValueAt(a,2).toString();
                                 String hasta = obtenerMedida(tablaingi.getValueAt(a,0).toString());
                                 double cantidadi = corregirDecimales(tablaingi.getValueAt(a,1).toString());
-                                cantidadf = redondear(cantidadf + obtenerCantidad(desde,hasta,cantidadi)*cant);
+                                cantidadf = redondear(cantidadf + (obtenerCantidad(desde,hasta,cantidadi)*cant)-(obtenerCantidad(desde,hasta,cantidadi)*cantv));
                                 tablaingf.setValueAt(String.valueOf(cantidadf), b, 1);
                                 
                                 encontrado = true;
@@ -221,15 +229,98 @@ public class CantidadProducto extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void cantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cantidadMouseClicked
+    private void btncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btncancelarActionPerformed
 
-    }//GEN-LAST:event_cantidadMouseClicked
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(validaciones()){
+            
+            String nombre = this.nombre.getText();
+            int cant = Integer.parseInt(this.cantidad.getText());
+            
+            for(int i = 0;i<Inicio.TablaProductos.getRowCount();i++){
+                if(Inicio.TablaProductos.getValueAt(i,0).equals(nombre)){
+                    int porciones = Integer.parseInt(Inicio.TablaProductos.getValueAt(i,1).toString());
+                    int precioprod = Integer.parseInt(Inicio.TablaProductos.getValueAt(i,2).toString());
+                    
+                    int precioencargo = Integer.parseInt(Inicio.textprecio.getText());                                        
+                    
+                    String precio = "";                   
+                    
+                    DefaultTableModel tabla = (DefaultTableModel) Inicio.TablaEncargo.getModel();
+                    
+                    for(int q = 0;q<tabla.getRowCount();q++){
+                        if(tabla.getValueAt(q,0).equals(nombre)){
+                            
+                            int cantf = cant + Integer.parseInt(tabla.getValueAt(q,1).toString());
+                            porciones = porciones*cantf;
+                            String porcion = String.valueOf(porciones);
+                            tabla.setValueAt(porcion,q,2);
+                            
+                            String cantidadprod = String.valueOf(cantf);
+                            tabla.setValueAt(cantidadprod,q,1);
+                            
+                            precioencargo = precioencargo + precioprod*cant;
+                            precio = String.valueOf(precioencargo); 
+                        }
+                    }
+                    
+                    Inicio.textprecio.setText(precio);
+                    
+                    //------------------------------------------
+                    
+                    DefaultTableModel tablaingi = (DefaultTableModel) Inicio.TablaIngredientes.getModel();                  
+                    DefaultTableModel tablaingf = (DefaultTableModel) Inicio.TablaIngEncargo.getModel();
+                    
+                    for(int a = 0;a<tablaingi.getRowCount();a++){
+                        boolean encontrado = false;
+                        
+                        for(int b = 0;b<tablaingf.getRowCount();b++){
+                            if(tablaingi.getValueAt(a,0).equals(tablaingf.getValueAt(b,0))){
+                                
+                                double cantidadf = Double.parseDouble(tablaingf.getValueAt(b,1).toString());
+                                String desde = tablaingi.getValueAt(a,2).toString();
+                                String hasta = obtenerMedida(tablaingi.getValueAt(a,0).toString());
+                                double cantidadi = corregirDecimales(tablaingi.getValueAt(a,1).toString());
+                                cantidadf = redondear(cantidadf + (obtenerCantidad(desde,hasta,cantidadi)*cant));
+                                tablaingf.setValueAt(String.valueOf(cantidadf), b, 1);
+                                
+                                encontrado = true;
+                                break;
+                                
+                            }
+                        }
+                        
+                        if(!encontrado){
+                        
+                            String nombreing = tablaingi.getValueAt(a,0).toString();
+                            double cantidading = corregirDecimales(tablaingi.getValueAt(a,1).toString());
+                            String medidaing = obtenerMedida(tablaingi.getValueAt(a,0).toString());
+                            double cantidadingf = redondear(obtenerCantidad(tablaingi.getValueAt(a,2).toString(),medidaing,cantidading)*cant);
+
+                            String[] nuevoing = {nombreing,String.valueOf(cantidadingf),medidaing};
+                            tablaingf.addRow(nuevoing);
+                        
+                        }                                                
+                    }
+                    
+                    dispose();
+                    
+                }
+            }
+            
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JSpinner cantidad;
+    private javax.swing.JButton btncancelar;
+    public static javax.swing.JLabel cantidad;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JLabel nombre;
@@ -251,7 +342,7 @@ public class CantidadProducto extends javax.swing.JFrame {
     
     private boolean validaciones(){
     
-        Object valor = cantidad.getValue();
+        int valor = Integer.parseInt(cantidad.getText());
         String nombre = this.nombre.getText();
         boolean encontrado = false;
         for(int i = 0;i<Inicio.TablaEncargo.getRowCount();i++){
@@ -260,17 +351,8 @@ public class CantidadProducto extends javax.swing.JFrame {
                 break;
             }
         }
-        if(!(valor instanceof Number)){
-            JOptionPane.showMessageDialog(null,"Sólo puede ingresar valores numéricos","Alerta",JOptionPane.INFORMATION_MESSAGE);
-            return false;
-        }else if(encontrado){
-            ValidarProductoEncontrado abrir = new ValidarProductoEncontrado(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
-                                                    servicioEncargo,servicioDetalleEncargo);
-            abrir.setVisible(true);
-            abrir.nombre.setText(nombre);
-            abrir.cantidad.setText(String.valueOf(valor));
-            dispose();
+        if(valor<1){
+            JOptionPane.showMessageDialog(null,"La cantidad debe ser mayor a 0","Alerta",JOptionPane.INFORMATION_MESSAGE);
             return false;
         }else {
             return true;

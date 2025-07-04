@@ -31,10 +31,6 @@ public class DetalleEncargo {
     @Column(length = 3)
     private String cantidad;
     
-    
-    @Column(length = 20)
-    private String tipoCantidadProd;
-
     public Long getId() {
         return id;
     }
@@ -65,16 +61,6 @@ public class DetalleEncargo {
 
     public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public String getTipoCantidadProd() {
-        return tipoCantidadProd;
-    }
-
-    public void setTipoCantidadProd(String tipoCantidadProd) {
-        this.tipoCantidadProd = tipoCantidadProd;
-    }
-
- 
+    }    
     
 }

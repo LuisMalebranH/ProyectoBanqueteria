@@ -4,6 +4,8 @@ import com.banqueteria.recetario.cantidad.Cantidad;
 import com.banqueteria.recetario.cantidad.ServicioCantidad;
 import com.banqueteria.recetario.categoria.Categoria;
 import com.banqueteria.recetario.categoria.ServicioCategoria;
+import com.banqueteria.recetario.detalleencargo.ServicioDetalleEncargo;
+import com.banqueteria.recetario.encargo.ServicioEncargo;
 import com.banqueteria.recetario.ingrediente.Ingrediente;
 import com.banqueteria.recetario.ingrediente.ServicioIngrediente;
 import com.banqueteria.recetario.listaingredientes.ListaIngredientes;
@@ -33,24 +35,30 @@ public class AgregarProducto extends javax.swing.JFrame {
     
     private ServicioCategoria servicioCategoria;
     private ServicioIngrediente servicioIngrediente;
-    private final ServicioCantidad servicioCantidad;
-    private final ServicioProducto servicioProducto;
+    private ServicioCantidad servicioCantidad;
+    private ServicioProducto servicioProducto;
     private ServicioListaIngredientes servicioListaIngredientes;
     private ServicioMedidaIngrediente servicioMedidaIngrediente;
-    
+    private ServicioEncargo servicioEncargo;
+    private ServicioDetalleEncargo servicioDetalleEncargo;
+
     public AgregarProducto(
             ServicioCantidad servicioCantidad,
             ServicioCategoria servicioCategoria,
             ServicioIngrediente servicioIngrediente, 
             ServicioProducto servicioProducto,
             ServicioListaIngredientes servicioListaIngredientes,
-            ServicioMedidaIngrediente servicioMedidaIngrediente) {
+            ServicioMedidaIngrediente servicioMedidaIngrediente,
+            ServicioEncargo servicioEncargo,
+            ServicioDetalleEncargo servicioDetalleEncargo) {
         this.servicioCantidad = servicioCantidad;
         this.servicioCategoria = servicioCategoria;
         this.servicioIngrediente = servicioIngrediente;
         this.servicioProducto = servicioProducto;
         this.servicioListaIngredientes = servicioListaIngredientes;
         this.servicioMedidaIngrediente = servicioMedidaIngrediente;
+        this.servicioEncargo = servicioEncargo;
+        this.servicioDetalleEncargo = servicioDetalleEncargo;
         initComponents();
         
         this.setSize(1200, 800);
@@ -334,13 +342,15 @@ public class AgregarProducto extends javax.swing.JFrame {
 
     private void jBttn_NuevaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBttn_NuevaCategoriaActionPerformed
         CrearCategoría crear = new CrearCategoría(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
         crear.setVisible(true);
     }//GEN-LAST:event_jBttn_NuevaCategoriaActionPerformed
 
     private void jBttn_NuevoIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBttn_NuevoIngredienteActionPerformed
         CrearIngrediente crear = new CrearIngrediente(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
         crear.setVisible(true);
     }//GEN-LAST:event_jBttn_NuevoIngredienteActionPerformed
 
@@ -350,7 +360,8 @@ public class AgregarProducto extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
        CantidadIngrediente abrir = new CantidadIngrediente(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
        abrir.setVisible(true); 
        abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
        abrir.nombre.setText((String) this.TablaIngredientes.getValueAt(this.TablaIngredientes.getSelectedRow(),0));
@@ -359,7 +370,8 @@ public class AgregarProducto extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         Inicio abrir;
         abrir = new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
         abrir.setVisible(true);
         dispose();
     }                                                           
@@ -396,7 +408,8 @@ public class AgregarProducto extends javax.swing.JFrame {
         }
         
         AgregarProducto abrir = new AgregarProducto(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
         
         abrir.labelid.setText(id);
         abrir.TextoNombre.setText(nom);
@@ -538,7 +551,8 @@ public class AgregarProducto extends javax.swing.JFrame {
             }  
             
             Inicio abrir = new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
             abrir.setVisible(true);
             dispose();
             
@@ -566,7 +580,8 @@ public class AgregarProducto extends javax.swing.JFrame {
         double precioProdfinal = redondear(precioProd);        
         
         CantidadIngrediente2 abrir = new CantidadIngrediente2(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
         abrir.setVisible(true); 
         abrir.setLocation(obtenerPosicionX(), obtenerPosicionY());
         abrir.nombre.setText((String) this.TablaListaIng.getValueAt(this.TablaListaIng.getSelectedRow(), 0));
@@ -609,7 +624,8 @@ public class AgregarProducto extends javax.swing.JFrame {
         
         
         CrearIngrediente abrir = new CrearIngrediente(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
         abrir.setVisible(true);
         
         abrir.textnombre.setText(nombre);
@@ -633,7 +649,8 @@ public class AgregarProducto extends javax.swing.JFrame {
     private void jBtn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_CancelarActionPerformed
         
         Inicio abrir = new Inicio(servicioCantidad,servicioCategoria,servicioIngrediente, 
-                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente);
+                                                    servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
+                                                    servicioEncargo,servicioDetalleEncargo);
         
         abrir.setVisible(true);
         dispose();
