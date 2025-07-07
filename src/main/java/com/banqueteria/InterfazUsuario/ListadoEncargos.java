@@ -80,6 +80,8 @@ public class ListadoEncargos extends javax.swing.JFrame {
         TablaEncargos = new javax.swing.JTable();
         jPanel_Ingredientes = new javax.swing.JPanel();
         jBtn_Cancelar1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        textonombre = new javax.swing.JTextField();
         jBtn_Cancelar = new javax.swing.JButton();
 
         jMenuItem2.setText("Ver detalle ");
@@ -135,6 +137,16 @@ public class ListadoEncargos extends javax.swing.JFrame {
             }
         });
         jPanel_Ingredientes.add(jBtn_Cancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 680, 140, 40));
+
+        jLabel1.setText("Nombre cliente");
+        jPanel_Ingredientes.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 130, 30));
+
+        textonombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textonombreKeyReleased(evt);
+            }
+        });
+        jPanel_Ingredientes.add(textonombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 160, 30));
 
         PanelAP.add(jPanel_Ingredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 770));
 
@@ -295,6 +307,11 @@ public class ListadoEncargos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jBtn_Cancelar1ActionPerformed
 
+    private void textonombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textonombreKeyReleased
+        String texto = this.textonombre.getText();
+        filtrar(texto);
+    }//GEN-LAST:event_textonombreKeyReleased
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -302,10 +319,12 @@ public class ListadoEncargos extends javax.swing.JFrame {
     private javax.swing.JTable TablaEncargos;
     private javax.swing.JButton jBtn_Cancelar;
     private javax.swing.JButton jBtn_Cancelar1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel_Ingredientes;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField textonombre;
     // End of variables declaration//GEN-END:variables
 
     public void llenarTabla (){    
@@ -332,6 +351,15 @@ public class ListadoEncargos extends javax.swing.JFrame {
         }
         
     }
+    
+    private void filtrar(String texto){
+    
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(tabla);
+        this.TablaEncargos.setRowSorter(tr);
+        
+        tr.setRowFilter(RowFilter.regexFilter(texto));
+        
+    } 
 
     private int obtenerPosicionY(){
         Point mouse1 = this.PanelAP.getMousePosition();
