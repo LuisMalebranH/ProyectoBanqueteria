@@ -200,7 +200,7 @@ public class ListadoEncargos extends javax.swing.JFrame {
         MostrarDetalleEncargo abrir  = new MostrarDetalleEncargo(servicioCantidad,servicioCategoria,servicioIngrediente, 
                                     servicioProducto,servicioListaIngredientes,servicioMedidaIngrediente,
                                     servicioEncargo,servicioDetalleEncargo);
-        abrir.setLocation(obtenerPosicionX(), obtenerPosicionY()-200);
+        abrir.setLocationRelativeTo(null);
         
         DefaultTableModel tablaEncargo = (DefaultTableModel) abrir.TablaEncargo.getModel();
         DefaultTableModel tablaIngredientes = (DefaultTableModel) abrir.TablaIngEncargo.getModel();

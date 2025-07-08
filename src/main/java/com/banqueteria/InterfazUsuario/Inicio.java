@@ -839,7 +839,7 @@ public class Inicio extends javax.swing.JFrame {
                 documento.add(new Paragraph("Lista Ingredientes:"));
                 documento.add(new Paragraph(" "));
 
-                int contadoring = 0;
+                int contadorprecio = 0;
 
                 for(int b=0;b<TablaIngEncargo.getRowCount();b++){
 
@@ -850,15 +850,29 @@ public class Inicio extends javax.swing.JFrame {
                     double precio = Double.parseDouble(buscarIngrediente(nombre).getPrecio());
                     double cantidading = Double.parseDouble(buscarIngrediente(nombre).getCantidad());
                     documento.add(new Paragraph("Precio estimado del ingrediente: "+String.valueOf(precio)+" pesos por "+cantidading+" "+medida));
-                    double preciofinal = redondear((precio*Double.parseDouble(cantidad))/cantidading);
-                    documento.add(new Paragraph("Precio estimado del total necesario: "+preciofinal+" pesos por "+cantidad+" "+medida));
-                    documento.add(new Paragraph("-----------------------------------------"));
-                    contadoring = (int) (contadoring + preciofinal);
+                    
+                    if(!cantidad.equals("0.0")){
+                        int contadoringrediente = 1;
+                        while(Double.parseDouble(cantidad)>(cantidading*contadoringrediente)){
+                            contadoringrediente = contadoringrediente + 1;
+                        }
+                        double preciofinal = redondear((precio*contadoringrediente));
+                        documento.add(new Paragraph("Precio estimado del total necesario: "+String.valueOf(precio*contadoringrediente)+" pesos por "+
+                                        contadoringrediente+" paquete de "+cantidading+" "+medida));
+                        documento.add(new Paragraph("Sobra del ingrediente por cantidad totalcomprada: "+((cantidading*contadoringrediente)-Double.parseDouble(cantidad))+" "+medida));
+                        documento.add(new Paragraph("-----------------------------------------"));
+                        contadorprecio = (int) (contadorprecio + preciofinal);
+                    }else{
+                        documento.add(new Paragraph("Sobra del ingrediente por cantidad totalcomprada: "+(cantidading-Double.parseDouble(cantidad))+" "+medida));
+                        documento.add(new Paragraph("-----------------------------------------"));
+                        contadorprecio = (int) (contadorprecio + precio);
+                    }                    
+                    
 
                 }
 
                 documento.add(new Paragraph(" "));
-                documento.add(new Paragraph("Precio final estimado: "+String.valueOf(contadoring)));
+                documento.add(new Paragraph("Precio final estimado: "+String.valueOf(contadorprecio)));
 
             } catch (DocumentException | FileNotFoundException e) {
                 e.printStackTrace();
