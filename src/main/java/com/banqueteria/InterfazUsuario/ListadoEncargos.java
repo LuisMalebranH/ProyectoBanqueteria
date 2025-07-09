@@ -17,10 +17,14 @@ import com.banqueteria.recetario.medidaingredientes.ServicioMedidaIngrediente;
 import com.banqueteria.recetario.producto.Producto;
 import com.banqueteria.recetario.producto.ServicioProducto;
 import java.awt.Point;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -211,8 +215,29 @@ public class ListadoEncargos extends javax.swing.JFrame {
         DefaultTableModel tablaIngredientes = (DefaultTableModel) abrir.TablaIngEncargo.getModel();
         
         String cliente = this.TablaEncargos.getValueAt(this.TablaEncargos.getSelectedRow(),0).toString();
+        
         String fechaelab = this.TablaEncargos.getValueAt(this.TablaEncargos.getSelectedRow(),1).toString();
+        SimpleDateFormat formatoEntrada1 = new SimpleDateFormat("dd-MM-yyyy");
+        Date fecha1 = null;
+        try {
+            fecha1 = formatoEntrada1.parse(fechaelab);
+        } catch (ParseException ex) {
+            Logger.getLogger(ListadoEncargos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        SimpleDateFormat formatoSalida1 = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaFormateada1 = formatoSalida1.format(fecha1);
+                
         String fechaent = this.TablaEncargos.getValueAt(this.TablaEncargos.getSelectedRow(),2).toString();
+        SimpleDateFormat formatoEntrada2 = new SimpleDateFormat("dd-MM-yyyy");
+        Date fecha2 = null;
+        try {
+            fecha2 = formatoEntrada2.parse(fechaent);
+        } catch (ParseException ex) {
+            Logger.getLogger(ListadoEncargos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        SimpleDateFormat formatoSalida2 = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaFormateada2 = formatoSalida2.format(fecha2);
+        
         String precio = this.TablaEncargos.getValueAt(this.TablaEncargos.getSelectedRow(),3).toString();
         
         abrir.textencargo.setText(cliente);
@@ -227,8 +252,10 @@ public class ListadoEncargos extends javax.swing.JFrame {
         List<DetalleEncargo> listadetallefiltrado = new ArrayList<>();           
         
         for(Encargo e : lista){
-            if(e.getCliente().equals(cliente)&String.valueOf(e.getFechaElaboracion()).equals(fechaelab)
-                    &String.valueOf(e.getFechaEntrega()).equals(fechaent)&e.getPrecio().equals(precio)){
+            if(e.getCliente().equals(cliente)&
+                    String.valueOf(e.getFechaElaboracion()).equals(fechaFormateada1)&
+                    String.valueOf(e.getFechaEntrega()).equals(fechaFormateada2)&
+                    e.getPrecio().equals(precio)){
                 Encargo encargo = new Encargo();
                 encargo.setId(e.getId());
                 encargo.setFechaElaboracion(e.getFechaElaboracion());
@@ -348,12 +375,27 @@ public class ListadoEncargos extends javax.swing.JFrame {
         lista = servicioEncargo.getAllEncargo();
         
         for(int i = 0; i<lista.size();i++){
-            nombre = lista.get(i).getCliente();
-            fechaelab = String.valueOf(lista.get(i).getFechaElaboracion());
-            fechaent = String.valueOf(lista.get(i).getFechaEntrega());
-            precio = lista.get(i).getPrecio();
-            String[] dato = {nombre, fechaelab, fechaent, precio};
-            tabla.addRow(dato);
+            try {
+                nombre = lista.get(i).getCliente();
+                
+                fechaelab = String.valueOf(lista.get(i).getFechaElaboracion());
+                SimpleDateFormat formatoEntrada1 = new SimpleDateFormat("yyyy-MM-dd");
+                Date fecha1 = formatoEntrada1.parse(fechaelab);
+                SimpleDateFormat formatoSalida1 = new SimpleDateFormat("dd-MM-yyyy");
+                String fechaFormateada1 = formatoSalida1.format(fecha1);
+                
+                fechaent = String.valueOf(lista.get(i).getFechaEntrega());
+                SimpleDateFormat formatoEntrada2 = new SimpleDateFormat("yyyy-MM-dd");
+                Date fecha2 = formatoEntrada2.parse(fechaent);
+                SimpleDateFormat formatoSalida2 = new SimpleDateFormat("dd-MM-yyyy");
+                String fechaFormateada2 = formatoSalida2.format(fecha2);
+                
+                precio = lista.get(i).getPrecio();
+                String[] dato = {nombre, fechaFormateada1, fechaFormateada2, precio};
+                tabla.addRow(dato);
+            } catch (ParseException ex) {
+                Logger.getLogger(ListadoEncargos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }
