@@ -160,7 +160,6 @@ public class Inicio extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jScrollPane5 = new javax.swing.JScrollPane();
         PanelFondo = new javax.swing.JPanel();
         PanelCalculo = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -577,7 +576,7 @@ public class Inicio extends javax.swing.JFrame {
         });
         PanelCategoria.add(labeld, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, -1, 100));
 
-        PanelFondo.add(PanelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 840, 160));
+        PanelFondo.add(PanelCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 0, 850, 160));
 
         btnAgregarProd1.setBackground(new java.awt.Color(163, 181, 135));
         btnAgregarProd1.setText("Encargos");
@@ -589,17 +588,17 @@ public class Inicio extends javax.swing.JFrame {
         });
         PanelFondo.add(btnAgregarProd1, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 720, 170, -1));
 
-        jScrollPane5.setViewportView(PanelFondo);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1212, Short.MAX_VALUE)
+            .addComponent(PanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 1212, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(PanelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -1061,7 +1060,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private com.toedter.calendar.JDateChooser jfecha;
     private javax.swing.JLabel labeld;
     private javax.swing.JLabel labeli;
